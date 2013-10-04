@@ -1,9 +1,9 @@
 package testObjects;
 
-import grading.testing.BasicTestCase;
-import grading.testing.Checkable;
-import grading.testing.TestCaseResult;
-import project.Project;
+import framework.grading.testing.BasicTestCase;
+import framework.grading.testing.Checkable;
+import framework.grading.testing.TestCaseResult;
+import framework.project.Project;
 
 /**
  * Created with IntelliJ IDEA.
