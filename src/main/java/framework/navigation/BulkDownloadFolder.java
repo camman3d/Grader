@@ -19,6 +19,13 @@ public interface BulkDownloadFolder {
     public List<StudentFolder> getStudentFolders();
 
     /**
+     * @param start The onyen to start with
+     * @param end The onyen to end with
+     * @return The students' folder wrapped in a {@link StudentFolder}
+     */
+    public List<StudentFolder> getStudentFolders(String start, String end);
+
+    /**
      * Finds a {@link StudentFolder} based on the student's onyen
      *
      * @param onyen The student's Onyen

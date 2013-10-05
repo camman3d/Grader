@@ -1,3 +1,5 @@
+import framework.gui.SettingsWindow;
+
 /**
  * Created with IntelliJ IDEA.
  * User: josh
@@ -8,6 +10,8 @@
 public class Driver {
     public static void main(String[] args) {
 
+        SettingsWindow window = SettingsWindow.create();
+        window.awaitBegin();
         System.out.println("Testing");
     }
 }

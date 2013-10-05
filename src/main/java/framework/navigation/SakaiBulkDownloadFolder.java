@@ -52,6 +52,21 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
     }
 
     @Override
+    public List<StudentFolder> getStudentFolders(String start, String end) {
+        List<StudentFolder> filteredFolders = new ArrayList<StudentFolder>();
+        boolean collect = false;
+        for (StudentFolder studentFolder : getStudentFolders()) {
+            if (studentFolder.getOnyen().equals(start))
+                collect = true;
+            if (collect)
+                filteredFolders.add(studentFolder);
+            if (studentFolder.getOnyen().equals(end))
+                collect = false;
+        }
+        return filteredFolders;
+    }
+
+    @Override
     public StudentFolder getStudentFolder(final String onyen) {
         File studentFolder = folder.listFiles(new FileFilter() {
             @Override
