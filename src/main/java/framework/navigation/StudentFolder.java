@@ -12,6 +12,11 @@ import java.io.File;
 public interface StudentFolder<T extends Project> {
 
     /**
+     * @return The student folder
+     */
+    public File getFolder();
+
+    /**
      * @return A JODA {@link org.joda.time.DateTime} representing the submission time in an {@link scala.Option} if it doesn't exit
      */
     public Option<DateTime> getSubmissionTime();

@@ -1,5 +1,7 @@
 package framework.gui;
 
+import utils.GradingEnvironment;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,9 +30,10 @@ public class SettingsWindow {
 
     // Settings
     private String downloadPath;
-    private String editor;
+//    private String editor;
 
     public SettingsWindow() {
+        editorLabel.setText(GradingEnvironment.get().getEditor());
 
         // Clicking the "Begin" button will close the window and release the semaphore.
         beginButton.addActionListener(new ActionListener() {
@@ -59,7 +62,8 @@ public class SettingsWindow {
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int returnValue = fileChooser.showOpenDialog(frame);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    editor = fileChooser.getSelectedFile().getAbsolutePath();
+                    String editor = fileChooser.getSelectedFile().getAbsolutePath();
+                    GradingEnvironment.get().setEditor(editor);
                     editorLabel.setText(editor);
                 }
             }
@@ -100,9 +104,9 @@ public class SettingsWindow {
         return downloadPath;
     }
 
-    public String getEditor() {
-        return editor;
-    }
+//    public String getEditor() {
+//        return editor;
+//    }
 
     public String getStart() {
         return start.getText();

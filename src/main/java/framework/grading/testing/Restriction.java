@@ -40,6 +40,7 @@ public class Restriction extends Checkable {
     @Override
     public CheckResult check(Project project) {
         CheckResult result = check(-points, testCases, project);
-        return new CheckResult(result.getScore() + points, result.getResults());
+        result.setScore(-result.getScore());
+        return result;
     }
 }

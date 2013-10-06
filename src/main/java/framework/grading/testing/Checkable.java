@@ -24,11 +24,18 @@ public abstract class Checkable {
     protected CheckResult check(double points, List<TestCase> testCases, Project project) {
         double pointWeight = points / testCases.size();
         CheckResult result = new CheckResult(pointWeight);
-        for (TestCase testCase : testCases) {
-            TestCaseResult testResult = testCase.test(project);
-            result.save(testResult);
+        try {
+            for (TestCase testCase : testCases) {
+                TestCaseResult testResult = testCase.test(project);
+                result.save(testResult);
+            }
+            result.setStatus(CheckResult.CheckStatus.Successful);
+            return result;
+        } catch (NotAutomatableException e) {
+            return new CheckResult(0, "Not auto gradable", CheckResult.CheckStatus.NotGraded);
+        } catch (Exception e) {
+            return new CheckResult(0, "Auto grading failed", CheckResult.CheckStatus.Failed);
         }
-        return result;
     }
 
     /**

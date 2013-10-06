@@ -1,5 +1,8 @@
 package framework.project;
 
+import framework.execution.NotRunnableException;
+import framework.execution.ProcessExecution;
+import framework.execution.ReflectionRunner;
 import utils.DirectoryUtils;
 import scala.Option;
 
@@ -12,6 +15,7 @@ import java.io.FileNotFoundException;
 public class StandardProject implements Project {
 
     private File directory;
+    private File sourceFolder;
     private Option<ProjectClassesManager> classesManager;
 
     /**
@@ -26,6 +30,7 @@ public class StandardProject implements Project {
         Option<File> src = DirectoryUtils.locateFolder(directory, "src");
         if (src.isEmpty())
             throw new FileNotFoundException("No src folder");
+        sourceFolder = src.get();
         this.directory = src.get().getParentFile();
 
         try {
@@ -40,11 +45,11 @@ public class StandardProject implements Project {
     /**
      * This figures out where the build folder is, taking into account variations due to IDE
      *
-     * @param executeClass The name of the class that has the main method, such as "main.Assignment1"
+     * @param preferredClass The name of the class that has the main method, such as "main.Assignment1"
      * @return The build folder
      * @throws FileNotFoundException
      */
-    private File getBuildFolder(String executeClass) throws FileNotFoundException {
+    public File getBuildFolder(String preferredClass) throws FileNotFoundException {
         Option<File> out = DirectoryUtils.locateFolder(directory, "out");
         Option<File> bin = DirectoryUtils.locateFolder(directory, "bin");
 
@@ -60,8 +65,8 @@ public class StandardProject implements Project {
             if (bin.isDefined())
                 dir = bin.get();
 
-            if (executeClass.contains(".")) {
-                Option<File> packageDir = DirectoryUtils.locateFolder(dir, executeClass.split("\\.")[0]);
+            if (preferredClass.contains(".")) {
+                Option<File> packageDir = DirectoryUtils.locateFolder(dir, preferredClass.split("\\.")[0]);
                 if (packageDir.isDefined())
                     return packageDir.get().getParentFile();
                 else
@@ -73,16 +78,30 @@ public class StandardProject implements Project {
 
     @Override
     public void start() {
-        // TODO: Start the project
+        // TODO: Get input setup
+        try {
+            new ReflectionRunner(this).run("");
+        } catch (NotRunnableException e) {
+            System.out.println("Project cannot be run.");
+        }
     }
 
     @Override
     public void launch() {
-        // TODO: Launch the project
+        try {
+            ProcessExecution execution = new ProcessExecution(this);
+        } catch (NotRunnableException e) {
+            System.out.println("Project cannot be run");
+        }
     }
 
     @Override
     public Option<ProjectClassesManager> getClassesManager() {
         return classesManager;
+    }
+
+    @Override
+    public File getSourceFolder() {
+        return sourceFolder;
     }
 }

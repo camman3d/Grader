@@ -26,6 +26,11 @@ public class SakaiStudentFolder implements StudentFolder {
     }
 
     @Override
+    public File getFolder() {
+        return folder;
+    }
+
+    @Override
     public Option<DateTime> getSubmissionTime() {
         File timestampFile = new File(folder, "timestamp.txt");
         if (!timestampFile.exists())
@@ -63,7 +68,7 @@ public class SakaiStudentFolder implements StudentFolder {
         Option<File> projectFolder = DirectoryUtils.find(submissionFolder, new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return pathname.isDirectory();
+                return pathname.isDirectory() && !pathname.getName().equals("__MACOSX");
             }
         });
         if (projectFolder.isDefined())

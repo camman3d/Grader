@@ -39,6 +39,14 @@ public class ProjectRequirements {
         restrictions.add(restriction);
     }
 
+    public List<Feature> getFeatures() {
+        return features;
+    }
+
+    public List<Restriction> getRestrictions() {
+        return restrictions;
+    }
+
     public List<CheckResult> checkFeatures(Project project) {
         List<CheckResult> results = new LinkedList<CheckResult>();
         for (Feature feature : features)

@@ -1,6 +1,8 @@
 package framework.grading;
 
 import framework.grading.testing.CheckResult;
+import framework.gui.GradingWindow;
+import framework.gui.SettingsWindow;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
@@ -52,11 +54,16 @@ public class GradingManager {
                     List<CheckResult> featureResults = projectRequirements.checkFeatures(project.get());
                     List<CheckResult> restrictionResults = projectRequirements.checkRestrictions(project.get());
 
-                    // Do manual grading and verification
-                    performManualVerification(featureResults, restrictionResults);
+                    // TODO: Do manual grading and verification
+                    GradingWindow window = GradingWindow.create(projectRequirements, folder, project, featureResults, restrictionResults);
+                    boolean continueGrading = window.awaitDone();
+                    String comments = window.getComments();
 
                     // Log the results
-                    logResults(folder, featureResults, restrictionResults);
+                    logResults(folder, featureResults, restrictionResults, comments);
+
+                    if (!continueGrading)
+                        System.exit(0);
                 } else {
                     // TODO: Gracefully handle absence of project
                     System.out.println("No project for: " + folder.getUserId());
@@ -70,17 +77,15 @@ public class GradingManager {
     }
 
     private void getGradingOptions() {
-        // TODO: Get the grading options
-        downloadPath = "";
-        start = "";
-        end = "";
+        SettingsWindow window = SettingsWindow.create();
+        window.awaitBegin();
+        downloadPath = window.getDownloadPath();
+        start = window.getStart();
+        end = window.getEnd();
     }
 
-    private void performManualVerification(List<CheckResult> featureResults, List<CheckResult> restrictionResults) {
-        // TODO: Do manual grading and verification
-    }
-
-    private void logResults(StudentFolder folder, List<CheckResult> featureResults, List<CheckResult> restrictionResults) {
+    private void logResults(StudentFolder folder, List<CheckResult> featureResults,
+                            List<CheckResult> restrictionResults, String comments) {
         // TODO: Log the results
     }
 

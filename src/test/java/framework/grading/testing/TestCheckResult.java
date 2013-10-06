@@ -36,6 +36,6 @@ public class TestCheckResult {
         CheckResult result = new CheckResult(1);
         result.save(new TestCaseResult(true, "First note", "A"));
         result.save(new TestCaseResult(true, "Second note", "B"));
-        assertTrue("There should be some notes", result.getNoteSummary().split("\n").length >= 4);
+        assertTrue("There should be some notes", result.getResultNotes().split("\n").length >= 4);
     }
 }

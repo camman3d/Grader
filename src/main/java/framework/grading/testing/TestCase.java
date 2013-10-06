@@ -17,8 +17,9 @@ public interface TestCase {
      *
      * @param project The project to test
      * @return A {@link TestCaseResult} containing the result and any notes.
+     * @throws NotAutomatableException
      */
-    public TestCaseResult test(Project project);
+    public TestCaseResult test(Project project) throws NotAutomatableException;
 
     /**
      * Sets the checkable containing this test case.
