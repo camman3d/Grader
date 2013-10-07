@@ -110,11 +110,19 @@ public class CheckResult implements Describable {
         return results;
     }
 
+    public void setResults(List<TestCaseResult> results) {
+        this.results = results;
+    }
+
     /**
      * @return The gradable Feature/Restriction
      */
     public Gradable getTarget() {
         return target;
+    }
+
+    public void setTarget(Gradable target) {
+        this.target = target;
     }
 
     /**

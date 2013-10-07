@@ -2,17 +2,14 @@ package framework.gui;
 
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
-import framework.grading.testing.TestCaseResult;
 import framework.project.Project;
 import scala.Option;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.DefaultFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,6 +24,7 @@ public class FeatureListItem {
     private JSpinner score;
     private JLabel max;
     private JButton fullCredit;
+    private JLabel extraCredit;
     private JButton notes;
     private JButton autoGrade;
     private TotalScoreUpdater updater;
@@ -34,58 +32,83 @@ public class FeatureListItem {
     private Feature feature;
     private CheckResult result;
 
-    public FeatureListItem(JLabel name, final JSpinner score, JLabel max, JButton fullCredit, final JButton notes, JButton autoGrade) {
+    public FeatureListItem(JLabel name, JSpinner score, JLabel max, JButton fullCredit, JLabel extraCredit,
+                           JButton notes, JButton autoGrade) {
+
         this.name = name;
         this.score = score;
         this.max = max;
         this.fullCredit = fullCredit;
+        this.extraCredit = extraCredit;
         this.notes = notes;
         this.autoGrade = autoGrade;
 
-        result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, null);
-
-        notes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String noteString = (String) JOptionPane.showInputDialog(notes, "Please enter in some notes:",
-                        "Notes", JOptionPane.QUESTION_MESSAGE, null, null, result.getNotes());
-                if (noteString != null)
-                    result.setNotes(noteString);
-            }
-        });
-        fullCredit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                result.setScore(feature.getPoints());
-                score.setValue(feature.getPoints());
-            }
-        });
-        score.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (score.getValue() instanceof Double)
-                    result.setScore((Double) score.getValue());
-                if (score.getValue() instanceof Integer)
-                    result.setScore((Integer) score.getValue());
-                updater.update();
-            }
-        });
+        result = null;
     }
 
     public void setFeature(Feature feature) {
         this.feature = feature;
         name.setText(feature.getName());
         max.setText(feature.getPoints() + "");
+        if (!feature.isExtraCredit())
+            extraCredit.setVisible(false);
     }
 
     public void setResult(CheckResult result) {
-        this.result = result;
-        score.setValue(result.getScore());
-        if (result.getStatus() == CheckResult.CheckStatus.Successful) {
+        setResult(result, false);
+    }
+
+    public void setResult(CheckResult _result, boolean manual) {
+
+        // If this is the first time then initialize the listeners
+        if (this.result == null) {
+            notes.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String noteString = (String) JOptionPane.showInputDialog(notes, "Please enter in some notes:",
+                            "Notes", JOptionPane.QUESTION_MESSAGE, null, null, result.getNotes());
+                    if (noteString != null)
+                        result.setNotes(noteString);
+                }
+            });
+            fullCredit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    result.setScore(feature.getPoints());
+                    score.setValue(feature.getPoints());
+                    updater.update();
+                }
+            });
+            score.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    if (score.getValue() instanceof Double)
+                        result.setScore((Double) score.getValue());
+                    if (score.getValue() instanceof Integer)
+                        result.setScore((Integer) score.getValue());
+                    updater.update();
+                }
+            });
+            this.result = _result;
+        } else {
+            // Copy the values. The original object needs to stay the same, as it is used in other scopes
+            this.result.setNotes(result.getNotes());
+            this.result.setScore(result.getScore());
+            this.result.setStatus(result.getStatus());
+            this.result.setResults(result.getResults());
+            this.result.setTarget(result.getTarget());
+        }
+
+        score.setValue(_result.getScore());
+        if (_result.getStatus() == CheckResult.CheckStatus.Successful) {
             autoGrade.setEnabled(false);
             autoGrade.setText("Graded");
         }
-        if (result.getStatus() == CheckResult.CheckStatus.Failed) {
+        if (_result.getStatus() == CheckResult.CheckStatus.NotGraded && manual) {
+            autoGrade.setEnabled(false);
+            autoGrade.setText("Cannot Grade");
+        }
+        if (_result.getStatus() == CheckResult.CheckStatus.Failed) {
             autoGrade.setEnabled(false);
             autoGrade.setText("Cannot Grade");
         }
@@ -100,6 +123,7 @@ public class FeatureListItem {
         score.setVisible(false);
         max.setVisible(false);
         fullCredit.setVisible(false);
+        extraCredit.setVisible(false);
         notes.setVisible(false);
         autoGrade.setVisible(false);
     }
@@ -109,7 +133,7 @@ public class FeatureListItem {
             autoGrade.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setResult(feature.check(project.get()));
+                    setResult(feature.check(project.get()), true);
                 }
             });
         } else {

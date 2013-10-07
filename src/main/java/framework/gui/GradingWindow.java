@@ -129,6 +129,48 @@ public class GradingWindow {
     private JLabel status6;
     private JLabel status7;
     private JLabel totalScoreLabel;
+    private JLabel featureName8;
+    private JLabel featureName9;
+    private JLabel featureName10;
+    private JLabel featureName11;
+    private JLabel featureName12;
+    private JSpinner score8;
+    private JSpinner score9;
+    private JSpinner score10;
+    private JSpinner score11;
+    private JSpinner score12;
+    private JLabel max8;
+    private JLabel max9;
+    private JLabel max10;
+    private JLabel max11;
+    private JLabel max12;
+    private JButton fullCredit8;
+    private JButton fullCredit9;
+    private JButton fullCredit10;
+    private JButton fullCredit11;
+    private JButton fullCredit12;
+    private JButton notes8;
+    private JButton notes9;
+    private JButton notes10;
+    private JButton notes11;
+    private JButton notes12;
+    private JButton autoGrade8;
+    private JButton autoGrade9;
+    private JButton autoGrade10;
+    private JButton autoGrade11;
+    private JButton autoGrade12;
+    private JLabel extraCredit1;
+    private JLabel extraCredit2;
+    private JLabel extraCredit3;
+    private JLabel extraCredit4;
+    private JLabel extraCredit5;
+    private JLabel extraCredit6;
+    private JLabel extraCredit7;
+    private JLabel extraCredit8;
+    private JLabel extraCredit9;
+    private JLabel extraCredit10;
+    private JLabel extraCredit11;
+    private JLabel extraCredit12;
     private TotalScoreUpdater scoreUpdater;
 
     // Properties dealing with the project
@@ -145,13 +187,18 @@ public class GradingWindow {
         done.acquire();
 
         features = new ArrayList<FeatureListItem>();
-        features.add(new FeatureListItem(featureName1, score1, max1, fullCredit1, notes1, autoGrade1));
-        features.add(new FeatureListItem(featureName2, score2, max2, fullCredit2, notes2, autoGrade2));
-        features.add(new FeatureListItem(featureName3, score3, max3, fullCredit3, notes3, autoGrade3));
-        features.add(new FeatureListItem(featureName4, score4, max4, fullCredit4, notes4, autoGrade4));
-        features.add(new FeatureListItem(featureName5, score5, max5, fullCredit5, notes5, autoGrade5));
-        features.add(new FeatureListItem(featureName6, score6, max6, fullCredit6, notes6, autoGrade6));
-        features.add(new FeatureListItem(featureName7, score7, max7, fullCredit7, notes7, autoGrade7));
+        features.add(new FeatureListItem(featureName1, score1, max1, fullCredit1, extraCredit1, notes1, autoGrade1));
+        features.add(new FeatureListItem(featureName2, score2, max2, fullCredit2, extraCredit2, notes2, autoGrade2));
+        features.add(new FeatureListItem(featureName3, score3, max3, fullCredit3, extraCredit3, notes3, autoGrade3));
+        features.add(new FeatureListItem(featureName4, score4, max4, fullCredit4, extraCredit4, notes4, autoGrade4));
+        features.add(new FeatureListItem(featureName5, score5, max5, fullCredit5, extraCredit5, notes5, autoGrade5));
+        features.add(new FeatureListItem(featureName6, score6, max6, fullCredit6, extraCredit6, notes6, autoGrade6));
+        features.add(new FeatureListItem(featureName7, score7, max7, fullCredit7, extraCredit7, notes7, autoGrade7));
+        features.add(new FeatureListItem(featureName8, score8, max8, fullCredit8, extraCredit8, notes8, autoGrade8));
+        features.add(new FeatureListItem(featureName9, score9, max9, fullCredit9, extraCredit9, notes9, autoGrade9));
+        features.add(new FeatureListItem(featureName10, score10, max10, fullCredit10, extraCredit10, notes10, autoGrade10));
+        features.add(new FeatureListItem(featureName11, score11, max11, fullCredit11, extraCredit11, notes11, autoGrade11));
+        features.add(new FeatureListItem(featureName12, score12, max12, fullCredit12, extraCredit12, notes12, autoGrade12));
 
         restrictions = new ArrayList<RestrictionListItem>();
         restrictions.add(new RestrictionListItem(restriction1, rScore1, rMax1, rNotes1, status1));
@@ -247,7 +294,7 @@ public class GradingWindow {
             } else
                 System.out.println("We need more restriction slots!!!!");
         }
-        for (int i = restrictionList.size(); i < features.size(); i++)
+        for (int i = restrictionList.size(); i < restrictions.size(); i++)
             restrictions.get(i).hide();
     }
 
@@ -259,7 +306,7 @@ public class GradingWindow {
             window.frame = frame;
             frame.setContentPane(window.mainPanel);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setPreferredSize(new Dimension(640, 480));
+            frame.setPreferredSize(new Dimension(640, 600));
             frame.pack();
             frame.setVisible(true);
 
