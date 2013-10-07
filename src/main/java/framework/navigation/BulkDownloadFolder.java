@@ -32,4 +32,9 @@ public interface BulkDownloadFolder {
      * @return The {@link StudentFolder}
      */
     public StudentFolder getStudentFolder(String onyen);
+
+    /**
+     * @return The download root
+     */
+    public File getFolder();
 }

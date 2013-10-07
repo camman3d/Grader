@@ -2,6 +2,7 @@ package framework.grading.testing;
 
 import framework.project.Project;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,10 +33,26 @@ public class Feature extends Checkable {
         this.testCases = testCases;
     }
 
+    public Feature(String name, double points, TestCase ... testCases) {
+        this.name = name;
+        this.points = points;
+        this.extraCredit = false;
+        this.testCases = Arrays.asList(testCases);
+    }
+
+    public Feature(String name, double points, boolean extraCredit, TestCase ... testCases) {
+        this.name = name;
+        this.points = points;
+        this.extraCredit = extraCredit;
+        this.testCases = Arrays.asList(testCases);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public double getPoints() {
         return points;
     }
@@ -47,5 +64,13 @@ public class Feature extends Checkable {
     @Override
     public CheckResult check(Project project) {
         return check(points, testCases, project);
+    }
+
+    @Override
+    public String getSummary() {
+        String spaces = "                                 ";
+        String score = points < 10 ? " " + points : points + "";
+        String ec = extraCredit ? " (Extra credit)" : "";
+        return name + spaces.substring(name.length()) + "%.1f / " + score + ec;
     }
 }

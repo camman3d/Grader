@@ -7,6 +7,9 @@ import framework.project.Project;
 import scala.Option;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.DefaultFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
@@ -26,6 +29,7 @@ public class FeatureListItem {
     private JButton fullCredit;
     private JButton notes;
     private JButton autoGrade;
+    private TotalScoreUpdater updater;
 
     private Feature feature;
     private CheckResult result;
@@ -38,7 +42,7 @@ public class FeatureListItem {
         this.notes = notes;
         this.autoGrade = autoGrade;
 
-        result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded);
+        result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, null);
 
         notes.addActionListener(new ActionListener() {
             @Override
@@ -54,6 +58,16 @@ public class FeatureListItem {
             public void actionPerformed(ActionEvent e) {
                 result.setScore(feature.getPoints());
                 score.setValue(feature.getPoints());
+            }
+        });
+        score.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (score.getValue() instanceof Double)
+                    result.setScore((Double) score.getValue());
+                if (score.getValue() instanceof Integer)
+                    result.setScore((Integer) score.getValue());
+                updater.update();
             }
         });
     }
@@ -102,5 +116,9 @@ public class FeatureListItem {
             autoGrade.setEnabled(false);
             autoGrade.setText("Cannot Grade");
         }
+    }
+
+    public void setUpdater(TotalScoreUpdater updater) {
+        this.updater = updater;
     }
 }

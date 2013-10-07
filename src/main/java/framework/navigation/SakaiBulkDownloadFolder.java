@@ -76,4 +76,9 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
         })[0];
         return new SakaiStudentFolder(studentFolder);
     }
+
+    @Override
+    public File getFolder() {
+        return folder;
+    }
 }

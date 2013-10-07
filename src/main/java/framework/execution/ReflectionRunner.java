@@ -15,7 +15,7 @@ import java.lang.reflect.Modifier;
 /**
  * Like AReflectionBasedProjectRunner
  */
-public class ReflectionRunner {
+public class ReflectionRunner implements Runner {
 
     private Project project;
 
@@ -23,11 +23,20 @@ public class ReflectionRunner {
         this.project = project;
     }
 
-    public void run(String input) throws NotRunnableException {
-        run(input, new String[]{});
+    @Override
+    public RunningProject run(String input) throws NotRunnableException {
+        return run(input, new String[]{});
     }
 
-    public void run(final String input, final String[] args) throws NotRunnableException {
+    @Override
+    public RunningProject run(final String input, final String[] args) throws NotRunnableException {
+        final RunningProject runner = new RunningProject();
+        try {
+            runner.start();
+        } catch (InterruptedException e) {
+            throw new NotRunnableException();
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -35,6 +44,7 @@ public class ReflectionRunner {
                 PrintStream systemOut = new PrintStream(System.out);
 
                 try {
+
                     // Create the input/output streams
                     InputStream stdin = new ByteArrayInputStream(input.getBytes());
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -52,17 +62,19 @@ public class ReflectionRunner {
                     stdin.close();
                     stdout.close();
 
-                    // TODO: Do something with the output
-//                    return outputStream.toString();
+                    // Do something with the output
+                    runner.setOutput(outputStream.toString());
+                    runner.end();
                 } catch (Exception e) {
-                    e.printStackTrace();
-//                    throw new NotRunnableException();
+                    runner.error();
+                    runner.end();
                 } finally {
                     System.setIn(systemIn);
                     System.setOut(systemOut);
                 }
             }
         }).start();
+        return runner;
     }
 
     private Class<?> getMainClass() throws NotRunnableException {

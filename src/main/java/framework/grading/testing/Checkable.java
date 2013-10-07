@@ -11,7 +11,7 @@ import java.util.List;
  * Time: 10:04 AM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class Checkable {
+public abstract class Checkable implements Gradable {
 
     /**
      * This checks the test cases against the project
@@ -23,7 +23,7 @@ public abstract class Checkable {
      */
     protected CheckResult check(double points, List<TestCase> testCases, Project project) {
         double pointWeight = points / testCases.size();
-        CheckResult result = new CheckResult(pointWeight);
+        CheckResult result = new CheckResult(pointWeight, this);
         try {
             for (TestCase testCase : testCases) {
                 TestCaseResult testResult = testCase.test(project);
@@ -32,9 +32,9 @@ public abstract class Checkable {
             result.setStatus(CheckResult.CheckStatus.Successful);
             return result;
         } catch (NotAutomatableException e) {
-            return new CheckResult(0, "Not auto gradable", CheckResult.CheckStatus.NotGraded);
+            return new CheckResult(0, "Not auto gradable", CheckResult.CheckStatus.NotGraded, this);
         } catch (Exception e) {
-            return new CheckResult(0, "Auto grading failed", CheckResult.CheckStatus.Failed);
+            return new CheckResult(0, "Auto grading failed", CheckResult.CheckStatus.Failed, this);
         }
     }
 

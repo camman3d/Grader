@@ -1,5 +1,7 @@
 package framework.project;
 
+import framework.execution.NotRunnableException;
+import framework.execution.RunningProject;
 import scala.Option;
 
 import java.io.File;
@@ -8,22 +10,22 @@ import java.io.FileNotFoundException;
 /**
  * Like Project
  */
-public interface Project<T extends ClassesManager> {
+public interface Project {
 
     /**
      * Attempts to start the project in the same process
      */
-    public void start();
+    public RunningProject start(String input) throws NotRunnableException;
 
     /**
      * Attempts to launch the project in a new process
      */
-    public void launch();
+    public RunningProject launch(String input) throws NotRunnableException;
 
     /**
      * @return The {@link ClassesManager} for this project. This can be used to look at the source code.
      */
-    public Option<T> getClassesManager();
+    public Option<ClassesManager> getClassesManager();
 
     /**
      * @return The source code folder

@@ -14,3 +14,7 @@
 # Maven
 log/
 target/
+
+# Project specific
+.gradersettings
+log

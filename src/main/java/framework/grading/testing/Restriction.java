@@ -2,6 +2,7 @@ package framework.grading.testing;
 
 import framework.project.Project;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,10 +24,18 @@ public class Restriction extends Checkable {
         this.testCases = testCases;
     }
 
+    public Restriction(String name, double points, TestCase ... testCases) {
+        this.name = name;
+        this.points = Math.min(points, -points); // Make sure we are negative
+        this.testCases = Arrays.asList(testCases);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public double getPoints() {
         return points;
     }
@@ -40,7 +49,14 @@ public class Restriction extends Checkable {
     @Override
     public CheckResult check(Project project) {
         CheckResult result = check(-points, testCases, project);
-        result.setScore(-result.getScore());
+        result.setScore(result.getScore() + points);
         return result;
+    }
+
+    @Override
+    public String getSummary() {
+        String spaces = "                                 ";
+        String score = points < 10 ? " " + points : points + "";
+        return name + spaces.substring(name.length()) + "%.1f / " + score;
     }
 }

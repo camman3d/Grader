@@ -1,8 +1,14 @@
 package framework.grading;
 
 import framework.grading.testing.CheckResult;
+import framework.grading.testing.Feature;
+import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.gui.SettingsWindow;
+import framework.logging.FeedbackJsonLogger;
+import framework.logging.LocalJsonLogger;
+import framework.logging.Logger;
+import framework.logging.TextSummaryLogger;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
@@ -10,6 +16,7 @@ import framework.navigation.StudentFolder;
 import framework.project.Project;
 import scala.Option;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +33,7 @@ public class GradingManager {
 
     private String projectName;
     private ProjectRequirements projectRequirements;
+    private List<Logger> loggers;
 
     // Settings that affect what to grade
     private String downloadPath;
@@ -35,6 +43,10 @@ public class GradingManager {
     public GradingManager(String projectName, ProjectRequirements projectRequirements) {
         this.projectName = projectName;
         this.projectRequirements = projectRequirements;
+        loggers = new ArrayList<Logger>() {{
+//            add(new LocalJsonLogger());
+            add(new TextSummaryLogger());
+        }};
     }
 
     public void run() {
@@ -44,30 +56,41 @@ public class GradingManager {
             // Get the student folders, starting and ending with the specified onyens
             BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(downloadPath);
             List<StudentFolder> folders = downloadFolder.getStudentFolders(start, end);
+//            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
 
             // Grade each one
             for (StudentFolder folder : folders) {
                 Option<Project> project = folder.getProject(projectName);
+                List<CheckResult> featureResults;
+                List<CheckResult> restrictionResults;
+
+                // If there is a  project then attempt to auto grade
                 if (project.isDefined()) {
 
                     // Run all the checks/test cases
-                    List<CheckResult> featureResults = projectRequirements.checkFeatures(project.get());
-                    List<CheckResult> restrictionResults = projectRequirements.checkRestrictions(project.get());
-
-                    // TODO: Do manual grading and verification
-                    GradingWindow window = GradingWindow.create(projectRequirements, folder, project, featureResults, restrictionResults);
-                    boolean continueGrading = window.awaitDone();
-                    String comments = window.getComments();
-
-                    // Log the results
-                    logResults(folder, featureResults, restrictionResults, comments);
-
-                    if (!continueGrading)
-                        System.exit(0);
+                    featureResults = projectRequirements.checkFeatures(project.get());
+                    restrictionResults = projectRequirements.checkRestrictions(project.get());
                 } else {
-                    // TODO: Gracefully handle absence of project
-                    System.out.println("No project for: " + folder.getUserId());
+
+                    // Gracefully handle absence of project by not doing auto grading
+                    featureResults = new ArrayList<CheckResult>();
+                    restrictionResults = new ArrayList<CheckResult>();
+                    for (Feature feature : projectRequirements.getFeatures())
+                        featureResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, feature));
+                    for (Restriction restriction : projectRequirements.getRestrictions())
+                        restrictionResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, restriction));
                 }
+
+                // Do manual grading and verification
+                GradingWindow window = GradingWindow.create(projectRequirements, folder, project, featureResults, restrictionResults);
+                boolean continueGrading = window.awaitDone();
+                String comments = window.getComments();
+
+                // Log the results
+                logResults(folder, featureResults, restrictionResults, comments);
+
+                if (!continueGrading)
+                    System.exit(0);
             }
             System.out.println("Done!");
         } catch (NotValidDownloadFolderException e) {
@@ -86,7 +109,10 @@ public class GradingManager {
 
     private void logResults(StudentFolder folder, List<CheckResult> featureResults,
                             List<CheckResult> restrictionResults, String comments) {
-        // TODO: Log the results
+
+        // Log the results
+        for (Logger logger : loggers)
+            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments);
     }
 
 }

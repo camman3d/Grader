@@ -1,9 +1,10 @@
 package framework.project;
 
 import framework.execution.NotRunnableException;
-import framework.execution.ProcessExecution;
+import framework.execution.ProcessRunner;
 import framework.execution.ReflectionRunner;
-import utils.DirectoryUtils;
+import framework.execution.RunningProject;
+import framework.utils.DirectoryUtils;
 import scala.Option;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class StandardProject implements Project {
 
     private File directory;
     private File sourceFolder;
-    private Option<ProjectClassesManager> classesManager;
+    private Option<ClassesManager> classesManager;
 
     /**
      * Basic constructor
@@ -36,7 +37,7 @@ public class StandardProject implements Project {
         try {
             File sourceFolder = new File(this.directory, "src");
             File buildFolder = getBuildFolder("main." + name);
-            classesManager = Option.apply(new ProjectClassesManager(buildFolder, sourceFolder));
+            classesManager = Option.apply((ClassesManager) new ProjectClassesManager(buildFolder, sourceFolder));
         } catch (Exception e) {
             classesManager = Option.empty();
         }
@@ -77,26 +78,17 @@ public class StandardProject implements Project {
     }
 
     @Override
-    public void start() {
-        // TODO: Get input setup
-        try {
-            new ReflectionRunner(this).run("");
-        } catch (NotRunnableException e) {
-            System.out.println("Project cannot be run.");
-        }
+    public RunningProject start(String input) throws NotRunnableException {
+        return new ReflectionRunner(this).run(input);
     }
 
     @Override
-    public void launch() {
-        try {
-            ProcessExecution execution = new ProcessExecution(this);
-        } catch (NotRunnableException e) {
-            System.out.println("Project cannot be run");
-        }
+    public RunningProject launch(String input) throws NotRunnableException {
+        return new ProcessRunner(this).run(input);
     }
 
     @Override
-    public Option<ProjectClassesManager> getClassesManager() {
+    public Option<ClassesManager> getClassesManager() {
         return classesManager;
     }
 

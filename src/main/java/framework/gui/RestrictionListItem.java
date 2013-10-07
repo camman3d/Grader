@@ -7,6 +7,8 @@ import framework.project.Project;
 import scala.Option;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,6 +26,7 @@ public class RestrictionListItem {
     private JLabel max;
     private JButton notes;
     private JLabel status;
+    private TotalScoreUpdater updater;
 
 //    private Restriction restriction;
     private CheckResult result;
@@ -35,7 +38,7 @@ public class RestrictionListItem {
         this.notes = notes;
         this.status = status;
 
-        result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded);
+        result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, null);
 
         notes.addActionListener(new ActionListener() {
             @Override
@@ -44,6 +47,16 @@ public class RestrictionListItem {
                         "Notes", JOptionPane.QUESTION_MESSAGE, null, null, result.getNotes());
                 if (noteString != null)
                     result.setNotes(noteString);
+            }
+        });
+        score.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (score.getValue() instanceof Double)
+                    result.setScore((Double) score.getValue());
+                if (score.getValue() instanceof Integer)
+                    result.setScore((Integer) score.getValue());
+                updater.update();
             }
         });
     }
@@ -71,6 +84,10 @@ public class RestrictionListItem {
         max.setVisible(false);
         notes.setVisible(false);
         status.setVisible(false);
+    }
+
+    public void setUpdater(TotalScoreUpdater updater) {
+        this.updater = updater;
     }
 
 }

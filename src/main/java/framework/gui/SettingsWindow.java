@@ -1,6 +1,7 @@
 package framework.gui;
 
-import utils.GradingEnvironment;
+import framework.utils.GraderSettings;
+import framework.utils.GradingEnvironment;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,10 +31,24 @@ public class SettingsWindow {
 
     // Settings
     private String downloadPath;
-//    private String editor;
+    private String editor;
 
     public SettingsWindow() {
-        editorLabel.setText(GradingEnvironment.get().getEditor());
+        // Get previous settings
+        if (GraderSettings.get().has("editor")) {
+            editor = GraderSettings.get().get("editor");
+            GradingEnvironment.get().setEditor(editor);
+        } else
+            editor = GradingEnvironment.get().getEditor();
+        editorLabel.setText(editor);
+        if (GraderSettings.get().has("path")) {
+            downloadPath = GraderSettings.get().get("path");
+            downloadPathLabel.setText(GraderSettings.get().get("path"));
+        }
+        if (GraderSettings.get().has("start"))
+            start.setText(GraderSettings.get().get("start"));
+        if (GraderSettings.get().has("end"))
+            end.setText(GraderSettings.get().get("end"));
 
         // Clicking the "Begin" button will close the window and release the semaphore.
         beginButton.addActionListener(new ActionListener() {
@@ -62,9 +77,10 @@ public class SettingsWindow {
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int returnValue = fileChooser.showOpenDialog(frame);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    String editor = fileChooser.getSelectedFile().getAbsolutePath();
-                    GradingEnvironment.get().setEditor(editor);
-                    editorLabel.setText(editor);
+                    String _editor = fileChooser.getSelectedFile().getAbsolutePath();
+                    GradingEnvironment.get().setEditor(_editor);
+                    editor = _editor;
+                    editorLabel.setText(_editor);
                 }
             }
         });
@@ -72,8 +88,6 @@ public class SettingsWindow {
 
     public static SettingsWindow create() {
         try {
-            // TODO: Get previous settings
-
             JFrame frame = new JFrame("Grader Settings");
             SettingsWindow window = new SettingsWindow();
             window.frame = frame;
@@ -92,6 +106,12 @@ public class SettingsWindow {
     public void awaitBegin() {
         try {
             finished.acquire();
+            // Update the settings
+            GraderSettings.get().set("start", start.getText());
+            GraderSettings.get().set("end", end.getText());
+            GraderSettings.get().set("path", downloadPath);
+            GraderSettings.get().set("editor", editor);
+            GraderSettings.get().save();
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             System.exit(1);

@@ -1,5 +1,7 @@
 package framework.grading.testing;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,39 +12,50 @@ import java.util.List;
  * Time: 10:17 AM
  * To change this template use File | Settings | File Templates.
  */
-public class CheckResult {
+@JsonIgnoreProperties({"status"})
+public class CheckResult implements Describable {
 
     public enum CheckStatus {Successful, NotGraded, Failed}
 
+    // Values that we will want later
     private double score;
     private List<TestCaseResult> results;
     private String notes;
-    private double pointWeight;
+    private Gradable target;
+
+    // Values for grading, not needed later
     private CheckStatus status;
+    private double pointWeight;
 
     /**
      * Use this constructor before processing any test results.
      * If you are going to change the values, use the setters.
      * @param pointWeight How many points each test case is worth.
+     * @param target The gradable feature/restriction
      */
-    public CheckResult(double pointWeight) {
+    public CheckResult(double pointWeight, Gradable target) {
         this.pointWeight = pointWeight;
-        this.score = 0;
+        this.target = target;
+        score = 0;
         results = new ArrayList<TestCaseResult>();
         notes = "";
         status = CheckStatus.NotGraded;
     }
 
     /**
-     * Use this constructor to create "failed" results
+     * Use this constructor to create custom results
      * @param score The score to set
      * @param notes General notes
      * @param status The final status
+     * @param target The gradable feature/restriction
      */
-    public CheckResult(double score, String notes, CheckStatus status) {
+    public CheckResult(double score, String notes, CheckStatus status, Gradable target) {
         this.score = score;
         this.notes = notes;
         this.status = status;
+        this.target = target;
+
+        results = new ArrayList<TestCaseResult>();
     }
 
     /**
@@ -91,22 +104,17 @@ public class CheckResult {
     }
 
     /**
-     * @return The summary of the results from the test cases
-     */
-    public String getResultNotes() {
-        String summary = "";
-        for (TestCaseResult result : results) {
-            if (!result.getNotes().isEmpty())
-                summary += " --- From test case \"" + result.getName() + "\" ---\n" + result.getNotes() + "\n\n";
-        }
-        return summary;
-    }
-
-    /**
      * @return The detailed results from the test cases.
      */
     public List<TestCaseResult> getResults() {
         return results;
+    }
+
+    /**
+     * @return The gradable Feature/Restriction
+     */
+    public Gradable getTarget() {
+        return target;
     }
 
     /**
@@ -117,4 +125,18 @@ public class CheckResult {
         score += result.getPercentage() * pointWeight;
         results.add(result);
     }
+
+    @Override
+    public String getSummary() {
+        String summary = "";
+        for (TestCaseResult result : results) {
+            if (!result.getNotes().isEmpty())
+                summary += " * From test case \"" + result.getName() + "\": " + result.getNotes();
+        }
+        if (summary.isEmpty())
+            return summary;
+        else
+            return "Notes about " + target.getName() + ":\n" + summary;
+    }
+
 }

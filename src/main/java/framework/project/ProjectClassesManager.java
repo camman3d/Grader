@@ -2,7 +2,7 @@ package framework.project;
 
 import org.apache.commons.io.FileUtils;
 import scala.Option;
-import utils.DirectoryUtils;
+import framework.utils.DirectoryUtils;
 
 import java.io.File;
 import java.io.FileFilter;

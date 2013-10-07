@@ -1,5 +1,6 @@
 package framework.gui;
 
+import framework.execution.NotRunnableException;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
@@ -7,9 +8,10 @@ import framework.grading.testing.Restriction;
 import framework.navigation.StudentFolder;
 import framework.project.Project;
 import scala.Option;
-import utils.GradingEnvironment;
+import framework.utils.GradingEnvironment;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ import java.util.concurrent.Semaphore;
  * To change this template use File | Settings | File Templates.
  */
 public class GradingWindow {
+
+    private JFrame frame;
+
     private JLabel userId;
     private JTabbedPane tabbedPane1;
     private JButton saveAndContinueButton;
@@ -123,6 +128,8 @@ public class GradingWindow {
     private JLabel status5;
     private JLabel status6;
     private JLabel status7;
+    private JLabel totalScoreLabel;
+    private TotalScoreUpdater scoreUpdater;
 
     // Properties dealing with the project
     private StudentFolder folder;
@@ -189,13 +196,21 @@ public class GradingWindow {
         runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                project.get().start();
+                try {
+                    project.get().start("");
+                } catch (NotRunnableException e1) {
+                    JOptionPane.showMessageDialog(mainPanel, "Error running project.");
+                }
             }
         });
         launchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                project.get().launch();
+                try {
+                    project.get().launch("");
+                } catch (NotRunnableException e1) {
+                    JOptionPane.showMessageDialog(mainPanel, "Error running project.");
+                }
             }
         });
         leaveCommentsButton.addActionListener(new ActionListener() {
@@ -212,6 +227,7 @@ public class GradingWindow {
     private void setFeatures(List<Feature> featureList, List<CheckResult> featureResults) {
         for (int i = 0; i < featureList.size(); i++) {
             if (i < features.size()) {
+                features.get(i).setUpdater(scoreUpdater);
                 features.get(i).setFeature(featureList.get(i));
                 features.get(i).setResult(featureResults.get(i));
                 features.get(i).setProject(project);
@@ -225,6 +241,7 @@ public class GradingWindow {
     private void setRestrictions(List<Restriction> restrictionList, List<CheckResult> restrictionResults) {
         for (int i = 0; i < restrictionList.size(); i++) {
             if (i < restrictions.size()) {
+                restrictions.get(i).setUpdater(scoreUpdater);
                 restrictions.get(i).setRestriction(restrictionList.get(i));
                 restrictions.get(i).setResult(restrictionResults.get(i));
             } else
@@ -239,17 +256,23 @@ public class GradingWindow {
         try {
             JFrame frame = new JFrame("GradingWindow");
             GradingWindow window = new GradingWindow();
+            window.frame = frame;
             frame.setContentPane(window.mainPanel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.setPreferredSize(new Dimension(640, 480));
             frame.pack();
             frame.setVisible(true);
 
             // Setup the UI
             window.folder = folder;
             window.project = project;
+            window.userId.setText(folder.getUserId());
+
+            // Setup the features/restrictions
+            window.scoreUpdater = new TotalScoreUpdater(window.totalScoreLabel, featureResults, restrictionResults);
             window.setFeatures(requirements.getFeatures(), featureResults);
             window.setRestrictions(requirements.getRestrictions(), restrictionResults);
-            window.userId.setText(folder.getUserId());
+
             if (project.isDefined())
                 window.noProjectActions.setVisible(false);
             else
@@ -265,6 +288,7 @@ public class GradingWindow {
     public boolean awaitDone() {
         try {
             done.acquire();
+            frame.dispose();
             return continueGrading;
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

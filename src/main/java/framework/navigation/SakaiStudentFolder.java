@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import framework.project.StandardProject;
 import scala.Option;
 import util.misc.Common;
-import utils.DirectoryUtils;
+import framework.utils.DirectoryUtils;
 
 import java.io.File;
 import java.io.FileFilter;

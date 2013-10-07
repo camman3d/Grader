@@ -1,4 +1,4 @@
-package utils;
+package framework.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,17 +25,20 @@ public class GradingEnvironment {
         "notepad"
     };
 
+    private String osName;
     private String editor;
     private String browser;
     private String classpath;
 
     private GradingEnvironment() {
-        String osName = System.getProperty("os.name");
+        osName = System.getProperty("os.name");
         if (osName.equals("Mac OS X")) {
+            osName = "Mac";
             browser = "open";
             editor = findEditor(macEditors);
             classpath = findClasspath(":");
         } else {
+            osName = "Windows";
             browser = "explorer";
             editor = findEditor(windowsEditors);
             classpath = findClasspath(";");
@@ -69,6 +72,10 @@ public class GradingEnvironment {
 
     public String getEditor() {
         return editor;
+    }
+
+    public String getOsName() {
+        return osName;
     }
 
     public void open(File file) {
