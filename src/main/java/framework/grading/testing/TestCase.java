@@ -19,7 +19,7 @@ public interface TestCase {
      * @return A {@link TestCaseResult} containing the result and any notes.
      * @throws NotAutomatableException
      */
-    public TestCaseResult test(Project project) throws NotAutomatableException;
+    public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException;
 
     /**
      * Sets the checkable containing this test case.

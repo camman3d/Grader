@@ -5,10 +5,9 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.gui.SettingsWindow;
-import framework.logging.FeedbackJsonLogger;
+import framework.logging.FeedbackTextSummaryLogger;
 import framework.logging.LocalJsonLogger;
 import framework.logging.Logger;
-import framework.logging.TextSummaryLogger;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
@@ -44,8 +43,8 @@ public class GradingManager {
         this.projectName = projectName;
         this.projectRequirements = projectRequirements;
         loggers = new ArrayList<Logger>() {{
-//            add(new LocalJsonLogger());
-            add(new TextSummaryLogger());
+            add(new LocalJsonLogger());
+//            add(new FeedbackTextSummaryLogger());
         }};
     }
 

@@ -28,7 +28,7 @@ public class SimpleTestCase extends BasicTestCase {
     }
 
     @Override
-    public TestCaseResult test(Project project) {
+    public TestCaseResult test(Project project, boolean autoGrade) {
         return new TestCaseResult(percentage, notes, name);
     }
 

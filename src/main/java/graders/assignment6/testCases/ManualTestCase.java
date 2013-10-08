@@ -2,6 +2,7 @@ package graders.assignment6.testCases;
 
 import framework.grading.testing.BasicTestCase;
 import framework.grading.testing.NotAutomatableException;
+import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.Project;
 
@@ -18,7 +19,7 @@ public class ManualTestCase extends BasicTestCase {
     }
 
     @Override
-    public TestCaseResult test(Project project) throws NotAutomatableException {
-        throw new NotAutomatableException();
+    public TestCaseResult test(Project project, boolean autoGrade) throws NotGradableException {
+        throw new NotGradableException();
     }
 }

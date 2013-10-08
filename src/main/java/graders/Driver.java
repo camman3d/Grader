@@ -29,7 +29,7 @@ public class Driver {
 
         requirements.addFeature(new Feature("Be cool", 10, Arrays.asList((TestCase) new BasicTestCase("Class checker") {
             @Override
-            public TestCaseResult test(Project project) {
+            public TestCaseResult test(Project project, boolean autoGrade) {
                 if (project.getClassesManager().isDefined())
                     return pass();
                 else

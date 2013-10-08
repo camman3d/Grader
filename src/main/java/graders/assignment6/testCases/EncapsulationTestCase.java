@@ -2,6 +2,7 @@ package graders.assignment6.testCases;
 
 import framework.grading.testing.BasicTestCase;
 import framework.grading.testing.NotAutomatableException;
+import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
@@ -24,9 +25,9 @@ public class EncapsulationTestCase extends BasicTestCase {
     }
 
     @Override
-    public TestCaseResult test(Project project) throws NotAutomatableException {
+    public TestCaseResult test(Project project, boolean autoGrade) throws NotGradableException {
         if (project.getClassesManager().isEmpty())
-            throw new NotAutomatableException();
+            throw new NotGradableException();
 
         String notes = "";
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().getClassDescriptions();

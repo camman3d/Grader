@@ -32,7 +32,7 @@ public class TestBasicTestCase {
     @Test
     public void testTest() {
         SimpleTestCase testCase = new SimpleTestCase(0.4, "Some notes", "Foo bar");
-        TestCaseResult result = testCase.test(null);
+        TestCaseResult result = testCase.test(null, true);
         assertEquals("Names should match", result.getName(), "Foo bar");
         assertEquals("Notes should match", result.getNotes(), "Some notes");
         assertTrue("Percentages should match", result.getPercentage() == 0.4);

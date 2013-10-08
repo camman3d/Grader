@@ -133,7 +133,7 @@ public class FeatureListItem {
             autoGrade.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setResult(feature.check(project.get()), true);
+                    setResult(feature.check(project.get(), false), true);
                 }
             });
         } else {

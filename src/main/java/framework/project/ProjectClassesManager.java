@@ -45,8 +45,12 @@ public class ProjectClassesManager implements ClassesManager {
         });
         for (File file : javaFiles) {
             String className = getClassName(file);
-            Class c = classLoader.loadClass(className);
-            classDescriptions.add(new BasicClassDescription(c, file));
+            try {
+                Class c = classLoader.loadClass(className);
+                classDescriptions.add(new BasicClassDescription(c, file));
+            } catch (IncompatibleClassChangeError e) {
+                throw new IOException(e.getMessage());
+            }
         }
     }
 

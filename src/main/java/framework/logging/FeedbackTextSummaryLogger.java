@@ -2,6 +2,8 @@ package framework.logging;
 
 import framework.grading.testing.CheckResult;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 /**
@@ -11,7 +13,14 @@ import java.util.List;
  * Time: 7:10 AM
  * To change this template use File | Settings | File Templates.
  */
-public class TextSummaryLogger implements Logger {
+public class FeedbackTextSummaryLogger implements Logger {
+
+    private File downloadFolder;
+
+    public FeedbackTextSummaryLogger(File downloadFolder) {
+        this.downloadFolder = downloadFolder;
+    }
+
     @Override
     public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
         String log = "";
@@ -63,7 +72,12 @@ public class TextSummaryLogger implements Logger {
         log += comments;
 
 
-        // TODO: Maybe write this to a file?
-        System.out.println(log);
+        // Maybe write this to a file
+//        File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");
+//        FileWriter writer = new FileWriter();
+//        new File(feedbackFolder, "feedback.txt")
+//        new File(downloadFolder, userId + "/")
+
+//        System.out.println(log);
     }
 }

@@ -62,8 +62,8 @@ public class Feature extends Checkable {
     }
 
     @Override
-    public CheckResult check(Project project) {
-        return check(points, testCases, project);
+    public CheckResult check(Project project, boolean autoMode) {
+        return check(points, testCases, project, autoMode);
     }
 
     @Override

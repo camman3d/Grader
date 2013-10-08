@@ -44,11 +44,12 @@ public class Restriction extends Checkable {
      * Checks the project for restrictions. Negative points are given if violated.
      *
      * @param project The project to check
+     * @param autoMode Whether or not we are "auto-grading"
      * @return The result of the restriction checks
      */
     @Override
-    public CheckResult check(Project project) {
-        CheckResult result = check(-points, testCases, project);
+    public CheckResult check(Project project, boolean autoMode) {
+        CheckResult result = check(-points, testCases, project, autoMode);
         result.setScore(result.getScore() + points);
         return result;
     }
