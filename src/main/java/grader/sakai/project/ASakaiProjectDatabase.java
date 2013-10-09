@@ -318,19 +318,13 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
     public ProjectStepper createAndDisplayProjectStepper() {
         ProjectStepper aProjectStepper = createProjectStepper();
         aProjectStepper.setProjectDatabase(this);
-        displayProjectStepper(aProjectStepper);
+        aProjectStepper.display();
+//        displayProjectStepper(aProjectStepper);
         return aProjectStepper;
     }
 
-    public OEFrame displayProjectStepper(ProjectStepper aProjectStepper) {
-        OEFrame oeFrame = ObjectEditor.edit(aProjectStepper);
-        oeFrame.setLocation(700, 500);
-        oeFrame.setSize(500, 700);
-        return oeFrame;
-    }
-
     public ProjectStepper createProjectStepper() {
-        return new AProjectStepper();
+        return ProjectStepperFactory.create();
     }
 
     public void runProjectInteractively(String anOnyen) {

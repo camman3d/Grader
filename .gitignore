@@ -17,4 +17,5 @@ target/
 
 # Project specific
 .gradersettings
+GraderData
 log

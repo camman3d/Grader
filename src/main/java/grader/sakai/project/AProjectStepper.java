@@ -1,5 +1,6 @@
 package grader.sakai.project;
 
+import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
@@ -145,6 +146,14 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
     @Visible(false)
     public SakaiProject getProject() {
         return project;
+    }
+
+    @Override
+    public void display() {
+        OEFrame oeFrame = ObjectEditor.edit(this);
+        oeFrame.setLocation(700, 500);
+        oeFrame.setSize(500, 700);
+//        return oeFrame;
     }
 
     public static void writeScores(ProjectStepper aProjectStepper) {

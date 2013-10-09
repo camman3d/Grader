@@ -1,23 +1,15 @@
 package grader.assignment;
 
-import bus.uigen.ObjectEditor;
-import bus.uigen.attributes.AttributeNames;
 import grader.checkers.CheckResult;
 import grader.checkers.FeatureChecker;
-import grader.documents.DocumentDisplayerRegistry;
 import grader.file.FileProxy;
 import grader.sakai.project.SakaiProject;
 import grader.sakai.project.SakaiProjectDatabase;
 import util.annotations.*;
-import util.models.AListenableVector;
-import util.models.ListenableVector;
 import util.trace.Tracer;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 
 // a feature to be implemented by a student
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
@@ -112,13 +104,12 @@ public class AGradingFeature implements GradingFeature {
         return extraCredit;
     }
 
+    /**
+     * @return If this feature is ready to grade
+     */
     public boolean preAutoGrade() {
-        return featureChecker != null &&
-                !cannotAutoGrade &&
-                !graded &&
-                project != null &&
-                project.hasBeenRun() &&
-                project.canBeRun();
+        return featureChecker != null && !cannotAutoGrade && !graded && project != null && project.hasBeenRun()
+                && project.canBeRun();
 
     }
 

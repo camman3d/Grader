@@ -39,5 +39,8 @@ public interface ProjectStepper extends ClearanceManager, PropertyListenerRegist
 
     public SakaiProject getProject();
 
+    // Added this so different project steppers can work differently
+    public void display();
+
 
 }
