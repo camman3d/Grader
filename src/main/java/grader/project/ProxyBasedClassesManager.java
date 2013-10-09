@@ -1,8 +1,8 @@
 package grader.project;
 
 
-public interface ProxyBasedClassesManager extends ClassesManager{
-	public  void makeClassDescriptions(Project aProject);
-	
+public interface ProxyBasedClassesManager extends ClassesManager {
+    public void makeClassDescriptions(Project aProject);
+
 
 }

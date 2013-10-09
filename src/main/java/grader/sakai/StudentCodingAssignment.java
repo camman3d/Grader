@@ -5,12 +5,14 @@ import grader.file.RootFolderProxy;
 import grader.project.Project;
 
 public interface StudentCodingAssignment extends StudentAssignment {
-	
-	public FileProxy getRubrick();
-	public RootFolderProxy getProjectFolder() ;
-	public Project getProject() ;
 
-	public void setProject(Project newVal) ;
-	
+    public FileProxy getRubrick();
+
+    public RootFolderProxy getProjectFolder();
+
+    public Project getProject();
+
+    public void setProject(Project newVal);
+
 
 }

@@ -1,54 +1,55 @@
 package grader.assignment;
 
-import java.util.List;
-import java.util.Set;
-
 import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 
-public interface AssignmentDataFolder extends RootFolderProxy{
-	public Set<String> getInputFiles() ;
+import java.util.List;
+import java.util.Set;
 
-	public List<String> getStudentIDs() ;
-	public FileProxy getFeatureGradeFile();
-	public String getIdFileName();
+public interface AssignmentDataFolder extends RootFolderProxy {
+    public Set<String> getInputFiles();
 
-	public void setIdFileName(String idFileName) ;
+    public List<String> getStudentIDs();
 
-	public String getGradedIdFileName() ;
+    public FileProxy getFeatureGradeFile();
 
-	public void setGradedIdFileName(String gradedIdFileName);
+    public String getIdFileName();
 
-	public String getSkippedIdFileName() ;
+    public void setIdFileName(String idFileName);
 
-	public void setSkippedIdFileName(String skippedIdFileName) ;
+    public String getGradedIdFileName();
 
-	public String getLogFileName() ;
+    public void setGradedIdFileName(String gradedIdFileName);
 
-	public void setLogFileName(String logFileName) ;
+    public String getSkippedIdFileName();
 
-	public String getInputFolderName() ;
+    public void setSkippedIdFileName(String skippedIdFileName);
 
-	public void setInputFolderName(String inputFolderName) ;
+    public String getLogFileName();
 
-	public String getFeatureGradeFileName() ;
+    public void setLogFileName(String logFileName);
 
-	public void setFeatureGradeFileName(String featureGradeFileName) ;
+    public String getInputFolderName();
 
-	public String getIdText() ;
+    public void setInputFolderName(String inputFolderName);
 
-	public void setIdText(String idText) ;
+    public String getFeatureGradeFileName();
 
-	public FileProxy getFinalGradeFile();
+    public void setFeatureGradeFileName(String featureGradeFileName);
 
-	public void setFinalGradeFile(FileProxy finalGradeFile);
+    public String getIdText();
 
-	public void setInputFiles(Set<String> inputFiles) ;
+    public void setIdText(String idText);
 
-	public void setStudentIDs(List<String> studentIDs) ;
+    public FileProxy getFinalGradeFile();
 
-	public void setFeatureGradeFile(FileProxy featureGradeFile) ;
+    public void setFinalGradeFile(FileProxy finalGradeFile);
 
+    public void setInputFiles(Set<String> inputFiles);
+
+    public void setStudentIDs(List<String> studentIDs);
+
+    public void setFeatureGradeFile(FileProxy featureGradeFile);
 
 
 }

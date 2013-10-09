@@ -1,7 +1,8 @@
 package grader.file;
 
 public interface FileNames {
-	String getAbsoluteName();
-	String getName();
+    String getAbsoluteName();
+
+    String getName();
 
 }

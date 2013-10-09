@@ -1,172 +1,161 @@
 package grader.assignment;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import grader.file.FileProxy;
 import grader.file.FileProxyUtils;
 import grader.file.filesystem.AFileSystemFileProxy;
 import grader.file.filesystem.AFileSystemRootFolderProxy;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.List;
+import java.util.Set;
+
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements AssignmentDataFolder {
+
+    public static final String DEFAULT_ID_FILE_NAME = "onyens.txt";
+    public static final String DEFAULT_LOG_FILE_NAME = "log.txt";
+    public static final String DEFAULT_SKIPPED_FILE_NAME = "skipped_onyens.txt";
+    public static final String DEFAULT_GRADED_ID_FILE_NAME = "graded_onyens.txt";
+
+    public static final String DEFAULT_INPUT_FOLDER_NAME = "input";
+    public static final String DEFAULT_FEATURE_GRADE_FILE_NAME = "FeatureGrades.csv";
+    String idFileName = DEFAULT_ID_FILE_NAME;
+    String gradedIdFileName;
+    String skippedIdFileName;
+    String logFileName;
+    String inputFolderName = DEFAULT_INPUT_FOLDER_NAME;
+    String featureGradeFileName = DEFAULT_FEATURE_GRADE_FILE_NAME;
+    String idText;
+    Set<String> inputFiles;
+    List<String> studentIDs;
+    FileProxy finalGradeFile, featureGradeFile;
 
 
-public class AnAssignmenDataFolder extends AFileSystemRootFolderProxy implements AssignmentDataFolder{
-	
-	public static final String DEFAULT_ID_FILE_NAME = "onyens.txt";
-	public static final String DEFAULT_LOG_FILE_NAME = "log.txt";
-	public static final String DEFAULT_SKIPPED_FILE_NAME = "skipped_onyens.txt";
-	public static final String DEFAULT_GRADED_ID_FILE_NAME = "graded_onyens.txt";
+    public AnAssignmenDataFolder(String aRootFolderName, FileProxy aFinalGradeFile) {
+        super(aRootFolderName);
+        finalGradeFile = aFinalGradeFile;
+        if (rootFolder != null)
+            initGraderData();
+    }
 
-	public static final String DEFAULT_INPUT_FOLDER_NAME = "input";
-	public static final String DEFAULT_FEATURE_GRADE_FILE_NAME = "FeatureGrades.csv";
-	String idFileName = DEFAULT_ID_FILE_NAME;
-	String gradedIdFileName  ;
-	String skippedIdFileName ;
-	String logFileName ;	
-	String inputFolderName = DEFAULT_INPUT_FOLDER_NAME;
-	String featureGradeFileName = DEFAULT_FEATURE_GRADE_FILE_NAME;
-	String idText;
-	Set<String> inputFiles;
-	List<String> studentIDs;
-	 FileProxy finalGradeFile, featureGradeFile;
-	
-	
+    void initGraderData() {
 
-	public AnAssignmenDataFolder(String aRootFolderName, FileProxy aFinalGradeFile) {
-		super(aRootFolderName);
-		finalGradeFile = aFinalGradeFile;
-		if (rootFolder != null )
-		initGraderData();
-	}
-	
-	void initGraderData() {
-	
-		FileProxy inputFolder = this.getFileEntryFromLocalName(inputFolderName);
-		if (inputFolder != null)
-		inputFiles = inputFolder.getChildrenNames();
-		FileProxy idFileProxy = getFileEntryFromLocalName(idFileName);
-		featureGradeFile = getFileEntryFromLocalName(featureGradeFileName);
-		gradedIdFileName  = rootFolder.getAbsolutePath()+"/" + DEFAULT_GRADED_ID_FILE_NAME;
-		skippedIdFileName =rootFolder.getAbsolutePath()+"/" +  DEFAULT_SKIPPED_FILE_NAME;
-		logFileName = rootFolder.getAbsolutePath()+"/" +  DEFAULT_LOG_FILE_NAME;	
-		if (finalGradeFile != null && (featureGradeFile == null || !featureGradeFile.exists())) {
-			String fullFeatureGradeFileName = rootFolder.getAbsolutePath()+"/" + featureGradeFileName;
-			File featureFile = new File(fullFeatureGradeFileName);
-			File aFinalGradeFile = new File(finalGradeFile.getAbsoluteName() );
-			 
-			try {
-				Files.copy(aFinalGradeFile.toPath(), featureFile.toPath(), REPLACE_EXISTING );
-				featureGradeFile = new AFileSystemFileProxy(this, new File(fullFeatureGradeFileName), this.getAbsoluteName());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        FileProxy inputFolder = this.getFileEntryFromLocalName(inputFolderName);
+        if (inputFolder != null)
+            inputFiles = inputFolder.getChildrenNames();
+        FileProxy idFileProxy = getFileEntryFromLocalName(idFileName);
+        featureGradeFile = getFileEntryFromLocalName(featureGradeFileName);
+        gradedIdFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_GRADED_ID_FILE_NAME;
+        skippedIdFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_SKIPPED_FILE_NAME;
+        logFileName = rootFolder.getAbsolutePath() + "/" + DEFAULT_LOG_FILE_NAME;
+        if (finalGradeFile != null && (featureGradeFile == null || !featureGradeFile.exists())) {
+            String fullFeatureGradeFileName = rootFolder.getAbsolutePath() + "/" + featureGradeFileName;
+            File featureFile = new File(fullFeatureGradeFileName);
+            File aFinalGradeFile = new File(finalGradeFile.getAbsoluteName());
 
-		}
-		studentIDs = FileProxyUtils.toList(idFileProxy);
-		
-	}
-	public Set<String> getInputFiles() {
-		return inputFiles;
-	}
+            try {
+                Files.copy(aFinalGradeFile.toPath(), featureFile.toPath(), REPLACE_EXISTING);
+                featureGradeFile = new AFileSystemFileProxy(this, new File(fullFeatureGradeFileName), this.getAbsoluteName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-	public List<String> getStudentIDs() {
-		return studentIDs;
-	}
-	
-//	public FileProxy getFeatureGradeFileProxy() {
-//		return featureGradeFile;
-//	}
+        }
+        studentIDs = FileProxyUtils.toList(idFileProxy);
 
-	@Override
-	public FileProxy getFeatureGradeFile() {
-		// TODO Auto-generated method stub
-		return featureGradeFile;
-	}
+    }
 
-	public String getIdFileName() {
-		return idFileName;
-	}
+    public Set<String> getInputFiles() {
+        return inputFiles;
+    }
 
-	public void setIdFileName(String idFileName) {
-		this.idFileName = idFileName;
-	}
+    public List<String> getStudentIDs() {
+        return studentIDs;
+    }
 
-	public String getGradedIdFileName() {
-		return gradedIdFileName;
-	}
+    @Override
+    public FileProxy getFeatureGradeFile() {
+        return featureGradeFile;
+    }
 
-	public void setGradedIdFileName(String gradedIdFileName) {
-		this.gradedIdFileName = gradedIdFileName;
-	}
+    public String getIdFileName() {
+        return idFileName;
+    }
 
-	public String getSkippedIdFileName() {
-		return skippedIdFileName;
-	}
+    public void setIdFileName(String idFileName) {
+        this.idFileName = idFileName;
+    }
 
-	public void setSkippedIdFileName(String skippedIdFileName) {
-		this.skippedIdFileName = skippedIdFileName;
-	}
+    public String getGradedIdFileName() {
+        return gradedIdFileName;
+    }
 
-	public String getLogFileName() {
-		return logFileName;
-	}
+    public void setGradedIdFileName(String gradedIdFileName) {
+        this.gradedIdFileName = gradedIdFileName;
+    }
 
-	public void setLogFileName(String logFileName) {
-		this.logFileName = logFileName;
-	}
+    public String getSkippedIdFileName() {
+        return skippedIdFileName;
+    }
 
-	public String getInputFolderName() {
-		return inputFolderName;
-	}
+    public void setSkippedIdFileName(String skippedIdFileName) {
+        this.skippedIdFileName = skippedIdFileName;
+    }
 
-	public void setInputFolderName(String inputFolderName) {
-		this.inputFolderName = inputFolderName;
-	}
+    public String getLogFileName() {
+        return logFileName;
+    }
 
-	public String getFeatureGradeFileName() {
-		return featureGradeFileName;
-	}
+    public void setLogFileName(String logFileName) {
+        this.logFileName = logFileName;
+    }
 
-	public void setFeatureGradeFileName(String featureGradeFileName) {
-		this.featureGradeFileName = featureGradeFileName;
-	}
+    public String getInputFolderName() {
+        return inputFolderName;
+    }
 
-	public String getIdText() {
-		return idText;
-	}
+    public void setInputFolderName(String inputFolderName) {
+        this.inputFolderName = inputFolderName;
+    }
 
-	public void setIdText(String idText) {
-		this.idText = idText;
-	}
+    public String getFeatureGradeFileName() {
+        return featureGradeFileName;
+    }
 
-	public FileProxy getFinalGradeFile() {
-		return finalGradeFile;
-	}
+    public void setFeatureGradeFileName(String featureGradeFileName) {
+        this.featureGradeFileName = featureGradeFileName;
+    }
 
-	public void setFinalGradeFile(FileProxy finalGradeFile) {
-		this.finalGradeFile = finalGradeFile;
-	}
+    public String getIdText() {
+        return idText;
+    }
 
-	public void setInputFiles(Set<String> inputFiles) {
-		this.inputFiles = inputFiles;
-	}
+    public void setIdText(String idText) {
+        this.idText = idText;
+    }
 
-	public void setStudentIDs(List<String> studentIDs) {
-		this.studentIDs = studentIDs;
-	}
+    public FileProxy getFinalGradeFile() {
+        return finalGradeFile;
+    }
 
-	public void setFeatureGradeFile(FileProxy featureGradeFile) {
-		this.featureGradeFile = featureGradeFile;
-	}
+    public void setFinalGradeFile(FileProxy finalGradeFile) {
+        this.finalGradeFile = finalGradeFile;
+    }
+
+    public void setInputFiles(Set<String> inputFiles) {
+        this.inputFiles = inputFiles;
+    }
+
+    public void setStudentIDs(List<String> studentIDs) {
+        this.studentIDs = studentIDs;
+    }
+
+    public void setFeatureGradeFile(FileProxy featureGradeFile) {
+        this.featureGradeFile = featureGradeFile;
+    }
 
 
 }

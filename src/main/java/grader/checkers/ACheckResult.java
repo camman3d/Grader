@@ -6,8 +6,7 @@ import java.util.List;
 public class ACheckResult implements CheckResult{
 	List<String> log = new ArrayList();
 	double score;
-	
-	
+
 	public double getScore() {
 		return score;
 	}

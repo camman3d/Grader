@@ -1,59 +1,52 @@
 package grader.sakai;
 
-import java.util.Set;
-
 import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.project.Project;
 
-public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment implements StudentCodingAssignment{
-	FileProxy rubrick;
-	RootFolderProxy projectFolder;
-	Project project;
-	
-	public Project getProject() {
-		return project;
-	}
+import java.util.Set;
 
-	public void setProject(Project newVal) {
-		this.project = newVal;
-	}
+public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment implements StudentCodingAssignment {
+    public static final String RUBRICK_SUBSTRING = "rubric";
 
-	public static final String RUBRICK_SUBSTRING = "rubric";
+    FileProxy rubrick;
+    RootFolderProxy projectFolder;
+    Project project;
 
-	public ASakaiStudentCodingAssignment(String aFolderName, FileProxy aFileProxy) {
-		super(aFolderName, aFileProxy);
-		if (isSubmitted())
-		findRubrickAndProject();
-		
-	}
-	
-	void findRubrickAndProject() {
-		Set<String> childrenNames = submissionFolder.getChildrenNames();
-		for (String childName:childrenNames) {
-			FileProxy childProxy = submissionFolder.getFileEntry(childName);	
-			if (childName.toLowerCase().indexOf(RUBRICK_SUBSTRING) > -1) {
-				rubrick = childProxy;		
-			} else if (childProxy.isDirectory()) {
-				projectFolder = childProxy;
-			} else if (childProxy.getAbsoluteName().endsWith(".zip")) {
-				projectFolder = new AZippedRootFolderProxy(childProxy.getAbsoluteName());
-			}
-				
-				
-		}
-		
-	}
+    public Project getProject() {
+        return project;
+    }
 
-	public FileProxy getRubrick() {
-		return rubrick;
-	}
+    public void setProject(Project newVal) {
+        this.project = newVal;
+    }
 
-	public RootFolderProxy getProjectFolder() {
-		return projectFolder;
-	}
-	
-	
+    public ASakaiStudentCodingAssignment(String aFolderName, FileProxy aFileProxy) {
+        super(aFolderName, aFileProxy);
+        if (isSubmitted())
+            findRubrickAndProject();
+    }
 
+    void findRubrickAndProject() {
+        Set<String> childrenNames = submissionFolder.getChildrenNames();
+        for (String childName : childrenNames) {
+            FileProxy childProxy = submissionFolder.getFileEntry(childName);
+            if (childName.toLowerCase().indexOf(RUBRICK_SUBSTRING) > -1) {
+                rubrick = childProxy;
+            } else if (childProxy.isDirectory()) {
+                projectFolder = childProxy;
+            } else if (childProxy.getAbsoluteName().endsWith(".zip")) {
+                projectFolder = new AZippedRootFolderProxy(childProxy.getAbsoluteName());
+            }
+        }
+    }
+
+    public FileProxy getRubrick() {
+        return rubrick;
+    }
+
+    public RootFolderProxy getProjectFolder() {
+        return projectFolder;
+    }
 }

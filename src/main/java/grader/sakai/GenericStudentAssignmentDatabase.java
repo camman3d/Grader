@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.Set;
 
 public interface GenericStudentAssignmentDatabase<GenericAssignment> {
-	public Set<String> getStudentIds() ;
-	public BulkAssignmentFolder getBulkAssignmentFolder();
+    public Set<String> getStudentIds();
 
-	
-	public Collection<GenericAssignment> getStudentAssignments() ;
-	public GenericAssignment getStudentAssignment(String aStudentId) ;
+    public BulkAssignmentFolder getBulkAssignmentFolder();
+
+    public Collection<GenericAssignment> getStudentAssignments();
+
+    public GenericAssignment getStudentAssignment(String aStudentId);
 
 }
