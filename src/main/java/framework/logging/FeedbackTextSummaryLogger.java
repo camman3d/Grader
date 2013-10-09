@@ -1,9 +1,11 @@
 package framework.logging;
 
 import framework.grading.testing.CheckResult;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -71,13 +73,13 @@ public class FeedbackTextSummaryLogger implements Logger {
         log += "----------------------------------\n";
         log += comments;
 
-
         // Maybe write this to a file
-//        File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");
-//        FileWriter writer = new FileWriter();
-//        new File(feedbackFolder, "feedback.txt")
-//        new File(downloadFolder, userId + "/")
-
-//        System.out.println(log);
+        File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");
+        File output = new File(feedbackFolder, "feedback.txt");
+        try {
+            FileUtils.writeStringToFile(output, log);
+        } catch (IOException e) {
+            System.out.println("Error writing feedback.");
+        }
     }
 }

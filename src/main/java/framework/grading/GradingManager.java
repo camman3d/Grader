@@ -5,6 +5,7 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.gui.SettingsWindow;
+import framework.logging.FeedbackJsonLogger;
 import framework.logging.FeedbackTextSummaryLogger;
 import framework.logging.LocalJsonLogger;
 import framework.logging.Logger;
@@ -44,7 +45,6 @@ public class GradingManager {
         this.projectRequirements = projectRequirements;
         loggers = new ArrayList<Logger>() {{
             add(new LocalJsonLogger());
-//            add(new FeedbackTextSummaryLogger());
         }};
     }
 
@@ -55,7 +55,8 @@ public class GradingManager {
             // Get the student folders, starting and ending with the specified onyens
             BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(downloadPath);
             List<StudentFolder> folders = downloadFolder.getStudentFolders(start, end);
-//            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
+            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
+            loggers.add(new FeedbackTextSummaryLogger(downloadFolder.getFolder()));
 
             // Grade each one
             for (StudentFolder folder : folders) {
