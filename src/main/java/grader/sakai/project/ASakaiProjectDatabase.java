@@ -1,25 +1,63 @@
 package grader.sakai.project;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import grader.assignment.AGradingFeature;
+import grader.assignment.AGradingFeatureList;
 import grader.assignment.AnAssignmenDataFolder;
 import grader.assignment.AssignmentDataFolder;
 import grader.assignment.GradingFeature;
+import grader.assignment.GradingFeatureList;
 import grader.documents.AWordDocumentDisplayer;
 import grader.documents.DocumentDisplayer;
 import grader.documents.DocumentDisplayerRegistry;
-import grader.feedback.*;
+import grader.feedback.AManualFeedbackManager;
+import grader.feedback.AScoreFeedbackFileWriter;
+import grader.feedback.AnAllTextSourceDisplayer;
+import grader.feedback.AnAutoFeedbackManager;
+import grader.feedback.AutoFeedback;
+import grader.feedback.ManualFeedback;
+import grader.feedback.ScoreFeedback;
+import grader.feedback.SourceDisplayer;
 import grader.file.RootFolderProxy;
+import grader.project.AMainClassFinder;
 import grader.project.AProject;
+import grader.project.MainClassFinder;
+import grader.project.Project;
 import grader.project.source.ClassesTextManager;
-import grader.sakai.*;
-import grader.spreadsheet.*;
-import util.misc.Common;
+import grader.sakai.ASakaiBulkAssignmentFolder;
+import grader.sakai.ASakaiStudentCodingAssignment;
+import grader.sakai.ASakaiStudentCodingAssignmentsDatabase;
+import grader.sakai.AnAbstractSakaiStudentAssignmentsDatabase;
+import grader.sakai.BulkAssignmentFolder;
+import grader.sakai.GenericStudentAssignmentDatabase;
+import grader.sakai.StudentAssignment;
+import grader.sakai.StudentCodingAssignment;
+import grader.spreadsheet.FeatureGradeRecorder;
+import grader.spreadsheet.FeatureGradeRecorderSelector;
+import grader.spreadsheet.FinalGradeRecorder;
+import grader.spreadsheet.FinalGradeRecorderSelector;
+import grader.spreadsheet.TotalScoreRecorderSelector;
+import grader.spreadsheet.csv.ASakaiCSVFeatureGradeManager;
+import grader.spreadsheet.csv.ASakaiCSVFinalGradeManager;
+import grader.spreadsheet.xlsx.ASakaiSpreadsheetGradeRecorder;
 
+import java.awt.Window;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import util.misc.Common;
+import util.models.AListenableVector;
+import util.trace.Tracer;
+
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
+import bus.uigen.uiFrameList;
 
 public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	public static final String DEFAULT_ASSIGNMENT_DATA_FOLDER = "C:/Users/dewan/Downloads/GraderData";
@@ -34,13 +72,15 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	FinalGradeRecorder gradeRecorder;
 	FinalGradeRecorder totalScoreRecorder;
 	protected FeatureGradeRecorder featureGradeRecorder;
-	List<GradingFeature> gradingFeatures = new AGradingFeatureList();
+	GradingFeatureList gradingFeatures = new AGradingFeatureList();
 	String sourceSuffix = ClassesTextManager.DEFAULT_SOURCES_FILE_SUFFIX;
 	String outputSuffix = AProject.DEFAULT_OUTPUT_FILE_SUFFIX;
 	ScoreFeedback scoreFeedback;
 	AutoFeedback autoFeedback;
 	ManualFeedback manualFeedback;
 	SourceDisplayer sourceDisplayer;
+	 MainClassFinder mainClassFinder;
+
 
 	public ASakaiProjectDatabase(String aBulkAssignmentsFolderName,
 			String anAssignmentsDataFolderName) {
@@ -54,14 +94,15 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		// gradeRecorder = new
 		// ASakaiCSVFinalGradeManager(bulkFolder.getSpreadsheet());
 		// gradeRecorder = new ASakaiCSVFinalGradeManager(this);
-		gradeRecorder = createFinalGradeRecorder();
 		featureGradeRecorder = createFeatureGradeRecorder();
+		gradeRecorder = createFinalGradeRecorder();
 //		totalScoreRecorder = createTotalScoreRecorder();
 		totalScoreRecorder = createTotalScoreRecorder();
 		autoFeedback = createAutoFeedback();
 		manualFeedback = createManualFeedback();
 		scoreFeedback = createScoreFeedback();
 		sourceDisplayer = createSourceDisplayer();
+		mainClassFinder = createMainClassFinder();
 		
 
 		
@@ -89,11 +130,11 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 	
 	protected AutoFeedback createAutoFeedback() {
-		return new AnAutoFeedbackFileWriter();
+		return new AnAutoFeedbackManager();
 	}
 	
 	protected ManualFeedback createManualFeedback() {
-		return new AManualFeedbackFileDisplayer();
+		return new AManualFeedbackManager();
 	}
 	
 	protected ScoreFeedback createScoreFeedback() {
@@ -106,7 +147,9 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 
 	protected FinalGradeRecorder createFinalGradeRecorder() {
-		return FinalGradeRecorderSelector.createFinalGradeRecorder(this);
+//		return FinalGradeRecorderSelector.createFinalGradeRecorder(this);
+		return featureGradeRecorder;
+
 	}
 
 	protected FeatureGradeRecorder createFeatureGradeRecorder() {
@@ -114,8 +157,8 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 
 	protected FinalGradeRecorder createTotalScoreRecorder() {
-//		return featureGradeRecorder;
-		return TotalScoreRecorderSelector.createFinalGradeRecorder(this);
+		return featureGradeRecorder;
+//		return TotalScoreRecorderSelector.createFinalGradeRecorder(this);
 	}
 
 	public FinalGradeRecorder getTotalScoreRecorder() {
@@ -134,8 +177,11 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		return AProject.DEFAULT_OUTPUT_FILE_SUFFIX;
 	}
 
-	public List<GradingFeature> getGradingFeatures() {
+	public GradingFeatureList getGradingFeatures() {
 		return gradingFeatures;
+	}
+	protected MainClassFinder createMainClassFinder() {
+		return new AMainClassFinder();
 	}
 
 	public void addGradingFeatures(List<GradingFeature> aGradingFeatures) {
@@ -146,7 +192,10 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 			if (aGradingFeature.isAutoGradable() && aGradingFeature.getFeatureChecker().isOverridable()) {
 				GradingFeature manualFeature = new AGradingFeature(
 						"Override" + aGradingFeature.getFeature(), aGradingFeature.getMax(), aGradingFeature.isExtraCredit());
+				manualFeature.setProjectDatabase(this);
 				gradingFeatures.add(manualFeature);
+				aGradingFeature.setLinkedFeature(manualFeature);
+				manualFeature.setLinkedFeature(aGradingFeature);
 				
 				
 			}
@@ -245,7 +294,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	}
 
-	String assignmentName;
+	String assignmentName, mixedCaseAssignmentName;
 
 	protected String getAssignmentName() {
 		if (assignmentName == null)
@@ -253,12 +302,18 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 					.replaceAll("\\s", "");
 		return assignmentName;
 	}
+	protected String getMixedCaseAssignmentName() {
+		if (mixedCaseAssignmentName == null)
+			mixedCaseAssignmentName = this.getBulkAssignmentFolder().getMixedCaseAssignmentName()
+					.replaceAll("\\s", "");
+		return mixedCaseAssignmentName;
+	}
 
 	public String getOutputFileName(SakaiProject aProject, String anInputFile) {
 		String inQualifier = "";
 		if (anInputFile != null) {
 			inQualifier = Common.toFilePrefix(Common
-                    .absoluteNameToLocalName(anInputFile)) + "_";
+					.absoluteNameToLocalName(anInputFile)) + "_";
 		}
 		String outputFileName = // aProject.getOutputFileName();
 		aProject.getOutputFolder() + "/" + inQualifier
@@ -288,7 +343,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 
 	public String getClassName() {
-		return "main." + assignmentName;
+		return "main." + getMixedCaseAssignmentName();
 	}
 
 	protected String[][] getArgs(String[] anInputFiles) {
@@ -304,6 +359,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 
 	String[] outputFiles;
+	String outputFileName;
 	String[] inputFiles;
 	String[][] args;
 
@@ -312,15 +368,14 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	}
 	
 	protected void initInputFiles() {
-        // [Josh] I commented this out 'cuz it was throwing null pointer exceptions
-//		Set<String> inputFilesSet = assignmentDataFolder.getInputFiles();
-//		inputFiles = new String[inputFilesSet.size()];
-//		int nextFileIndex = 0;
-//		for (String inputFile : inputFilesSet) {
-//			inputFiles[nextFileIndex] = inputFile;
-//			nextFileIndex++;
-//
-//		}
+		Set<String> inputFilesSet = assignmentDataFolder.getInputFiles();
+		inputFiles = new String[inputFilesSet.size()];
+		int nextFileIndex = 0;
+		for (String inputFile : inputFilesSet) {
+			inputFiles[nextFileIndex] = inputFile;
+			nextFileIndex++;
+
+		}
 	}
 
 	@Override
@@ -337,7 +392,8 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 					+ aProject.getStudentAssignment().getStudentName());
 			// String assignmentName =
 			// this.getBulkAssignmentFolder().getAssignmentName().replaceAll("\\s","");
-			String assignmentName = getAssignmentName();
+			String assignmentName = getMixedCaseAssignmentName();
+			
 			String mainClassName = getClassName();
 			Set<String> inputFilesSet = assignmentDataFolder.getInputFiles();
 //			inputFiles = new String[inputFilesSet.size()];
@@ -348,10 +404,12 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 //
 //			}
 			outputFiles = getOutputFileNames(aProject, inputFiles);
+			outputFileName = aProject.getOutputFileName();
+		
 			String[][] strings = getArgs(inputFiles);
 
 			aProject.setRunParameters(mainClassName, strings, inputFiles,
-					outputFiles);
+					outputFiles, mainClassFinder);
 			Thread thread = aProject.runProject();
 
 			//
@@ -382,7 +440,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 			// Thread thread = aProject.runProject();
 			// }
 
-			resetRunningProject(aProject);
+//			resetRunningProject(aProject);
 			// return aProject;
 		}
 		return aProject;
@@ -444,6 +502,36 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	// SakaiProject nextProject;
 	// String onyen;
 	// ProjectStepper projectStepper;
+	List<OEFrame>  oldList;
+	Window[] oldWindows;
+	public void recordWindows() {
+		oldList = new ArrayList( uiFrameList.getList());
+		oldWindows =	Window.getWindows();
+	}
+	public void clearWindows() {
+		if (oldWindows != null && oldList != null) {// somebody went before me, get rid of their windows
+//			System.out.println("dispoing old windows");
+			List<OEFrame> newList = new ArrayList( uiFrameList.getList());
+			
+
+
+			for (OEFrame frame:newList) {
+				if (oldList.contains(frame))
+					continue;
+				frame.dispose(); // will this work
+			}
+			Window[] newWindows =	Window.getWindows();
+			
+			
+			for (Window frame:newWindows) {
+				if (Common.containsReference(oldWindows, frame)) {
+					continue;
+				}
+				frame.dispose();
+			}
+		}
+	}
+	
 
 	public void runProjectInteractively(String anOnyen,
 			ProjectStepper aProjectStepper) {
@@ -451,42 +539,25 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 		origOut = System.out;
 		origIn = System.in;
-		// onyen = anOnyen;
-		// projectStepper = aProjectStepper;
-		// nextProject = runProject(onyen);
-		// aProjectStepper.waitForClearance();
-
-		// SakaiProject aProject = runProject(anOnyen);
+		
 		if (aProjectStepper.isAutoRun()) {
 			runProject(anOnyen, aProject);
 		}
 
-		// aProject.displaySourceInWord();
-		// aProjectStepper.setProject(aProject);
+		
+		recordWindows();
+		
 		aProjectStepper.setProject(anOnyen);
-		// } else {
-		// aProjectStepper.setProject(anOnyen);
-		// // aProjectStepper.waitForClearance();
-		// // runProject(anOnyen, aProject);
-		//
-		// }
+		
 		aProjectStepper.waitForClearance();
 
 		resetIO();
-		// if (System.in != origIn) {
-		//
-		// System.setIn(origIn);
-		// }
-		//
-		//
-		// if (System.out != origOut) {
-		// System.out.close();
-		// System.setOut(origOut);
-		// }
+		clearWindows();
+		
 
 	}
 
-	void resetIO() {
+	public void resetIO() {
 		if (System.in != origIn) {
 
 			System.setIn(origIn);
@@ -503,10 +574,14 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	public void displayOutput() {
 		resetIO();
-		for (String outputFileName : outputFiles) {
-
-			System.out.println("Displaying output from:" + outputFileName);
+		if (outputFiles.length == 0) {
 			DocumentDisplayerRegistry.display(outputFileName);
+			return;
+		}
+		for (String anOutputFileName : outputFiles) {
+
+			System.out.println("Displaying output from:" + anOutputFileName);
+			DocumentDisplayerRegistry.display(anOutputFileName);
 			// String windowsName= Common.toWindowsFileName(outputFileName);
 
 			// Common.toCanonicalFileName(aFileName);
@@ -523,6 +598,10 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		SakaiProject project = onyenToProject.get(aName);
 		if (project == null) {
 			StudentCodingAssignment aStudentAssignment = getStudentAssignment(aName);
+			if (aStudentAssignment ==  null) {
+				Tracer.error("No project for student:" + aName);
+				return null;
+			}
 			project = makeProject(aStudentAssignment);
 			if (project != null) {
 				onyenToProject.put(aStudentAssignment.getOnyen(), project);

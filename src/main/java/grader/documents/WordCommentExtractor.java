@@ -2,12 +2,12 @@ package grader.documents;
 
 import grader.TestExtractZippedFile;
 import grader.project.source.ClassesTextManager;
-import util.trace.Tracer;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.trace.Tracer;
 // shows how one can extract word comments from a word documentm. which is essentially a zipped folder
 public class WordCommentExtractor {
 	static String wordFile = ClassesTextManager.DEFAULT_SOURCES_FILE_NAME;

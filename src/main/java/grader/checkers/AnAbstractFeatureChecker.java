@@ -1,6 +1,7 @@
 package grader.checkers;
 
 import grader.assignment.GradingFeature;
+import grader.project.Project;
 import grader.sakai.project.SakaiProject;
 
 

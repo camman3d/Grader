@@ -1,8 +1,16 @@
 package grader.documents;
 
 
+import grader.project.AClassesManager;
 import grader.project.AProject;
+import grader.project.ClassesManager;
 import grader.project.Project;
+import grader.project.source.AClassesTextManager;
+import grader.project.source.ClassesTextManager;
+import grader.project.view.AClassViewManager;
+
+import java.io.IOException;
+
 import util.misc.Common;
 
 public class AWordDocumentDisplayer implements DocumentDisplayer {

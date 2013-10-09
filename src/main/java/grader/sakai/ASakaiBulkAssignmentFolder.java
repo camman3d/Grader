@@ -1,24 +1,26 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-import grader.file.RootFolderFactory;
-import grader.file.RootFolderProxy;
-import grader.file.zipfile.AZippedRootFolderProxy;
-import grader.project.Project;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import grader.file.FileProxy;
+import grader.file.RootFolderFactory;
+import grader.file.RootFolderProxy;
+import grader.file.zipfile.AZippedRootFolderProxy;
+import grader.project.AProject;
+import grader.project.Project;
 
-public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder {
+
+public class ASakaiBulkAssignmentFolder implements BulkAssignmentFolder{
 public static String DEFAULT_BULK_DOWNLOAD_FOLDER = "C:/Users/dewan/Downloads/bulk_download";
 public static String DEFAULT_ASSIGNMENT_NAME= "Assignment 11";
 public static String GRADES_SPREADSHEET_NAME = "grades.csv";
 
 String bulkDownloadDirectory;
 String assignmentName;
+String mixedCaseAssignmentName;
 RootFolderProxy rootBulkDownloadFolder;
 boolean isZippedRootFolder;
 FileProxy assignmentFolder;
@@ -39,8 +41,9 @@ public ASakaiBulkAssignmentFolder(String aBulkDownloadFolder, String anAssignmen
 }
 public ASakaiBulkAssignmentFolder(String aBulkDownloadFolder) {
 	bulkDownloadDirectory = aBulkDownloadFolder;
-//	initializeAssignmentData();
-//	assignmentName = assignmentFolder.getLocalName();
+	initializeAssignmentData();
+	assignmentName = assignmentFolder.getLocalName();
+	mixedCaseAssignmentName = assignmentFolder.getMixedCaseLocalName();
 //	rootBulkDownloadFolder = RootFolderFactory.createRootFolder(bulkDownloadDirectory);
 //	isZippedRootFolder = rootBulkDownloadFolder instanceof AZippedRootFolderProxy;
 //	
@@ -58,6 +61,10 @@ void initializeAssignmentData() {
 
 public String getAssignmentName() {
 	return assignmentName;
+}
+public String getMixedCaseAssignmentName() {
+	// TODO Auto-generated method stub
+	return mixedCaseAssignmentName;
 }
 
  FileProxy extractAssignmentFolder() {
@@ -137,6 +144,8 @@ public static void main (String[] args) {
 	System.out.println(assignment.getStudentFolderNames());
 	
 }
+
+
 
 
 

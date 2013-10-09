@@ -1,10 +1,10 @@
 package grader.sakai.project;
 
+import java.util.List;
+
 import grader.project.AProject;
 import grader.sakai.StudentAssignment;
 import grader.sakai.StudentCodingAssignment;
-
-import java.util.List;
 
 public class ASakaiProject extends AProject implements SakaiProject{
 	StudentCodingAssignment studentAssignment;

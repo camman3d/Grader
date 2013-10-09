@@ -1,6 +1,13 @@
 package grader.file;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import util.misc.Common;
 
 public  abstract class AnAbstractRootFolderProxy extends AnAbstractProxy implements RootFolderProxy {
 	protected Map<String, FileProxy> nameToFileProxy = new HashMap();
@@ -10,7 +17,7 @@ public  abstract class AnAbstractRootFolderProxy extends AnAbstractProxy impleme
 
 	protected void add(FileProxy aFileProxy) {
 		entries.add(aFileProxy);
-		nameToFileProxy.put(aFileProxy.getAbsoluteName(), aFileProxy);
+		nameToFileProxy.put(aFileProxy.getAbsoluteName().toLowerCase(), aFileProxy);
 	}
 	@Override
 	public List<FileProxy> getFileEntries() {
@@ -19,6 +26,27 @@ public  abstract class AnAbstractRootFolderProxy extends AnAbstractProxy impleme
 	@Override
 	public Set<String> getEntryNames() {
 		return nameToFileProxy.keySet();
+	}
+	public  List<FileProxy> getChildrenOf(String aParentName) {
+		String myName = aParentName.toLowerCase();
+		int parentDepth = Common.numMiddleOccurences(myName, '/');
+
+		List<FileProxy> retVal = new ArrayList();
+		for (FileProxy entry: entries) {
+			String childName = entry.getAbsoluteName();
+			if (!childName.startsWith(myName)) continue;
+			int childDepth = Common.numMiddleOccurences(childName, '/');
+
+			if (childDepth == parentDepth + 1) {
+				retVal.add(entry);
+			
+			
+//			String entryRelativeName = Common.toRelativeName(myName, entryName);
+			
+		   }
+		}
+		return retVal;
+
 	}
 	
 	@Override
@@ -59,7 +87,7 @@ public  abstract class AnAbstractRootFolderProxy extends AnAbstractProxy impleme
 		}
 	@Override
 	public FileProxy getFileEntry(String name) {
-		return nameToFileProxy.get(name);
+		return nameToFileProxy.get(name.toLowerCase());
 	}
 	
 	

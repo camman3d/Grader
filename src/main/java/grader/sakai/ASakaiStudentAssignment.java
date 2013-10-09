@@ -1,15 +1,16 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-import grader.file.FileProxyUtils;
-import util.misc.Common;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class ASakaiStudentAssignment implements StudentAssignment {
+import util.misc.Common;
+
+import grader.file.FileProxy;
+import grader.file.FileProxyUtils;
+
+public class ASakaiStudentAssignment implements StudentAssignment{
 	public static String SUBMISSION_LOCAL_NAME = "Submission attachment(s)";
 	public static String FEEDBACK_LOCAL_NAME = "Feedback Attachment(s)";
 	public static String COMMENTS_LOCAL_NAME = "comments.txt";

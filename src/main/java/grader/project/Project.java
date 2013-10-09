@@ -21,6 +21,7 @@ public interface Project {
 	public void setProjectFolder(String aProjectFolder) ;
 	public String getProjectFolderName() ;
 	public String getSourceProjectFolderName() ;
+//	public String getMixedCaseSourceProjectFolderName() ;
 	public String getBinaryProjectFolderName() ;
 	public List<Class> getImplicitlyLoadedClasses();
 
@@ -47,7 +48,7 @@ public interface Project {
 	boolean runChecked();
 //	boolean setRunParameters(String aMainClassName, String[] anArgs,
 //			String anInputFile, String anOutputFile);
-	public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles);
+	public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles, MainClassFinder aMainClassFinder);
 
 	Thread runProject();
 	JavaDocBuilder getJavaDocBuilder();

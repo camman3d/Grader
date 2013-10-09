@@ -1,8 +1,8 @@
 package grader.sakai;
 
-import grader.file.FileProxy;
-
 import java.util.Set;
+
+import grader.file.FileProxy;
 
 public interface BulkAssignmentFolder {
 	public FileProxy getAssignmentFolder();
@@ -13,5 +13,7 @@ public interface BulkAssignmentFolder {
 
 	FileProxy getSpreadsheet();
 	public String getAssignmentName();
+	public String getMixedCaseAssignmentName();
+
 
 }

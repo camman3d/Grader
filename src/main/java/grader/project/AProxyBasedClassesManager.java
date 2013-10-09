@@ -164,10 +164,10 @@ public class AProxyBasedClassesManager extends AClassesManager implements ProxyB
 //		String[] fileNames = aFolder.list();
 //		File[] files = aFolder.listFiles();
 		for (FileProxy aFile:aFiles) {
-			String locaName = aFile.getLocalName();
+			String locaName = aFile.getMixedCaseLocalName();
 			
 			if (locaName != null && locaName.endsWith(SOURCE_FILE_SUFFIX)) {
-				String relativeName = Common.toRelativeName(srcFolderName, aFile.getAbsoluteName());
+				String relativeName = Common.toRelativeName(srcFolderName, aFile.getMixedCaseAbsoluteName());
 				String className = Common.projectRelativeNameToClassName(relativeName);
 				StringBuffer text = Common.toText(aFile.getInputStream());
 //				StringBuffer text = Common.toText(aFile.getAbsoluteName());

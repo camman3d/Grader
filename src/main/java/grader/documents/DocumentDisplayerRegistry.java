@@ -1,15 +1,17 @@
 package grader.documents;
 
-import util.misc.Common;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import util.misc.Common;
 
 public class DocumentDisplayerRegistry {
 	public static Map<String, DocumentDisplayer> suffixToDisplayer = new HashMap();
 	public static DocumentDisplayer defaultDisplayer = new AGeneralDocumentDisplayer();
-	final static DocumentDisplayer wordDisplayer = new AWordDocumentDisplayer();
+	final static  DocumentDisplayer wordDisplayer = new AWordDocumentDisplayer();
 
+
+	
 	public static DocumentDisplayer getDefaultDisplayer() {
 		return defaultDisplayer;
 	}
@@ -44,6 +46,11 @@ public class DocumentDisplayerRegistry {
 	
 	public static void useWordIfPossible() {
 		registerDocumentDisplayer("txt", wordDisplayer);
+
+	}
+	
+	static {
+//		useWordIfPossible();
 
 	}
 

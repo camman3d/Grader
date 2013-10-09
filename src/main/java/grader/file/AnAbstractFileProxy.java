@@ -1,13 +1,14 @@
 package grader.file;
 
-import util.misc.Common;
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class AnAbstractFileProxy extends AnAbstractProxy implements FileProxy {
-	RootFolderProxy rootFolderProxy;
+import util.misc.Common;
+
+public abstract class AnAbstractFileProxy extends AnAbstractProxy implements FileProxy{
+	protected RootFolderProxy rootFolderProxy;
 	List<FileProxy> fileEntries;
 //	Set<String> descendentNames;
 	Set<FileProxy> childrenProxies;
@@ -33,6 +34,8 @@ public abstract class AnAbstractFileProxy extends AnAbstractProxy implements Fil
 		String parentName = Common.getParentFileName(getAbsoluteName());
 		return this.getFileEntry(parentName);
 	}
+	
+	
 	
 	
 	public void initRootData() {
@@ -80,6 +83,11 @@ public abstract class AnAbstractFileProxy extends AnAbstractProxy implements Fil
 	public Set<String> getDescendentEntryNames(FileProxy aParent) {
 		return rootFolderProxy.getDescendentEntryNames(aParent);
 	}
+	@Override
+	public List<FileProxy> getChildrenOf(String aParentName) {
+		return rootFolderProxy.getChildrenOf(aParentName);
+	}
+	
 	
 	
 

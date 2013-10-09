@@ -1,18 +1,19 @@
 package grader.sakai.project;
 
+import java.util.Collection;
+import java.util.Set;
+
+
 import grader.assignment.AssignmentDataFolder;
-import grader.assignment.GradingFeature;
+import grader.assignment.GradingFeatureList;
 import grader.feedback.AutoFeedback;
 import grader.feedback.ManualFeedback;
 import grader.feedback.ScoreFeedback;
 import grader.feedback.SourceDisplayer;
+import grader.project.Project;
 import grader.sakai.BulkAssignmentFolder;
 import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FinalGradeRecorder;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 public interface SakaiProjectDatabase {
 	public BulkAssignmentFolder getBulkAssignmentFolder();
@@ -31,7 +32,7 @@ public interface SakaiProjectDatabase {
 	public void runProjectsInteractively();
 
 	FinalGradeRecorder getGradeRecorder();
-	public List<GradingFeature> getGradingFeatures();
+	public GradingFeatureList getGradingFeatures();
 
 	FeatureGradeRecorder getFeatureGradeRecorder();
 	public void setGradeRecorder(FinalGradeRecorder gradeRecorder) ;

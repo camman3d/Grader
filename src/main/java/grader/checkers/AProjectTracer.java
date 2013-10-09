@@ -1,8 +1,20 @@
 package grader.checkers;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.List;
+
 import util.misc.Common;
 
-public class AProjectTracer extends AnAbstractFeatureChecker implements FeatureChecker {
+import bus.uigen.reflect.ClassProxy;
+import bus.uigen.reflect.FieldProxy;
+
+import grader.assignment.GradingFeature;
+import grader.file.FileProxy;
+import grader.project.ClassDescription;
+import grader.project.Project;
+
+public class AProjectTracer extends AnAbstractFeatureChecker implements FeatureChecker{
 	
 	CheckResult checkResult =  new ACheckResult();
 //	public AnEncapsulationChecker(GradingFeature aFeature) {
@@ -31,7 +43,7 @@ public class AProjectTracer extends AnAbstractFeatureChecker implements FeatureC
 		System.out.println("documents:" + project.getStudentAssignment().getDocuments());
 		System.out.println("date:" + project.getStudentAssignment().getDate());
 		System.out.println("feedback folder:" + project.getStudentAssignment().getFeedbackFolder());
-		System.out.println("root code folder:" + project.getRootCodeFolder());
+		System.out.println("root cocde folder:" + project.getRootCodeFolder());
 		System.out.println("sources folder name:" + project.getRootCodeFolder().getSourceProjectFolderName());
 		System.out.println("binary folder name:" + project.getRootCodeFolder().getBinaryProjectFolderName());
 		for (int i = 0; i < feature.getInputFiles().length; i++) {

@@ -3,27 +3,36 @@ package grader.file.zipfile;
 import grader.file.AnAbstractFileProxy;
 import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
-import util.misc.Common;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import util.misc.Common;
 // zip system interface to common interface
 public class AZippedFileProxy extends AnAbstractFileProxy implements FileProxy {
 	ZipEntry zipEntry;
 	ZipFile zipFile;
-	String name;
-	String absoluteName;
+	String name, mixedCaseName;
+	String absoluteName, mixedCaseAbsoluteName;
 //	RootFolderProxy rootFolderProxy;
 	public AZippedFileProxy(RootFolderProxy aRootFolderProxy, ZipEntry aZipEntry, ZipFile aZipFile, String aRootLocalName) {
 		super (aRootFolderProxy);
 		this.zipEntry = aZipEntry;
 		this.zipFile = aZipFile;
-		absoluteName = Common.toCanonicalFileName(Common.toCanonicalFileName(zipFile.getName()) + "/" + zipEntry.getName());
-		name = Common.toRelativeName(aRootLocalName, zipEntry.getName());
+		mixedCaseAbsoluteName = Common.toCanonicalFileName(Common.toCanonicalFileName(zipFile.getName()) + "/" + zipEntry.getName());
+		absoluteName = mixedCaseAbsoluteName.toLowerCase();
+		if (aZipEntry == null ) {
+			System.out.println("null zip entry");
+		}
+		mixedCaseName = Common.toRelativeName(aRootLocalName, zipEntry.getName());
+		if (mixedCaseName != null) // for MACOS, a null value is returned
+			name = mixedCaseName.toLowerCase();
+		
+//		name = Common.toRelativeName(aRootLocalName, zipEntry.getName()).toLowerCase();
 //		init();
 
 	}
@@ -67,6 +76,19 @@ public class AZippedFileProxy extends AnAbstractFileProxy implements FileProxy {
 		// TODO Auto-generated method stub
 		return name;
 	}
+
+	@Override
+	public String getMixedCaseAbsoluteName() {
+		// TODO Auto-generated method stub
+		return mixedCaseAbsoluteName;
+	}
+
+	@Override
+	public String getMixedCaseLocalName() {
+		// TODO Auto-generated method stub
+		return mixedCaseName;
+	}
+
 	
 	
 	

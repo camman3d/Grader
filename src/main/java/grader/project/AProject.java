@@ -23,6 +23,7 @@ import grader.documents.AWordDocumentDisplayer;
 import grader.documents.DocumentDisplayerRegistry;
 import grader.documents.WordCommentExtractor;
 import grader.documents.DocumentDisplayer;
+import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.file.filesystem.AFileSystemRootFolderProxy;
 import grader.file.zipfile.AZippedFileProxy;
@@ -41,7 +42,7 @@ public class AProject implements Project {
 	public static final String DEFAULT_PROJECT_FOLDER = ".";
 	public static final String DEFAULT_GRADING_FOLDER = "C:/Users/dewan/Downloads/GraderData";
 	public static final String DEFAULT_OUTPUT_FILE_PREFIX = "output";
-	public static final String DEFAULT_OUTPUT_FILE_SUFFIX = ".doc";
+	public static final String DEFAULT_OUTPUT_FILE_SUFFIX = ".txt";
 	
 
 
@@ -66,6 +67,7 @@ public class AProject implements Project {
 	String outputSuffix = DEFAULT_OUTPUT_FILE_SUFFIX;
 	boolean hasBeenRun, canBeRun = true;
 	 JavaDocBuilder javaDocBuilder;
+	 MainClassFinder mainClassFinder;
 
 	
 
@@ -86,7 +88,8 @@ public class AProject implements Project {
 		sourceSuffix = aSourceSuffix;
 		outputSuffix = anOutputSuffix;
 		init(aStudentCodingAssignment.getProjectFolder(), aStudentCodingAssignment.getFeedbackFolder().getAbsoluteName());
-	}
+	}	
+	
 	public String toString() {
 		return "(" + projectFolderName + "," + outputFolder + ")";
 	}
@@ -125,6 +128,9 @@ public class AProject implements Project {
 //		
 //	}
 	
+	protected MainClassFinder createMainClassFinder() {
+		return new AMainClassFinder();
+	}
 	
 	public void init(String aProjectFolder, String anOutputFolder, boolean aZippedFolder) {
 //		projectFolderName = aProjectFolder;
@@ -176,7 +182,8 @@ public class AProject implements Project {
 
 //		 classesManager = new AClassesManager();
 			
-			 classesManager = new AProxyBasedClassesManager();	
+			 classesManager = new AProxyBasedClassesManager();
+			 mainClassFinder = createMainClassFinder();
 //			 oldClassLoader = Thread.currentThread().getContextClassLoader();
 //				Thread.currentThread().setContextClassLoader((ClassLoader) proxyClassLoader);
 
@@ -264,7 +271,7 @@ public class AProject implements Project {
 	protected String[] outputFiles;
 	boolean runChecked;
 	@Override()
-	public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles){
+	public boolean setRunParameters(String aMainClassName, String anArgs[][], String[] anInputFiles, String[] anOutputFiles, MainClassFinder aMainClassFinder){
 		
 		args = anArgs;
 		try {
@@ -272,6 +279,9 @@ public class AProject implements Project {
 		 mainClass = proxyClassLoader.loadClass(mainClassName);
 		 inputFiles = anInputFiles;
 		 outputFiles = anOutputFiles;
+		 if (mainClass == null) {
+			 mainClass = mainClassFinder.mainClass(rootCodeFolder, proxyClassLoader, mainClassName);
+		 }
 		   if (mainClass == null) {
 				System.out.println("Missing main class:" + mainClassName + " for student:" + getProjectFolderName());
 				setCanBeRun(false);
@@ -279,6 +289,7 @@ public class AProject implements Project {
 				return false;
 
 		   }
+
 		   
 			 mainMethod = mainClass.getMethod("main", String[].class);
 			if (mainMethod == null) {
@@ -366,7 +377,7 @@ public class AProject implements Project {
 //				setCanBeRun(false);
 //				return null;
 //			}
-		setRunParameters(aMainClassName, anArgs, anInputFiles, anOutputFiles);
+		setRunParameters(aMainClassName, anArgs, anInputFiles, anOutputFiles, mainClassFinder);
 		return runProject();
 //		if (!canBeRun()) return null;
 //		Runnable runnable = new AProjectRunner(mainClassName, args, this, anInputFile, anOutputFile, mainClass, mainMethod);
@@ -495,7 +506,11 @@ public class AProject implements Project {
 		}
 		return javaDocBuilder;
 	}
-	
+//	@Override
+//	public String getMixedCaseSourceProjectFolderName() {
+//		 return sourceFolderName;
+//	}
+//	
 	
 	
 	public static void main (String[] args) {

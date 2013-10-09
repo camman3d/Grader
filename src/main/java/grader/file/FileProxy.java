@@ -4,8 +4,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 
+import util.misc.Common;
 // unite file system and zip file interface
-public interface FileProxy  extends RootFolderProxy {
+public interface FileProxy  extends RootFolderProxy{
 	String getAbsoluteName();
 //	String getLocalName();
 	long getTime();

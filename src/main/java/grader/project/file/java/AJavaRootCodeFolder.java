@@ -9,9 +9,10 @@ import grader.file.RootFolderProxy;
 import grader.project.file.RootCodeFolder;
 //a root folder containing source and binary directories
 public class AJavaRootCodeFolder implements RootCodeFolder {
-	public static final String SOURCE = "src";
-	public static final String BINARY = "bin";
+	public static final String SOURCE = "/src";
+	public static final String BINARY = "/bin";
 	public static final String BINARY_2 = "out";
+	public static final String BINARY_3 = "build"; // net beans
 	public static final String SOURCE_FILE_SUFFIX = ".java";
 	public static final String BINARY_FILE_SUFFIX = ".class";
 
@@ -30,12 +31,18 @@ public class AJavaRootCodeFolder implements RootCodeFolder {
 	
 
 	public AJavaRootCodeFolder(RootFolderProxy aRoot) {
+//		if (aRoot.getAbsoluteName().indexOf("erichman") != -1) {
+//			System.out.println (" found erichman");
+//		}
 		root = aRoot;
 		setSeparateSourcBinary();
 		sourceFolderName = getEntryWithSuffix(aRoot, SOURCE);
 		binaryFolderName = getEntryWithSuffix(aRoot, BINARY);
+		// allow a set here
 		if (binaryFolderName == null)
 			binaryFolderName = getEntryWithSuffix(aRoot, BINARY_2);
+		if (binaryFolderName == null)
+			binaryFolderName = getEntryWithSuffix(aRoot, BINARY_3);
 
 	
 		
@@ -53,6 +60,10 @@ public class AJavaRootCodeFolder implements RootCodeFolder {
 		if (separateSourceBinary) {
 			projectFolder = Common.getParentFileName(binaryFolderName);
 			sourceFolder = root.getFileEntry(sourceFolderName);
+//			if (sourceFolder ==null ) {
+//				System.out.println("All children" + root.getEntryNames());
+//				System.out.println("not found:" + sourceFolderName);
+//			}
 			binaryFolder = root.getFileEntry(binaryFolderName);
 		} else {
 			projectFolder = binaryFolderName;
@@ -93,7 +104,15 @@ public class AJavaRootCodeFolder implements RootCodeFolder {
 			int index = name.indexOf(suffix);
 			if (index < 0)
 				continue;
-			return name.substring(0, index + suffix.length());
+//			if (name.charAt(0) == '_')
+//				continue;
+//			if (name.indexOf("_macos") != -1)
+//				continue;
+			FileProxy proxy = aRoot.getFileEntry(name);
+			String mixedCaseProxy = proxy.getMixedCaseAbsoluteName();
+//			return name.substring(0, index + suffix.length());
+			return mixedCaseProxy.substring(0, index + suffix.length());
+
 //			if (name.endsWith(suffix))
 //				return name;
 		}
@@ -171,6 +190,11 @@ public class AJavaRootCodeFolder implements RootCodeFolder {
 	}
 	public boolean hasSeparateSourceBinary() {
 		return separateSourceBinary;
+	}
+	@Override
+	public String getMixedCaseSourceProjectFolderName() {
+		// TODO Auto-generated method stub
+		return sourceFolder.getMixedCaseAbsoluteName();
 	}
 
 }

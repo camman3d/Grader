@@ -1,12 +1,12 @@
 package grader.feedback;
 
+import java.util.List;
+
+import util.misc.Common;
 import grader.assignment.GradingFeature;
 import grader.file.FileProxy;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.ProjectStepper;
-import util.misc.Common;
-
-import java.util.List;
 
 public class AScoreFeedbackFileWriter implements ScoreFeedback {
 
@@ -16,7 +16,7 @@ public class AScoreFeedbackFileWriter implements ScoreFeedback {
 		FileProxy feedbackFolder = aProjectStepper.getProject().getStudentAssignment().getFeedbackFolder();
 		String totalScoresFile = feedbackFolder.getAbsoluteName() + "/" + ASakaiProjectDatabase.DEFAULT_SCORE_FILE_NAME;
 		try {
-		Common.writeFile(totalScoresFile, scoresText(aProjectStepper).toString());
+		Common.writeText(totalScoresFile, scoresText(aProjectStepper).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,14 +1,14 @@
 package grader.sakai;
 
-import util.misc.Common;
-import util.trace.Tracer;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class AnAbstractSakaiStudentAssignmentsDatabase<GenericAssignment> implements GenericStudentAssignmentDatabase<GenericAssignment> {
+import util.misc.Common;
+import util.trace.Tracer;
+
+public abstract class AnAbstractSakaiStudentAssignmentsDatabase<GenericAssignment> implements GenericStudentAssignmentDatabase<GenericAssignment>{
 	BulkAssignmentFolder bulkAssignmentFolder;
 	Map<String, GenericAssignment> nameToStudentAssignment = new HashMap();
 	 

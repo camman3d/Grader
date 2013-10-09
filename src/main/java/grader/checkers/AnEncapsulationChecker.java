@@ -1,15 +1,20 @@
 package grader.checkers;
 
-import bus.uigen.reflect.ClassProxy;
-import bus.uigen.reflect.FieldProxy;
-import grader.project.ClassDescription;
-
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import bus.uigen.reflect.ClassProxy;
+import bus.uigen.reflect.FieldProxy;
+
+import grader.assignment.GradingFeature;
+import grader.file.FileProxy;
+import grader.project.ClassDescription;
+import grader.project.Project;
+
 public class AnEncapsulationChecker extends AnAbstractFeatureChecker implements FeatureChecker{
 	
-	CheckResult checkResult =  new ACheckResult();
+	CheckResult checkResult;
 //	public AnEncapsulationChecker(GradingFeature aFeature) {
 //		
 //		feature = aFeature;
@@ -26,6 +31,7 @@ public class AnEncapsulationChecker extends AnAbstractFeatureChecker implements 
 	}
 	
 	void  checkPublicVariables() {
+		checkResult =  new ACheckResult();
 		List<ClassDescription> classDescriptions = project.getClassesManager().getClassDescriptions();
 		int numVariables = 0;
 		int numPublicVariables = 0;

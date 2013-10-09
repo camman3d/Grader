@@ -1,30 +1,45 @@
 package grader.sakai.project;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
-import bus.uigen.uiFrameList;
 import grader.assignment.GradingFeature;
+import grader.assignment.GradingFeatureList;
 import grader.documents.DocumentDisplayerRegistry;
+import grader.file.FileProxy;
+import grader.file.FileProxyUtils;
+import grader.project.Project;
 import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FinalGradeRecorder;
-import util.annotations.*;
-import util.misc.AClearanceManager;
-import util.misc.Common;
+import grader.spreadsheet.FinalGradeRecorderFactory;
+import grader.spreadsheet.TotalScoreRecorderSelector;
 
-import java.awt.*;
+import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
+import bus.uigen.uiFrameList;
+import util.annotations.Column;
+import util.annotations.ComponentWidth;
+import util.annotations.Row;
+import util.annotations.StructurePattern;
+import util.annotations.StructurePatternNames;
+import util.annotations.Visible;
+import util.misc.AClearanceManager;
+import util.misc.Common;
+import util.misc.ThreadSupport;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
-public class AProjectStepper extends AClearanceManager implements ProjectStepper {
+public class AProjectStepper extends AClearanceManager implements ProjectStepper{
 	PropertyChangeSupport propertyChangeSupport =new PropertyChangeSupport(this);
 	public final static long  UI_LOAD_TIME = 10*1000;
 	boolean firstTime;
-	List<OEFrame>  oldList;
-	Window[] oldWindows;
+//	List<OEFrame>  oldList;
+//	Window[] oldWindows;
 	String name = "";
 	SakaiProjectDatabase projectDatabase;
 	double score;
@@ -39,6 +54,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	boolean hasMoreSteps = true;
 	FinalGradeRecorder totalScoreRecorder;
 	boolean manualOnyen;
+	String logFile, gradedFile, skippedFile;
 	
 //	FinalGradeRecorder gradeRecorder() {
 //		return projectDatabase.getGradeRecorder();
@@ -52,6 +68,10 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		featureGradeRecorder = aProjectDatabase.getFeatureGradeRecorder();
 		totalScoreRecorder = aProjectDatabase.getTotalScoreRecorder();
 		registerWithGradingFeatures();
+		logFile = aProjectDatabase.getAssigmentDataFolder().getLogFileName();
+		gradedFile = aProjectDatabase.getAssigmentDataFolder().getGradedIdFileName();
+		skippedFile = aProjectDatabase.getAssigmentDataFolder().getSkippedIdFileName();
+//		recordWindows(); // the first project does not wait so we need to record here
 		
 	}
 	boolean runExecuted;
@@ -68,7 +88,13 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	
 	public void setOnyen(String anOnyen) {
 //		project = projectDatabase.getProject(anOnyen);
-		setProject(anOnyen);
+		String oldOnyen = onyen;
+		boolean retVal = setProject(anOnyen);
+		if (!retVal) {
+			onyen = oldOnyen;
+			propertyChangeSupport.firePropertyChange("onyen", null, onyen);
+			return;
+		}
 		projectDatabase.resetRunningProject(project);
 
 		if (autoRun)
@@ -82,9 +108,11 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		
 		
 	}
-	public void setProject(String anOnyen) {
+	public boolean setProject(String anOnyen) {
+		
 		onyen = anOnyen;
-		setProject( projectDatabase.getProject(anOnyen));
+		return setProject( projectDatabase.getProject(anOnyen));
+		
 				
 	}
 	boolean autoRun = false;
@@ -195,13 +223,14 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	}
 
 	@Visible(false)
-	public void setProject(SakaiProject newVal) {
+	public boolean setProject(SakaiProject newVal) {
+		if (newVal == null) return false;
 		writeScores(this);
 		runExecuted = false;
 		project = newVal;
 		if (project == null) {
 			System.out.println("No project submitted for dewan");
-			return;
+			return false;
 		}
 //		setName(project.getStudentAssignment().getStudentDescription());
 		setName(project.getStudentAssignment().getStudentName());
@@ -215,7 +244,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 			setInternalScore(getGrade());
 
 //			setInternalScore(gradeRecorder.getGrade(project.getStudentAssignment().getStudentName(), project.getStudentAssignment().getOnyen()));
-		
+		return true;
 	}
 	
 	public boolean preOutput() {
@@ -225,7 +254,9 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	}
 
 	public boolean preRun() {
-		return project.canBeRun() && !autoRun && !runExecuted;
+		return project.canBeRun() && !autoRun
+//				&& !runExecuted
+				;
 	}
 	@Row(3)
 	@ComponentWidth(100)
@@ -344,25 +375,60 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	}
 	
 	@Row(9)
-	public List<GradingFeature> getGradingFeatures() {
+	public GradingFeatureList getGradingFeatures() {
 		if (projectDatabase != null)
 		return projectDatabase.getGradingFeatures();
 		else return null;
 		
 	}
 	public boolean preProceed() {
-		return hasMoreSteps || manualOnyen;
+		return (hasMoreSteps || manualOnyen) && isAllGraded();
+	}
+	public boolean preSkip() {
+		return !preProceed();
 	}
 	@Row(10)
+	public boolean isAllGraded() {
+		return getGradingFeatures().isAllGraded();
+	}
+	
+	
+	
+	@Row(11)
 	@ComponentWidth(100)
 	public synchronized void proceed() {
 		super.proceed();
 		if (manualOnyen)
 			writeScores(this);
 		manualOnyen = false;
+		try {
+			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
+			Common.appendText(gradedFile, onyen + "\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 		
 	}
+
+	@Row(12)
+	@ComponentWidth(100)
+	public synchronized void skip() {
+		proceed();
+		try {
+			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n");
+			Common.appendText(skippedFile, onyen + "\n");
+			List<String> list = FileProxyUtils.toList(new File(logFile));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// should put person in skipped list
+		
+	}
+	
 	public boolean hasMoreSteps() {
 		return hasMoreSteps;
 	}
@@ -377,6 +443,34 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 
 	}
 	
+//	public void recordWindows() {
+//		oldList = new ArrayList( uiFrameList.getList());
+//		oldWindows =	Window.getWindows();
+//	}
+//	public void clearWindows() {
+//		if (oldWindows != null && oldList != null) {// somebody went before me, get rid of their windows
+////			System.out.println("dispoing old windows");
+//			List<OEFrame> newList = new ArrayList( uiFrameList.getList());
+//			
+//
+//
+//			for (OEFrame frame:newList) {
+//				if (oldList.contains(frame))
+//					continue;
+//				frame.dispose(); // will this work
+//			}
+//			Window[] newWindows =	Window.getWindows();
+//			
+//			
+//			for (Window frame:newWindows) {
+//				if (Common.containsReference(oldWindows, frame)) {
+//					continue;
+//				}
+//				frame.dispose();
+//			}
+//		}
+//	}
+	
 	@Override
 	public synchronized void waitForClearance() {
 		
@@ -384,38 +478,37 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 
 		
 		super.waitForClearance();
-		if (oldWindows != null && oldList != null) {// somebody went before me, get rid of their windows
-//			System.out.println("dispoing old windows");
-			List<OEFrame> newList = new ArrayList( uiFrameList.getList());
-			
-
-
-			for (OEFrame frame:newList) {
-				if (oldList.contains(frame))
-					continue;
-				frame.dispose(); // will this work
-			}
-			Window[] newWindows =	Window.getWindows();
-			
-			
-			for (Window frame:newWindows) {
-				if (Common.containsReference(oldWindows, frame)) {
-					continue;
-				}
-				frame.dispose();
-			}
-		}
-//		System.out.println("picking up old windows");
-//		List<OEFrame>  oldList = new ArrayList( uiFrameList.getList());
-//		Window[] oldWindows =	Window.getWindows();
-		oldList = new ArrayList( uiFrameList.getList());
-		oldWindows =	Window.getWindows();
-		 // get rid of previous project's windows
-//		if (oldWindows != null || oldList != null) {
-		
-		}
-		
+//		if (oldWindows != null && oldList != null) {// somebody went before me, get rid of their windows
+////			System.out.println("dispoing old windows");
+//			List<OEFrame> newList = new ArrayList( uiFrameList.getList());
+//			
+//
+//
+//			for (OEFrame frame:newList) {
+//				if (oldList.contains(frame))
+//					continue;
+//				frame.dispose(); // will this work
+//			}
+//			Window[] newWindows =	Window.getWindows();
+//			
+//			
+//			for (Window frame:newWindows) {
+//				if (Common.containsReference(oldWindows, frame)) {
+//					continue;
+//				}
+//				frame.dispose();
+//			}
 //		}
+//		clearWindows();
+//		recordWindows();
+
+//		oldList = new ArrayList( uiFrameList.getList());
+//		oldWindows =	Window.getWindows();
+
+		
+		}
+		
+
 
 		
 	@Override
@@ -433,6 +526,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 			setScore();
 			setGrade(aGradingFeature.getFeature(), aGradingFeature.getScore());
 		}
+		propertyChangeSupport.firePropertyChange("this", null, this); // an event from grading features, perhaps our precondition chnaged such as auoGraded
 		
 	}
 

@@ -64,7 +64,7 @@ public class AClassDescription  implements ClassDescription {
 		}	
 		className = aClassName;
 		packageName = Common.classNameToPackageName(aClassName);
-		qdoxClass = getQdoxClass();
+//		qdoxClass = getQdoxClass();
 	}
 	public String toString() {
 		if (classProxy != null)

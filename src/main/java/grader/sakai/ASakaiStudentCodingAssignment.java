@@ -1,11 +1,11 @@
 package grader.sakai;
 
+import java.util.Set;
+
 import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.project.Project;
-
-import java.util.Set;
 
 public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment implements StudentCodingAssignment{
 	FileProxy rubrick;
@@ -32,7 +32,7 @@ public class ASakaiStudentCodingAssignment extends ASakaiStudentAssignment imple
 	void findRubrickAndProject() {
 		Set<String> childrenNames = submissionFolder.getChildrenNames();
 		for (String childName:childrenNames) {
-			FileProxy childProxy = submissionFolder.getFileEntry(childName);
+			FileProxy childProxy = submissionFolder.getFileEntry(childName);	
 			if (childName.toLowerCase().indexOf(RUBRICK_SUBSTRING) > -1) {
 				rubrick = childProxy;		
 			} else if (childProxy.isDirectory()) {

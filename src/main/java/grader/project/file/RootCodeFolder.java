@@ -16,6 +16,8 @@ public interface RootCodeFolder {
 	List<FileProxy> getFileEntries();
 	FileProxy getFileEntry(String name);
 	public String getSourceProjectFolderName() ;
+	public String getMixedCaseSourceProjectFolderName() ;
+
 	public String getBinaryProjectFolderName() ;
 	Set<String> getEntryNames();
 	RootFolderProxy getRootFolder();

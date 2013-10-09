@@ -1,16 +1,16 @@
 package grader.feedback;
 
-import grader.assignment.GradingFeature;
-import grader.checkers.CheckResult;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-public class AnAutoFeedbackFileWriter implements AutoFeedback{
+import grader.assignment.GradingFeature;
+import grader.checkers.CheckResult;
+
+public class AnAutoFeedbackManager extends AManualFeedbackManager implements AutoFeedback{
 
 	@Override
-	public void recordAutoGrade(GradingFeature aGradingFature,
+	public void recordAutoGrade(GradingFeature aGradingFeature,
 			CheckResult result) {
 		
 			try {
@@ -18,7 +18,7 @@ public class AnAutoFeedbackFileWriter implements AutoFeedback{
 
 				
 //				CheckResult result = featureChecker.check();
-				FileOutputStream fileOutputStream = new FileOutputStream(aGradingFature.getFeedbackFileName());
+				FileOutputStream fileOutputStream = new FileOutputStream(aGradingFeature.getFeedbackFileName());
 //				TeePrintStream outStream = new TeePrintStream(fileOutputStream);
 				PrintStream outStream = new PrintStream(fileOutputStream);
 
@@ -37,6 +37,8 @@ public class AnAutoFeedbackFileWriter implements AutoFeedback{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if (aGradingFeature.getScore() != aGradingFeature.getMax())
+			super.comment(aGradingFeature);
 			
 		}
 		

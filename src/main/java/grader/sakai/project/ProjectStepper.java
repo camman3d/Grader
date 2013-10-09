@@ -1,13 +1,17 @@
 package grader.sakai.project;
 
+import util.annotations.ComponentWidth;
+import util.annotations.Row;
+import util.annotations.Visible;
 import util.misc.ClearanceManager;
 import util.models.PropertyListenerRegisterer;
+import grader.project.Project;
 
 import java.beans.PropertyChangeListener;
 
 
 public interface ProjectStepper  extends ClearanceManager, PropertyListenerRegisterer, PropertyChangeListener{
-	public void setProject(SakaiProject newVal) ;
+	public boolean setProject(SakaiProject newVal) ;
 	
 	public void output();
 	
@@ -19,7 +23,7 @@ public interface ProjectStepper  extends ClearanceManager, PropertyListenerRegis
 
 	public void setProjectDatabase(SakaiProjectDatabase aProjectDatabase) ;
 	public void setOnyen(String anOnyen) ;
-	public void setProject(String anOnyen) ;
+	public boolean setProject(String anOnyen) ;
 	public boolean isAutoRun() ;
     public void setAutoRun(boolean newVal);
     public void autoRun() ;

@@ -1,5 +1,12 @@
 package grader.sakai;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import util.misc.Common;
+
 public class ASakaiStudentAssignmentsDatabase extends AnAbstractSakaiStudentAssignmentsDatabase<StudentAssignment> {
 //	BulkAssignmentFolder bulkAssignmentFolder;
 //	Map<String, StudentAssignment> nameToStudentAssignment = new HashMap();

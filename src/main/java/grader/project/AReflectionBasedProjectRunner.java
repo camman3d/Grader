@@ -47,7 +47,7 @@ public class AReflectionBasedProjectRunner implements Runnable {
 //		System.out.println("terminated");
 //		
 //	}
-	
+	public static final String DEFAULT_OUTPUT_FILE_NAME = "output.txt";
 	public  void run () {
 		try {
 
@@ -60,6 +60,19 @@ public class AReflectionBasedProjectRunner implements Runnable {
 			    PrintStream stdout = null;
 //			    InputStream originalIn = System.in;
 			    PrintStream originalOut = System.out;
+			    if (inputFiles.length == 0) {
+			    	inputFiles = new String[1];
+			    }
+			    
+			    if (outputFiles.length == 0) {
+			    	outputFiles = new String [] {project.getOutputFileName()};
+			    }
+			    if (mainArgs.length == 0) {
+			    	mainArgs = new String [1][];
+			    	
+
+			    }
+			    
 			    
 			   for (int i = 0; i < inputFiles.length; i++) {
 				   

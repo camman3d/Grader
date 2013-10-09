@@ -6,6 +6,9 @@ import java.util.Set;
 public interface RootFolderProxy  {
 	String getAbsoluteName();
 	String getLocalName();
+	public String getMixedCaseAbsoluteName();
+	
+	public String getMixedCaseLocalName() ;
 	List<FileProxy> getFileEntries();
 	FileProxy getFileEntry(String name);
 	Set<String> getEntryNames();
@@ -15,5 +18,7 @@ public interface RootFolderProxy  {
 	boolean isDirectory();
 	public FileProxy getFileEntryFromLocalName(String name);
 	boolean exists();
+	public  List<FileProxy> getChildrenOf(String aParentName);
+
 
 }

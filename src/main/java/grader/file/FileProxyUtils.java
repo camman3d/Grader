@@ -1,7 +1,6 @@
 package grader.file;
 
-import util.misc.Common;
-
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,6 +8,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import util.misc.Common;
 
 
 public class FileProxyUtils {
@@ -55,6 +56,7 @@ public class FileProxyUtils {
 		}
 		return new ArrayList();
 	}
+	
 	static public List<String> toList(FileProxy f) {
 //		List<String> retVal = new ArrayList();
 		if (f == null) {

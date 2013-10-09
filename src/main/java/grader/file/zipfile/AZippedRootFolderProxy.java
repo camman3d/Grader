@@ -3,8 +3,6 @@ package grader.file.zipfile;
 import grader.file.AnAbstractRootFolderProxy;
 import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
-import util.misc.Common;
-import util.trace.Tracer;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -12,10 +10,14 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import util.misc.Common;
+import util.trace.Tracer;
+
 public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements RootFolderProxy {
 	ZipFile zipFile;
 	String rootLocalName;
 	String absoluteName;
+	public static final String MACOS = "_MACOS";
 
 	public AZippedRootFolderProxy(String aZipFileName) {
 		super();
@@ -26,6 +28,9 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
 			return;
 //			e.printStackTrace();
 		}
+//		if (zipFile.getName().indexOf("erichman") != -1) {
+//			System.out.println("found student erichman");
+//		}
 		initRootName();
 		initEntries();
 		
@@ -58,20 +63,32 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
 	void initRootName() {
 		absoluteName = Common.toCanonicalFileName(zipFile.getName());
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-		if (enumeration.hasMoreElements()) {
+		while (enumeration.hasMoreElements()) {
+			 
 			ZipEntry nextEntry = enumeration.nextElement();
-			if (rootLocalName == null) {
-				rootLocalName = rootLocalName(nextEntry.getName());
+			String name = nextEntry.getName();
+			if (name.indexOf(".") >= 0 && name.indexOf('/') == -1) 
+				continue; // we got a file at the top level
+			
+			
+//			if (rootLocalName == null) {
+				rootLocalName = rootLocalName(name);
 				Tracer.info(this, "Local name:" + rootLocalName + " of zip file" + zipFile.getName());
-			}
+				return;
+//			}
 		}
 		
 	}
 	
 	void initEntries() {
+//		if (zipFile.getName().indexOf("erichman") != -1) {
+//			System.out.println("found student erichman");
+//		}
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 		while (enumeration.hasMoreElements()) {
 			ZipEntry nextEntry = enumeration.nextElement();
+			if (nextEntry.getName().indexOf(MACOS) >= 0) 
+				continue; // mac added stuff
 //			if (rootName == null) {
 //				rootName = rootName(nextEntry.getName());
 //			}
@@ -92,6 +109,18 @@ public class AZippedRootFolderProxy extends AnAbstractRootFolderProxy implements
 			System.out.println(aFileProxy.getLocalName());
 
 		}		
+	}
+
+	@Override
+	public String getMixedCaseAbsoluteName() {
+		// TODO Auto-generated method stub
+		return rootLocalName;
+	}
+
+	@Override
+	public String getMixedCaseLocalName() {
+		// TODO Auto-generated method stub
+		return absoluteName;
 	}
 
 
