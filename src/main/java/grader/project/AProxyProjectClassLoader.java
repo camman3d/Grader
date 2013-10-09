@@ -1,20 +1,13 @@
 package grader.project;
 
-import grader.AFeature;
-import grader.AGradeSheet;
-import grader.StudentClassLoader;
 import grader.file.FileProxy;
 import grader.project.file.RootCodeFolder;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import javax.swing.JFrame;
 

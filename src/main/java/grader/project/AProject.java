@@ -3,30 +3,11 @@ package grader.project;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import javax.swing.JFrame;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 
-import util.misc.Common;
-
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
-import bus.uigen.uiFrameList;
-import bus.uigen.attributes.AttributeNames;
-import bus.uigen.widgets.awt.AWTContainer;
-
-import grader.AFeature;
-import grader.AGradeSheet;
-import grader.documents.AWordDocumentDisplayer;
-import grader.documents.DocumentDisplayerRegistry;
-import grader.documents.WordCommentExtractor;
-import grader.documents.DocumentDisplayer;
-import grader.file.FileProxy;
 import grader.file.RootFolderProxy;
 import grader.file.filesystem.AFileSystemRootFolderProxy;
-import grader.file.zipfile.AZippedFileProxy;
 import grader.file.zipfile.AZippedRootFolderProxy;
 import grader.project.file.RootCodeFolder;
 import grader.project.file.java.AJavaRootCodeFolder;
@@ -35,7 +16,6 @@ import grader.project.source.ClassesTextManager;
 import grader.project.view.AClassViewManager;
 import grader.project.view.ClassViewManager;
 import grader.sakai.StudentCodingAssignment;
-import grader.sakai.project.SakaiProjectDatabase;
 
 public class AProject implements Project {
 	public static final String ZIP_SUFFIX = ".zip";

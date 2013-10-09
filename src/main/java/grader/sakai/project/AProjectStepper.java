@@ -402,7 +402,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 			writeScores(this);
 		manualOnyen = false;
 		try {
-			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
+//			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
 			Common.appendText(gradedFile, onyen + "\n");
 
 		} catch (IOException e) {
@@ -418,7 +418,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	public synchronized void skip() {
 		proceed();
 		try {
-			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n");
+//			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n");
 			Common.appendText(skippedFile, onyen + "\n");
 			List<String> list = FileProxyUtils.toList(new File(logFile));
 		} catch (IOException e) {

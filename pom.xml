@@ -70,6 +70,13 @@
             <version>22</version>
         </dependency>
 
+        <dependency>
+            <groupId>qdox</groupId>
+            <artifactId>qdox</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+
     </dependencies>
 
     <packaging>jar</packaging>
