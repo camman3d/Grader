@@ -3,9 +3,11 @@ package framework.grading;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
+import framework.grading.testing.TestCase;
 import framework.project.Project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +35,22 @@ public class ProjectRequirements {
 
     public void addFeature(Feature feature) {
         features.add(feature);
+    }
+
+    public void addFeature(String name, double points, List<TestCase> testCases) {
+        addFeature(new Feature(name, points, testCases));
+    }
+
+    public void addFeature(String name, double points, boolean extraCredit, List<TestCase> testCases) {
+        addFeature(new Feature(name, points, extraCredit, testCases));
+    }
+
+    public void addFeature(String name, double points, TestCase ... testCases) {
+        addFeature(new Feature(name, points, testCases));
+    }
+
+    public void addFeature(String name, double points, boolean extraCredit, TestCase ... testCases) {
+        addFeature(new Feature(name, points, extraCredit, testCases));
     }
 
     public void addRestriction(Restriction restriction) {

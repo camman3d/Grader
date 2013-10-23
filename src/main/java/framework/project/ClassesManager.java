@@ -28,7 +28,7 @@ public interface ClassesManager {
      * @param tag The tag to search for
      * @return The {@link ClassDescription} wrapped in an {@link scala.Option} in case none is found.
      */
-    public Option<ClassDescription> findByTag(String tag);
+    public Set<ClassDescription> findByTag(String tag);
 
     /**
      * @return All the {@link ClassDescription}

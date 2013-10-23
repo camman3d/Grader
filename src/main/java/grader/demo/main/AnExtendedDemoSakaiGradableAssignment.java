@@ -117,7 +117,8 @@ public class AnExtendedDemoSakaiGradableAssignment extends ADemoSakaiGradableAss
 		System.out.println("Input files are:" + inputFiles);
 		
 //		projectDatabase.runProjectInteractively("mkcolema");
-		projectDatabase.runProjectsInteractively();
+//		projectDatabase.runProjectsInteractively();
+        projectDatabase.nonBlockingRunProjectsInteractively();
 
 	}
 

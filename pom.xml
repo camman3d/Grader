@@ -6,7 +6,7 @@
 
     <groupId>edu.unc</groupId>
     <artifactId>comp401-grader</artifactId>
-    <version>Assignment-6</version>
+    <version>Assignment-7</version>
 
     <dependencies>
 
@@ -111,7 +111,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>graders.assignment6.Assignment6Grader</mainClass>
+                            <mainClass>graders.assignment7.Assignment7Grader</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -355,6 +355,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		return featureGradeRecorder.getGrade(project.getStudentAssignment().getStudentName(), project.getStudentAssignment().getOnyen(), aFeature);
 
 	}
+	@Override
 	public void setScore(double newVal) {
 		setInternalScore(newVal);
 		if (totalScoreRecorder != null)
@@ -366,17 +367,18 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 //		propertyChangeSupport.firePropertyChange("Score", null, newVal);
 	}
 	
-	
+	@Override
 	public  boolean preGetGradingFeatures() {
 		return projectDatabase != null && projectDatabase.getGradingFeatures().size() > 0;
 	}
+	@Override
 	public boolean preAutoGrade() {
 		return project.runChecked() && project.canBeRun() && preGetGradingFeatures();
 	}
 //	
 	@Row(8)
 	@ComponentWidth(100)
-
+	@Override
 	public void autoGrade() {
 		project.setHasBeenRun(true);
 		for (GradingFeature gradingFeature:projectDatabase.getGradingFeatures()) {
@@ -386,7 +388,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		}
 		
 	}
-	
+	@Override
 	@Row(9)
 	public GradingFeatureList getGradingFeatures() {
 		if (projectDatabase != null)
@@ -401,6 +403,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		return !preProceed();
 	}
 	@Row(10)
+	@Override
 	public boolean isAllGraded() {
 		return getGradingFeatures().isAllGraded();
 	}
@@ -416,7 +419,7 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 			writeScores(this);
 		manualOnyen = false;
 		try {
-			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
+//			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
 			Common.appendText(gradedFile, onyen + "\n");
 
 		} catch (IOException e) {
@@ -442,15 +445,17 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 //		// should put person in skipped list
 //		
 //	}
+	@Override
 	public boolean preNext() {
-		return !preDone();
+		return !preDone() && nextOnyenIndex < onyens.size() - 1 ;
 	}
 	@Row(12)
 	@ComponentWidth(100)
+	@Override
 	public synchronized void next() {
 		
 		try {
-			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n");
+//			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n");
 			Common.appendText(skippedFile, onyen + "\n");
 			List<String> list = FileProxyUtils.toList(new File(logFile));
 		} catch (IOException e) {
@@ -461,11 +466,13 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		// should put person in skipped list
 		
 	}
+	@Override
 	public boolean prePrevious() {
 		return nextOnyenIndex > 0;
 	}
 	@Row(13)
 	@ComponentWidth(100)
+	@Override
 	public synchronized void previous() {
 		
 //		try {
@@ -484,19 +491,21 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	String filter = "";
 	@Row(14)
 	@ComponentWidth(150)
+	@Override
 	public String getNavigationFilter() {
 		return projectDatabase.getNavigationFilter();
 	}
+	@Override
 	public void setNavigationFilter(String newVal) {
 		 projectDatabase.setNavigationFilter(newVal);
 		 configureNavigationList();
 		 runProjectsInteractively();
 	}
-	
+	@Override
 	public boolean hasMoreSteps() {
 		return hasMoreSteps;
 	}
-	
+	@Override
 	public void setHasMoreSteps(boolean newVal) {
 		if (hasMoreSteps == newVal) return;
 		 hasMoreSteps = newVal;
@@ -622,11 +631,13 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 	List<String> onyens;
 	int nextOnyenIndex = 0;
 	String nextOnyen;
+	@Override
 	public void configureNavigationList() {
 		onyens = projectDatabase.getOnyenNavigationList();
 		nextOnyenIndex = 0;
 		hasMoreSteps = true;
 	}
+	@Override
 	public boolean preRunProjectsInteractively() {
 		return onyens !=null && nextOnyenIndex < onyens.size();
 	}
@@ -658,10 +669,11 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		
 		
 	}
-	
+	@Override
 	public boolean preDone() {
 		return preProceed();
 	}
+	@Override
 	public synchronized void move(boolean forward) {
 		projectDatabase.resetIO();
 		projectDatabase.clearWindows();
@@ -691,14 +703,14 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 //		setProject(anOnyen);
 	}
 	
-	
+	@Override
 	@Row(11)
 	@ComponentWidth(100)
 	public synchronized void done() {
 		if (manualOnyen)
 			writeScores(this);
 		try {
-			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
+//			Common.appendText(logFile, onyen + " Skipped " + Common.currentTimeAsDate() + "\n\r");
 			Common.appendText(gradedFile, onyen + "\n");
 
 		} catch (IOException e) {

@@ -92,11 +92,11 @@ public class FeatureListItem {
             this.result = _result;
         } else {
             // Copy the values. The original object needs to stay the same, as it is used in other scopes
-            this.result.setNotes(result.getNotes());
-            this.result.setScore(result.getScore());
-            this.result.setStatus(result.getStatus());
-            this.result.setResults(result.getResults());
-            this.result.setTarget(result.getTarget());
+            this.result.setNotes(_result.getNotes());
+            this.result.setScore(_result.getScore());
+            this.result.setStatus(_result.getStatus());
+            this.result.setResults(_result.getResults());
+            this.result.setTarget(_result.getTarget());
         }
 
         score.setValue(_result.getScore());

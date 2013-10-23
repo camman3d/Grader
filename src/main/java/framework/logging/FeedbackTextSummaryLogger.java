@@ -4,6 +4,7 @@ import framework.grading.testing.CheckResult;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,60 +24,17 @@ public class FeedbackTextSummaryLogger implements Logger {
 
     @Override
     public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
-        String log = "";
-        double awarded = 0;
-        double deducted = 0;
-
-        log += "Grading result for: " + userId + "\n\n";
-
-        log += "Grading features...\n";
-        log += "----------------------------------\n";
-        for (CheckResult result : featureResults) {
-            awarded += result.getScore();
-            log += String.format(result.getTarget().getSummary(), result.getScore()) + "\n";
-        }
-        log += "----------------------------------\n";
-        log += "  Points Awarded: " + awarded + "\n\n";
-
-        if (!restrictionResults.isEmpty()) {
-            log += "Grading restrictions...\n";
-            log += "----------------------------------\n";
-            for (CheckResult result : restrictionResults) {
-                deducted += result.getScore();
-                log += String.format(result.getTarget().getSummary(), result.getScore()) + "\n";
-            }
-            log += "----------------------------------\n";
-            log += "  Points Deducted: " + deducted + "\n\n";
-        }
-
-        log += "  Total Score: " + (awarded + deducted) + "\n";
-
-        log += "\nNotes from grading features:\n";
-        log += "----------------------------------\n";
-        for (CheckResult result : featureResults) {
-            String note = result.getSummary();
-            if (!note.isEmpty())
-                log += note + "\n";
-        }
-
-        log += "\nNotes from grading restrictions:\n";
-        log += "----------------------------------\n";
-        for (CheckResult result : restrictionResults) {
-            String note = result.getSummary();
-            if (!note.isEmpty())
-                log += note + "\n";
-        }
-
-        log += "\nTA Comments:\n";
-        log += "----------------------------------\n";
-        log += comments;
-
+        String log = LocalTextSummaryLogger.getLog(userId, featureResults, restrictionResults, comments);
 
         // Maybe write this to a file
-//        File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");
-//        FileWriter writer = new FileWriter();
-//        new File(feedbackFolder, "feedback.txt")
-//        new File(downloadFolder, userId + "/")
+        File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");
+        try {
+            FileWriter writer = new FileWriter(new File(feedbackFolder, "feedback.txt"));
+            writer.write(log);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
 //        System.out.println(log);
     }

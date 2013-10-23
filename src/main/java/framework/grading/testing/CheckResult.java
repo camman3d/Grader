@@ -139,12 +139,14 @@ public class CheckResult implements Describable {
         String summary = "";
         for (TestCaseResult result : results) {
             if (!result.getNotes().isEmpty())
-                summary += " * From test case \"" + result.getName() + "\": " + result.getNotes();
+                summary += "\n * From test case \"" + result.getName() + "\": " + result.getNotes();
         }
+        if (!notes.isEmpty())
+            summary += "\n * Other notes: " + notes;
         if (summary.isEmpty())
             return summary;
         else
-            return "Notes about " + target.getName() + ":\n" + summary;
+            return "Notes about " + target.getName() + ":" + summary;
     }
 
 }

@@ -5,6 +5,7 @@ import util.annotations.Row;
 import util.annotations.Visible;
 import util.misc.ClearanceManager;
 import util.models.PropertyListenerRegisterer;
+import grader.assignment.GradingFeatureList;
 import grader.project.Project;
 
 import java.beans.PropertyChangeListener;
@@ -33,6 +34,36 @@ public interface ProjectStepper  extends ClearanceManager, PropertyListenerRegis
     public SakaiProject getProject();
     void runProjectsInteractively();
     public void configureNavigationList();
+
+	boolean preDone();
+
+	void done();
+
+	String getNavigationFilter();
+
+	void setNavigationFilter(String newVal);
+
+	boolean preGetGradingFeatures();
+
+	boolean preAutoGrade();
+
+	void autoGrade();
+
+	GradingFeatureList getGradingFeatures();
+
+	boolean isAllGraded();
+
+	boolean preNext();
+
+	void next();
+
+	boolean prePrevious();
+
+	void previous();
+
+	boolean preRunProjectsInteractively();
+
+	void move(boolean forward);
 
 	
 

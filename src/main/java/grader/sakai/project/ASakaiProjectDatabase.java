@@ -794,4 +794,10 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 
 	}
 
+
+    // Added by Josh
+    public void setManualFeedback(ManualFeedback manualFeedback) {
+        this.manualFeedback = manualFeedback;
+    }
+
 }
