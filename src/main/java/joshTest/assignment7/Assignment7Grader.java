@@ -1,9 +1,20 @@
 package joshTest.assignment7;
 
+import framework.grading.ProjectRequirements;
+import framework.grading.testing.Restriction;
+import framework.gui.SettingsWindow;
+import framework.utils.GraderSettings;
+import framework.utils.GradingEnvironment;
 import grader.assignment.AGradingFeature;
 import grader.assignment.GradingFeature;
+import grader.checkers.AProjectTracer;
 import grader.sakai.project.ASakaiProjectDatabase;
+import graders.assignment6.testCases.*;
+import graders.assignment7.Assignment7ProjectRequirements;
+import graders.assignment7.testCases.*;
+import joshTest.ManualFeedbackIgnorer;
 import joshTest.assignment7.checkers.BoundedShapeExtendsLocatableChecker;
+import joshTest.wrappers.ProjectDatabaseWrapper;
 
 import java.util.Arrays;
 
@@ -17,19 +28,29 @@ import java.util.Arrays;
 public class Assignment7Grader {
 
     public static void main(String[] args) {
-        String bulkFolder = "/Users/josh/Downloads/a7";
-        String dataFolder = "/Users/josh/Documents/School/Fall 2013/COMP401/Grader2/GraderData";
+//        String bulkFolder = "/Users/josh/Downloads/a7";
+//        String dataFolder = "/Users/josh/Documents/School/Fall 2013/COMP401/Grader2/GraderData";
+
+        SettingsWindow window = SettingsWindow.create();
+        window.awaitBegin();
 
         System.out.println("Loading projects...");
         long start = System.currentTimeMillis();
-        ASakaiProjectDatabase database = new ASakaiProjectDatabase(bulkFolder, dataFolder);
+        ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
         System.out.println("Done. Time taken: " + ((System.currentTimeMillis() - start) / 1000) + " seconds");
 
-        database.addGradingFeatures(Arrays.asList(
-                (GradingFeature) new AGradingFeature("Bounded shape extends locatable", 20, new BoundedShapeExtendsLocatableChecker()),
-                new AGradingFeature("Test feature 2", 15),
-                new AGradingFeature("Test feature 3", 10)
-        ));
+        GradingEnvironment.get().setAssignmentName("Assignment7");
+
+        // Create the project requirements/features
+        ProjectRequirements requirements = new Assignment7ProjectRequirements();
+        database.addProjectRequirements(requirements);
+
+        // Keep the note text editor from popping up
+        database.setManualFeedback(new ManualFeedbackIgnorer());
+
+//        database.addGradingFeatures(Arrays.asList(
+//                (GradingFeature) new AGradingFeature("Tracer", 20, new AProjectTracer())
+//        ));
 
         database.nonBlockingRunProjectsInteractively();
     }

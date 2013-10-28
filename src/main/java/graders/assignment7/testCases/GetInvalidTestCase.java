@@ -10,11 +10,8 @@ import graders.assignment7.tools.ManualClassFinder;
 import graders.assignment7.tools.RootTagFinder;
 import scala.Option;
 
-import javax.swing.*;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,10 +20,10 @@ import java.util.ArrayList;
  * Time: 12:55 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PutNullTestCase extends BasicTestCase {
+public class GetInvalidTestCase extends BasicTestCase {
 
-    public PutNullTestCase() {
-        super("Put null key/value test case");
+    public GetInvalidTestCase() {
+        super("Get invalid key test case");
     }
 
     @Override
@@ -41,20 +38,23 @@ public class PutNullTestCase extends BasicTestCase {
         }
 
         try {
-            // Get the put method
             Class<?> _class = classDescription.get().getJavaClass();
-            Method method = _class.getMethod("put", String.class, Object.class);
             Object table = _class.newInstance();
 
-            // Call it saving null a key and value
-            method.invoke(table, null, "Test1");
-            method.invoke(table, "test1", null);
+            // Get the put and get methods
+            Method putMethod = _class.getMethod("put", String.class, Object.class);
+            Method getMethod = _class.getMethod("get", String.class);
 
-            // If we got here then it didn't blow up, meaning it worked
-            return pass();
+            putMethod.invoke(table, "a", "b");
+            Object r = getMethod.invoke(table, "c");
+
+            if (r == null)
+                return pass();
+            else
+                return fail("Getting w/ invalid key shouldn't return anything.");
         } catch (InvocationTargetException e) {
             // This means the method threw an error
-            return fail("Putting with keys & values of null throws an error.");
+            return fail("Getting w/ invalid key throws an error");
         } catch (Exception e) {
             throw new NotGradableException();
         }

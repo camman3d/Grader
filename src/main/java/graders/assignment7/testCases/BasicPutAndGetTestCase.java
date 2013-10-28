@@ -12,6 +12,7 @@ import scala.Option;
 
 import javax.swing.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -22,10 +23,10 @@ import java.util.ArrayList;
  * Time: 12:55 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PutNewTestCase extends BasicTestCase {
+public class BasicPutAndGetTestCase extends BasicTestCase {
 
-    public PutNewTestCase() {
-        super("Put new key test case");
+    public BasicPutAndGetTestCase() {
+        super("Basic put and get test case");
     }
 
     @Override
@@ -40,42 +41,37 @@ public class PutNewTestCase extends BasicTestCase {
         }
 
         try {
-            // Get the put method
             Class<?> _class = classDescription.get().getJavaClass();
-            Method method = _class.getMethod("put", String.class, Object.class);
             Object table = _class.newInstance();
 
+            // Get the put and get methods
+            Method putMethod = _class.getMethod("put", String.class, Object.class);
+            Method getMethod = _class.getMethod("get", String.class);
+
             // Call it saving something
-            method.invoke(table, "test1", "Test1");
+            putMethod.invoke(table, "test1", "Test1");
 
-            // It's hard to check exactly how it worked. This is making an assumption on the implementation
-            // Get an array property
-            Field[] fields = _class.getDeclaredFields();
-            for (Field field : fields) {
-                if (field.getType().equals(ArrayList.class)) {
-                    int size = ((ArrayList) field.get(table)).size();
-                    if (size == 1)
-                        pass();
-                    fail("There should only be one item in the array list");
-                }
-            }
-
-            // So, they didn't do an array list. We'll have to ask
-            if (autoGrade)
-                throw new NotAutomatableException();
-            return ask();
+            // Get it back
+            String s = (String) getMethod.invoke(table, "test1");
+            if (s.equals("Test1"))
+                return pass();
+            return fail("Basic put and get didn't work");
+        } catch (InvocationTargetException e) {
+            // This means the method threw an error
+            return fail("Basic put/get throws an error");
         } catch (Exception e) {
-            if (autoGrade)
-                throw new NotAutomatableException();
-            return ask();
+            throw new NotGradableException();
+//            if (autoGrade)
+//                throw new NotAutomatableException();
+//            return ask();
         }
     }
 
-    private TestCaseResult ask() {
-        int result = JOptionPane.showConfirmDialog(null, "Does the put method save new keys and values?", "Put method", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (result == 0)
-            return pass();
-        else
-            return fail("Put method does not save new keys and values.");
-    }
+//    private TestCaseResult ask() {
+//        int result = JOptionPane.showConfirmDialog(null, "Does put and get save and return values?", "Put method", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+//        if (result == 0)
+//            return pass();
+//        else
+//            return fail("Put method does not save new keys and values.");
+//    }
 }

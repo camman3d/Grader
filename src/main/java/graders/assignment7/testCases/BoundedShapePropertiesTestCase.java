@@ -47,7 +47,7 @@ public class BoundedShapePropertiesTestCase extends BasicTestCase {
         // There should four methods: getWidth, getHeight, setWidth, setHeight
         int methodCount = 0;
         String notes = "";
-        List<String> validMethods = new ArrayList<String>(Arrays.asList("getwidth", "getheight", "setwidth", "setheight"));
+        List<String> validMethods = new ArrayList<String>(Arrays.asList("getwidth", "getheight"));
         for (Method method : methods) {
             String name = method.getName().toLowerCase();
             if (validMethods.contains(name)) {

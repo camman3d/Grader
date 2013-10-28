@@ -5,8 +5,7 @@ import framework.project.Project;
 import scala.Option;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,10 +25,18 @@ public class CachedProjectClassFinder {
 
     public Option<ClassDescription> get(String tag) {
         if (!cache.containsKey(tag)) {
+            List<ClassDescription> classDescriptions = new ArrayList<ClassDescription>(project.getClassesManager().get().getClassDescriptions());
+            Collections.sort(classDescriptions, new Comparator<ClassDescription>() {
+                @Override
+                public int compare(ClassDescription o1, ClassDescription o2) {
+                    return o1.getJavaClass().getCanonicalName().compareTo(o2.getJavaClass().getCanonicalName());
+                }
+            });
+
             ClassDescription description = (ClassDescription) JOptionPane.showInputDialog(null,
                     "Which class is: \"" + tag + "\"? (Click Cancel if doesn't exist)",
                     "Class finder", JOptionPane.QUESTION_MESSAGE, null,
-                    project.getClassesManager().get().getClassDescriptions().toArray(),
+                    classDescriptions.toArray(),
                     null
             );
             if (description == null)

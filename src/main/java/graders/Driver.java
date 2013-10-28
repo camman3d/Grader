@@ -7,6 +7,8 @@ import framework.gui.GradingWindow;
 import framework.gui.SettingsWindow;
 import framework.logging.JsonWritableResults;
 import framework.project.Project;
+import graders.assignment7.Assignment7ProjectRequirements;
+import graders.assignment8.Assignment8ProjectRequirements;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -25,19 +27,8 @@ import java.util.List;
 public class Driver {
     public static void main(String[] args) throws IOException {
 
-        ProjectRequirements requirements = new ProjectRequirements();
-
-        requirements.addFeature(new Feature("Be cool", 10, Arrays.asList((TestCase) new BasicTestCase("Class checker") {
-            @Override
-            public TestCaseResult test(Project project, boolean autoGrade) {
-                if (project.getClassesManager().isDefined())
-                    return pass();
-                else
-                    return fail("No classes!");
-            }
-        })));
-
-        GradingManager manager = new GradingManager("Assignment1", requirements);
+        ProjectRequirements requirements = new Assignment8ProjectRequirements();
+        GradingManager manager = new GradingManager("Assignment8", requirements);
         manager.run();
     }
 }

@@ -8,10 +8,11 @@ package joshTest.assignment7.checkers;
 //import framework.project.Project;
 
 import grader.checkers.ACheckResult;
-import grader.checkers.AnAbstractFeatureChecker;
 import grader.checkers.CheckResult;
 import grader.project.ClassDescription;
+import joshTest.wrappers.ErrorHandlingFeatureChecker;
 import joshTest.assignment7.tools.SuperclassFinder;
+import joshTest.assignment7.tools.TagFinder;
 
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import java.util.Set;
  * Time: 12:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BoundedShapeExtendsLocatableChecker extends AnAbstractFeatureChecker {
+public class BoundedShapeExtendsLocatableChecker extends ErrorHandlingFeatureChecker {
 
 
 //    @Override
@@ -57,28 +58,26 @@ public class BoundedShapeExtendsLocatableChecker extends AnAbstractFeatureChecke
 //    }
 
     @Override
-    public CheckResult check() {
-        try {
-            CheckResult result = new ACheckResult();
+    protected CheckResult doCheck() throws Exception {
+        CheckResult result = new ACheckResult();
 
-            // Get the class description for locatable
-            Set<ClassDescription> classDescriptions = project.getClassesManager().tagToClassDescriptions("Locatable");
-            if (classDescriptions == null || classDescriptions.isEmpty())
-                return null;
-            ClassDescription locatable = SuperclassFinder.findSuperclass(classDescriptions);
-
-            // Get the class descriptions for all bounded shapes
-            classDescriptions = project.getClassesManager().tagToClassDescriptions("Bounded Shape");
-            try {
-                SuperclassFinder.findClassThatExtends(classDescriptions, locatable);
-                result.setScore(feature.getMax());
-            } catch (Exception e) {
-                result.setScore(0);
-                result.getLog().add("Unable to find a class tagged with \"Bounded Shape\" that extends a class tagged with \"Locatable\"");
-            }
-            return result;
-        } catch (Exception e) {
+        // Get the class description for locatable
+//            Set<ClassDescription> classDescriptions = project.getClassesManager().tagToClassDescriptions("Locatable");
+        Set<ClassDescription> classDescriptions = TagFinder.find(project, "Locatable");
+        if (classDescriptions == null || classDescriptions.isEmpty())
             return null;
+        ClassDescription locatable = SuperclassFinder.findSuperclass(classDescriptions);
+
+        // Get the class descriptions for all bounded shapes
+        classDescriptions = TagFinder.find(project, "Bounded Shape");
+        try {
+            SuperclassFinder.findClassThatExtends(classDescriptions, locatable);
+            result.setScore(feature.getMax());
+        } catch (Exception e) {
+            result.setScore(0);
+            result.getLog().add("Unable to find a class tagged with \"Bounded Shape\" that extends a class tagged with \"Locatable\"");
         }
+        return result;
     }
+
 }

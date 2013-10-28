@@ -47,7 +47,7 @@ public class LocatablePropertiesTestCase extends BasicTestCase {
         // There should four methods: getX, getY, setX, and setY
         int methodCount = 0;
         String notes = "";
-        List<String> validMethods = new ArrayList<String>(Arrays.asList("getx", "gety", "setx", "sety"));
+        List<String> validMethods = new ArrayList<String>(Arrays.asList("getx", "gety"));
         for (Method method : methods) {
             String name = method.getName().toLowerCase();
             if (validMethods.contains(name)) {
