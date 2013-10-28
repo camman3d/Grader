@@ -40,4 +40,9 @@ public interface StudentFolder<T extends Project> {
      * @return The student's project wrapped in a {@link Project} and a {@link scala.Option} if it doesn't exist
      */
     public Option<T> getProject(String name);
+
+    /**
+     * @return The time the project was turned in
+     */
+    public Option<DateTime> getTimestamp();
 }

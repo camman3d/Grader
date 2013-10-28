@@ -23,8 +23,10 @@ public class FeedbackTextSummaryLogger implements Logger {
     }
 
     @Override
-    public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
-        String log = LocalTextSummaryLogger.getLog(userId, featureResults, restrictionResults, comments);
+    public void save(String projectName, String userId, List<CheckResult> featureResults,
+                     List<CheckResult> restrictionResults, String comments, double gradePercentage) {
+
+        String log = LocalTextSummaryLogger.getLog(userId, featureResults, restrictionResults, comments, gradePercentage);
 
         // Maybe write this to a file
         File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");

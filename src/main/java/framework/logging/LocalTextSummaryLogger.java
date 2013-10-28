@@ -18,8 +18,9 @@ public class LocalTextSummaryLogger implements Logger {
 
 
     @Override
-    public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
-        String log = getLog(userId, featureResults, restrictionResults, comments);
+    public void save(String projectName, String userId, List<CheckResult> featureResults,
+                     List<CheckResult> restrictionResults, String comments, double gradePercentage) {
+        String log = getLog(userId, featureResults, restrictionResults, comments, gradePercentage);
 
 
         // Maybe write this to a file
@@ -33,7 +34,8 @@ public class LocalTextSummaryLogger implements Logger {
         }
     }
 
-    public static String getLog(String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
+    public static String getLog(String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults,
+                                String comments, double gradePercentage) {
         String log = "";
         double awarded = 0;
         double deducted = 0;
@@ -77,6 +79,11 @@ public class LocalTextSummaryLogger implements Logger {
             if (!note.isEmpty())
                 log += note + "\n";
         }
+
+        if (gradePercentage < 1)
+            log += "\nLate penalty: " + (gradePercentage * 100) + "%\n";
+        if (gradePercentage > 1)
+            log += "\nEarly benefit: " + (gradePercentage * 100) + "%\n";
 
         log += "\nTA Comments:\n";
         log += "----------------------------------\n";

@@ -48,7 +48,9 @@ public class ProjectClassesManager implements ClassesManager {
             try {
                 Class c = classLoader.loadClass(className);
                 classDescriptions.add(new BasicClassDescription(c, file));
-            } catch (IncompatibleClassChangeError e) {
+            } catch (Error e) {
+                throw new IOException(e.getMessage());
+            } catch (Exception e) {
                 throw new IOException(e.getMessage());
             }
         }

@@ -19,12 +19,13 @@ public class FeedbackJsonLogger implements Logger {
     }
 
     @Override
-    public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
+    public void save(String projectName, String userId, List<CheckResult> featureResults,
+                     List<CheckResult> restrictionResults, String comments, double gradePercentage) {
         File feedbackFolder = new File(downloadFolder, userId + "/Feedback Attachment(s)");
 
         // Write the json file
         ObjectMapper mapper = new ObjectMapper();
-        JsonWritableResults results = new JsonWritableResults(userId, featureResults, restrictionResults, comments);
+        JsonWritableResults results = new JsonWritableResults(userId, featureResults, restrictionResults, comments, gradePercentage);
         try {
             mapper.writeValue(new File(feedbackFolder, "results.json"), results);
         } catch (IOException e) {

@@ -7,6 +7,7 @@ import graders.assignment6.testCases.*;
 import graders.assignment8.testCases.CannedTestCase1;
 import graders.assignment8.testCases.CannedTestCase2;
 import graders.assignment8.testCases.CannedTestCase3;
+import org.joda.time.DateTime;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +19,12 @@ import graders.assignment8.testCases.CannedTestCase3;
 public class Assignment8ProjectRequirements extends ProjectRequirements {
 
     public Assignment8ProjectRequirements() {
+
+        // Add due date/times with a 30 minute grace period
+        addDueDate("10/24/2013 00:30:00", 1.05);
+        addDueDate("10/26/2013 00:30:00", 1);
+        addDueDate("10/29/2013 11:30:00", 0.9);
+        addDueDate("10/31/2013 11:30:00", 0.75);
 
         // TODO: Add test cases
 

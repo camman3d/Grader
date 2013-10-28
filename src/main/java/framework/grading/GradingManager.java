@@ -11,6 +11,7 @@ import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
 import framework.navigation.StudentFolder;
 import framework.project.Project;
+import org.joda.time.DateTime;
 import scala.Option;
 
 import java.util.ArrayList;
@@ -84,8 +85,12 @@ public class GradingManager {
                 boolean continueGrading = window.awaitDone();
                 String comments = window.getComments();
 
+                // Figure out the late penalty
+                Option<DateTime> timestamp = folder.getTimestamp();
+                double gradePercentage = timestamp.isDefined() ? projectRequirements.checkDueDate(timestamp.get()) : 0;
+
                 // Log the results
-                logResults(folder, featureResults, restrictionResults, comments);
+                logResults(folder, featureResults, restrictionResults, comments, gradePercentage);
 
                 if (!continueGrading)
                     System.exit(0);
@@ -106,11 +111,11 @@ public class GradingManager {
     }
 
     private void logResults(StudentFolder folder, List<CheckResult> featureResults,
-                            List<CheckResult> restrictionResults, String comments) {
+                            List<CheckResult> restrictionResults, String comments, double gradePercentage) {
 
         // Log the results
         for (Logger logger : loggers)
-            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments);
+            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments, gradePercentage);
     }
 
 }

@@ -15,6 +15,12 @@ import graders.assignment7.testCases.*;
 public class Assignment7ProjectRequirements extends ProjectRequirements {
 
     public Assignment7ProjectRequirements() {
+
+        addDueDate("10/10/2013 00:30:00", 1);
+        addDueDate("10/12/2013 00:30:00", 1);
+        addDueDate("10/22/2013 11:30:00", 0.9);
+        addDueDate("10/24/2013 11:30:00", 0.75);
+
         addFeature("Locatable class and interface", 15,
                 new LocatableTagTestCase(),
                 new LocatablePropertiesTestCase()//,

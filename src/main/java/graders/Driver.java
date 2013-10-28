@@ -27,8 +27,8 @@ import java.util.List;
 public class Driver {
     public static void main(String[] args) throws IOException {
 
-        ProjectRequirements requirements = new Assignment8ProjectRequirements();
-        GradingManager manager = new GradingManager("Assignment8", requirements);
+        ProjectRequirements requirements = new Assignment7ProjectRequirements();
+        GradingManager manager = new GradingManager("Assignment7", requirements);
         manager.run();
     }
 }

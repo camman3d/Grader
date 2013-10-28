@@ -17,5 +17,6 @@ public interface Logger {
      * @param restrictionResults The results from grading the restrictions
      * @param comments Additional comments. May be empty
      */
-    public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments);
+    public void save(String projectName, String userId, List<CheckResult> featureResults,
+                     List<CheckResult> restrictionResults, String comments, double gradePercentage);
 }
