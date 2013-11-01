@@ -1,22 +1,11 @@
 package joshTest.assignment7;
 
 import framework.grading.ProjectRequirements;
-import framework.grading.testing.Restriction;
 import framework.gui.SettingsWindow;
-import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import grader.assignment.AGradingFeature;
-import grader.assignment.GradingFeature;
-import grader.checkers.AProjectTracer;
-import grader.sakai.project.ASakaiProjectDatabase;
-import graders.assignment6.testCases.*;
-import graders.assignment7.Assignment7ProjectRequirements;
-import graders.assignment7.testCases.*;
+import gradingTools.assignment7.Assignment7ProjectRequirements;
 import joshTest.ManualFeedbackIgnorer;
-import joshTest.assignment7.checkers.BoundedShapeExtendsLocatableChecker;
-import joshTest.wrappers.ProjectDatabaseWrapper;
-
-import java.util.Arrays;
+import framework.wrappers.ProjectDatabaseWrapper;
 
 /**
  * Created with IntelliJ IDEA.

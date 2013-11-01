@@ -195,6 +195,13 @@ public class GradingWindow {
     private JButton gradeResults10;
     private JButton gradeResults11;
     private JButton gradeResults12;
+    private JButton restrictionResults1;
+    private JButton restrictionResults2;
+    private JButton restrictionResults3;
+    private JButton restrictionResults4;
+    private JButton restrictionResults5;
+    private JButton restrictionResults6;
+    private JButton restrictionResults7;
     private TotalScoreUpdater scoreUpdater;
 
     // Properties dealing with the project
@@ -225,13 +232,13 @@ public class GradingWindow {
         features.add(new FeatureListItem(featureName12, score12, max12, fullCredit12, extraCredit12, notes12, gradeStatus12, autoGrade12, gradeResults12));
 
         restrictions = new ArrayList<RestrictionListItem>();
-        restrictions.add(new RestrictionListItem(restriction1, rScore1, rMax1, rNotes1, status1));
-        restrictions.add(new RestrictionListItem(restriction2, rScore2, rMax2, rNotes2, status2));
-        restrictions.add(new RestrictionListItem(restriction3, rScore3, rMax3, rNotes3, status3));
-        restrictions.add(new RestrictionListItem(restriction4, rScore4, rMax4, rNotes4, status4));
-        restrictions.add(new RestrictionListItem(restriction5, rScore5, rMax5, rNotes5, status5));
-        restrictions.add(new RestrictionListItem(restriction6, rScore6, rMax6, rNotes6, status6));
-        restrictions.add(new RestrictionListItem(restriction7, rScore7, rMax7, rNotes7, status7));
+        restrictions.add(new RestrictionListItem(restriction1, rScore1, rMax1, rNotes1, status1, restrictionResults1));
+        restrictions.add(new RestrictionListItem(restriction2, rScore2, rMax2, rNotes2, status2, restrictionResults2));
+        restrictions.add(new RestrictionListItem(restriction3, rScore3, rMax3, rNotes3, status3, restrictionResults3));
+        restrictions.add(new RestrictionListItem(restriction4, rScore4, rMax4, rNotes4, status4, restrictionResults4));
+        restrictions.add(new RestrictionListItem(restriction5, rScore5, rMax5, rNotes5, status5, restrictionResults5));
+        restrictions.add(new RestrictionListItem(restriction6, rScore6, rMax6, rNotes6, status6, restrictionResults6));
+        restrictions.add(new RestrictionListItem(restriction7, rScore7, rMax7, rNotes7, status7, restrictionResults7));
 
         saveAndQuitButton.addActionListener(new ActionListener() {
             @Override
@@ -330,7 +337,8 @@ public class GradingWindow {
             window.frame = frame;
             frame.setContentPane(window.mainPanel);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setPreferredSize(new Dimension(800, 600));
+            frame.setPreferredSize(new Dimension(1000, 600));
+//            frame.setSize(new Dimension(2000, 2000));
             frame.pack();
             frame.setVisible(true);
 //            frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);

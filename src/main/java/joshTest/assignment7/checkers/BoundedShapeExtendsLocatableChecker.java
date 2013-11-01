@@ -10,7 +10,7 @@ package joshTest.assignment7.checkers;
 import grader.checkers.ACheckResult;
 import grader.checkers.CheckResult;
 import grader.project.ClassDescription;
-import joshTest.wrappers.ErrorHandlingFeatureChecker;
+import framework.wrappers.ErrorHandlingFeatureChecker;
 import joshTest.assignment7.tools.SuperclassFinder;
 import joshTest.assignment7.tools.TagFinder;
 

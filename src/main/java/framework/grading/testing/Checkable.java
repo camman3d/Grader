@@ -34,6 +34,7 @@ public abstract class Checkable implements Gradable {
         } catch (NotAutomatableException e) {
             return new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, this);
         } catch (Exception e) {
+//            e.printStackTrace();
             return new CheckResult(0, "", CheckResult.CheckStatus.Failed, this);
         }
     }
