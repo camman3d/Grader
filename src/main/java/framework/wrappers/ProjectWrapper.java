@@ -1,5 +1,7 @@
 package framework.wrappers;
 
+import framework.navigation.SakaiStudentFolder;
+import framework.navigation.StudentFolder;
 import framework.project.StandardProject;
 import grader.project.Project;
 import net.lingala.zip4j.core.ZipFile;
@@ -16,8 +18,6 @@ import java.io.FileNotFoundException;
  * To change this template use File | Settings | File Templates.
  */
 public class ProjectWrapper extends StandardProject {
-
-
 
     public ProjectWrapper(Project project, String name) throws FileNotFoundException {
         super(getDirectory(project), name);
@@ -44,5 +44,10 @@ public class ProjectWrapper extends StandardProject {
                 throw new FileNotFoundException();
         } else
             return path;
+    }
+
+    public static StudentFolder getStudentFolder(Project project) {
+        File path = new File(project.getProjectFolderName());
+        return new SakaiStudentFolder(path.getParentFile().getParentFile());
     }
 }

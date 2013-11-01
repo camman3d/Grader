@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
+    private ProjectRequirements projectRequirements;
+
     public ProjectDatabaseWrapper() {
         super(getAssignmentFolder(), getDataFolder());
     }
@@ -49,6 +51,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
     }
 
     public void addProjectRequirements(ProjectRequirements requirements) {
+        projectRequirements = requirements;
         List<GradingFeature> gradingFeatures = new ArrayList<GradingFeature>();
 
         // Add the features
@@ -62,5 +65,9 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
         }
 
         addGradingFeatures(gradingFeatures);
+    }
+
+    public ProjectRequirements getProjectRequirements() {
+        return projectRequirements;
     }
 }

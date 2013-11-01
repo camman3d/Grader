@@ -3,6 +3,7 @@ package joshTest.assignment7;
 import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
 import framework.utils.GradingEnvironment;
+import framework.wrappers.ProjectStepperDisplayerWrapper;
 import gradingTools.assignment7.Assignment7ProjectRequirements;
 import joshTest.ManualFeedbackIgnorer;
 import framework.wrappers.ProjectDatabaseWrapper;
@@ -34,12 +35,7 @@ public class Assignment7Grader {
         ProjectRequirements requirements = new Assignment7ProjectRequirements();
         database.addProjectRequirements(requirements);
 
-        // Keep the note text editor from popping up
-        database.setManualFeedback(new ManualFeedbackIgnorer());
-
-//        database.addGradingFeatures(Arrays.asList(
-//                (GradingFeature) new AGradingFeature("Tracer", 20, new AProjectTracer())
-//        ));
+        database.setProjectStepperDisplayer(new ProjectStepperDisplayerWrapper());
 
         database.nonBlockingRunProjectsInteractively();
     }
