@@ -26,6 +26,8 @@ public class TestCaseWrapper extends BasicTestCase {
 
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
+        featureChecker.setProject(((ProjectWrapper) project).getProject());
+
         CheckResult result = featureChecker.check();
         if (result == null)
             throw new NotGradableException();

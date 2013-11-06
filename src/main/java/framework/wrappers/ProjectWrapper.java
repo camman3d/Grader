@@ -4,6 +4,7 @@ import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
 import framework.project.StandardProject;
 import grader.project.Project;
+import grader.sakai.project.SakaiProject;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -19,8 +20,15 @@ import java.io.FileNotFoundException;
  */
 public class ProjectWrapper extends StandardProject {
 
+    private Project project;
+
     public ProjectWrapper(Project project, String name) throws FileNotFoundException {
         super(getDirectory(project), name);
+        this.project = project;
+    }
+
+    public SakaiProject getProject() {
+        return (SakaiProject) project;
     }
 
     private static File getDirectory(Project project) throws FileNotFoundException {
