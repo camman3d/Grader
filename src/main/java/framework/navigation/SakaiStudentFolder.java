@@ -112,4 +112,18 @@ public class SakaiStudentFolder implements StudentFolder {
             return Option.empty();
         }
     }
+
+    @Override
+    public Option<DateTime> getTimestamp() {
+        File timestampFile = new File(folder, "timestamp.txt");
+        if (timestampFile.exists()) {
+            try {
+                String timestampText = FileUtils.readFileToString(timestampFile);
+                return Option.apply(new DateTime(Common.toDate(timestampText)));
+            } catch (IOException e) {
+                return Option.empty();
+            }
+        } else
+            return Option.empty();
+    }
 }

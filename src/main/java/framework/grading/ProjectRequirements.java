@@ -3,9 +3,14 @@ package framework.grading;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
+import framework.grading.testing.TestCase;
 import framework.project.Project;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +26,8 @@ public class ProjectRequirements {
     private List<Feature> features;
     private List<Restriction> restrictions;
 
+    private List<DueDate> dueDates = new ArrayList<DueDate>();
+
     public ProjectRequirements() {
         features = new ArrayList<Feature>();
         restrictions = new ArrayList<Restriction>();
@@ -33,6 +40,22 @@ public class ProjectRequirements {
 
     public void addFeature(Feature feature) {
         features.add(feature);
+    }
+
+    public void addFeature(String name, double points, List<TestCase> testCases) {
+        addFeature(new Feature(name, points, testCases));
+    }
+
+    public void addFeature(String name, double points, boolean extraCredit, List<TestCase> testCases) {
+        addFeature(new Feature(name, points, extraCredit, testCases));
+    }
+
+    public void addFeature(String name, double points, TestCase ... testCases) {
+        addFeature(new Feature(name, points, testCases));
+    }
+
+    public void addFeature(String name, double points, boolean extraCredit, TestCase ... testCases) {
+        addFeature(new Feature(name, points, extraCredit, testCases));
     }
 
     public void addRestriction(Restriction restriction) {
@@ -59,6 +82,25 @@ public class ProjectRequirements {
         for (Restriction restriction : restrictions)
             results.add(restriction.check(project));
         return results;
+    }
+
+    public double checkDueDate(DateTime dateTime) {
+        double percentage = 0;
+        for (DueDate dueDate : dueDates) {
+            if (dueDate.getCutoffDate().isAfter(dateTime))
+                percentage = Math.max(percentage, dueDate.getPercentage());
+        }
+        return percentage;
+    }
+
+    public void addDueDate(DateTime dateTime, double percentage) {
+        dueDates.add(new DueDate(dateTime, percentage));
+    }
+
+    public void addDueDate(String dateTime, double percentage) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
+        DateTime dt = formatter.parseDateTime(dateTime);
+        addDueDate(dt, percentage);
     }
 
 }

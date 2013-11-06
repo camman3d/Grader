@@ -35,7 +35,7 @@ public class ManualClassesManager implements ClassesManager {
     }
 
     @Override
-    public Option<ClassDescription> findByTag(String tag) {
+    public Set<ClassDescription> findByTag(String tag) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

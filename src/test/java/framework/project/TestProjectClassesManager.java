@@ -5,6 +5,7 @@ import scala.Option;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -74,14 +75,14 @@ public class TestProjectClassesManager {
     @Test
     public void testFindByTag() throws IOException, ClassNotFoundException {
         ClassesManager classesManager = new ProjectClassesManager(new File(validBuildLocation), new File(validSrcLocation));
-        Option<ClassDescription> description = classesManager.findByTag(validTag);
-        assertTrue("Class should exist", description.isDefined());
+        Set<ClassDescription> description = classesManager.findByTag(validTag);
+        assertFalse("Class should exist", description.isEmpty());
     }
 
     @Test
     public void testFindByTagInvalid() throws IOException, ClassNotFoundException {
         ClassesManager classesManager = new ProjectClassesManager(new File(validBuildLocation), new File(validSrcLocation));
-        Option<ClassDescription> description = classesManager.findByTag(invalidTag);
+        Set<ClassDescription> description = classesManager.findByTag(invalidTag);
         assertTrue("Class should not exist", description.isEmpty());
     }
 

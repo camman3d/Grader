@@ -69,4 +69,9 @@ public class BasicClassDescription implements ClassDescription {
             return new String[]{};
         }
     }
+
+    @Override
+    public String toString() {
+        return javaClass.getCanonicalName();
+    }
 }

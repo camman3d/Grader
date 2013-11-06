@@ -48,7 +48,9 @@ public class ProjectClassesManager implements ClassesManager {
             try {
                 Class c = classLoader.loadClass(className);
                 classDescriptions.add(new BasicClassDescription(c, file));
-            } catch (IncompatibleClassChangeError e) {
+            } catch (Error e) {
+                throw new IOException(e.getMessage());
+            } catch (Exception e) {
                 throw new IOException(e.getMessage());
             }
         }
@@ -94,14 +96,15 @@ public class ProjectClassesManager implements ClassesManager {
     }
 
     @Override
-    public Option<ClassDescription> findByTag(String tag) {
+    public Set<ClassDescription> findByTag(String tag) {
+        Set<ClassDescription> classes = new HashSet<ClassDescription>();
         for (ClassDescription description : classDescriptions) {
             for (String t : description.getTags()) {
                 if (t.equalsIgnoreCase(tag))
-                    return Option.apply(description);
+                    classes.add(description);
             }
         }
-        return Option.empty();
+        return classes;
     }
 
     @Override

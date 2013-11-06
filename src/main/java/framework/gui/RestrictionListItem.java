@@ -3,6 +3,7 @@ package framework.gui;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
+import framework.grading.testing.TestCaseResult;
 import framework.project.Project;
 import scala.Option;
 
@@ -26,17 +27,20 @@ public class RestrictionListItem {
     private JLabel max;
     private JButton notes;
     private JLabel status;
+//    private JButton restrictionResults;
     private TotalScoreUpdater updater;
 
 //    private Restriction restriction;
     private CheckResult result;
 
-    public RestrictionListItem(JLabel name, final JSpinner score, JLabel max, final JButton notes, JLabel status) {
+    public RestrictionListItem(JLabel name, final JSpinner score, JLabel max, final JButton notes, JLabel status,
+                               final JButton restrictionResults) {
         this.name = name;
         this.score = score;
         this.max = max;
         this.notes = notes;
         this.status = status;
+//        this.restrictionResults = restrictionResults;
 
         result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, null);
 
@@ -57,6 +61,18 @@ public class RestrictionListItem {
                 if (score.getValue() instanceof Integer)
                     result.setScore((Integer) score.getValue());
                 updater.update();
+            }
+        });
+        restrictionResults.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String message = "";
+                for (TestCaseResult testResult : result.getResults()) {
+                    message += testResult.getName() + ": " + (testResult.getPercentage() * 100) + "% \n";
+                    if (!testResult.getNotes().isEmpty())
+                        message += "  -- " + testResult.getNotes() + "\n";
+                }
+                JOptionPane.showMessageDialog(restrictionResults, message, "Result notes", JOptionPane.PLAIN_MESSAGE);
             }
         });
     }

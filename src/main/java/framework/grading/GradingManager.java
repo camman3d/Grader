@@ -5,15 +5,13 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.gui.SettingsWindow;
-import framework.logging.FeedbackJsonLogger;
-import framework.logging.FeedbackTextSummaryLogger;
-import framework.logging.LocalJsonLogger;
-import framework.logging.Logger;
+import framework.logging.*;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
 import framework.navigation.StudentFolder;
 import framework.project.Project;
+import org.joda.time.DateTime;
 import scala.Option;
 
 import java.util.ArrayList;
@@ -45,6 +43,7 @@ public class GradingManager {
         this.projectRequirements = projectRequirements;
         loggers = new ArrayList<Logger>() {{
             add(new LocalJsonLogger());
+            add(new LocalTextSummaryLogger());
         }};
     }
 
@@ -86,8 +85,12 @@ public class GradingManager {
                 boolean continueGrading = window.awaitDone();
                 String comments = window.getComments();
 
+                // Figure out the late penalty
+                Option<DateTime> timestamp = folder.getTimestamp();
+                double gradePercentage = timestamp.isDefined() ? projectRequirements.checkDueDate(timestamp.get()) : 0;
+
                 // Log the results
-                logResults(folder, featureResults, restrictionResults, comments);
+                logResults(folder, featureResults, restrictionResults, comments, gradePercentage);
 
                 if (!continueGrading)
                     System.exit(0);
@@ -108,11 +111,11 @@ public class GradingManager {
     }
 
     private void logResults(StudentFolder folder, List<CheckResult> featureResults,
-                            List<CheckResult> restrictionResults, String comments) {
+                            List<CheckResult> restrictionResults, String comments, double gradePercentage) {
 
         // Log the results
         for (Logger logger : loggers)
-            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments);
+            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments, gradePercentage);
     }
 
 }

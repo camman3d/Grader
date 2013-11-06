@@ -111,6 +111,22 @@ public class ProcessRunner implements Runner {
 
             // Start the process
             Process process = builder.start();
+
+            // Print output to the console
+            final InputStream processOut = process.getInputStream();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner scanner = new Scanner(processOut);
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        System.out.println(line);
+                        runner.appendOutput(line);
+                    }
+                }
+            }).start();
+
+            // Write to the process
             OutputStreamWriter processIn = new OutputStreamWriter(process.getOutputStream());
             processIn.write(input);
 
@@ -119,9 +135,9 @@ public class ProcessRunner implements Runner {
             process.waitFor();
 
             // Write the output
-            StringWriter writer = new StringWriter();
-            IOUtils.copy(process.getInputStream(), writer);
-            runner.setOutput(writer.toString());
+//            StringWriter writer = new StringWriter();
+//            IOUtils.copy(process.getInputStream(), writer);
+//            runner.setOutput(writer.toString());
             runner.end();
 
         } catch (Exception e) {

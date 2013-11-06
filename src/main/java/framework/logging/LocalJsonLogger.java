@@ -13,14 +13,15 @@ import java.util.List;
 public class LocalJsonLogger implements Logger {
 
     @Override
-    public void save(String projectName, String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
+    public void save(String projectName, String userId, List<CheckResult> featureResults,
+                     List<CheckResult> restrictionResults, String comments, double gradePercentage) {
         // Make sure the folder exists
         File folder = new File("log/" + projectName);
         folder.mkdirs();
 
         // Write the json file
         ObjectMapper mapper = new ObjectMapper();
-        JsonWritableResults results = new JsonWritableResults(userId, featureResults, restrictionResults, comments);
+        JsonWritableResults results = new JsonWritableResults(userId, featureResults, restrictionResults, comments, gradePercentage);
         try {
             mapper.writeValue(new File(folder, userId + ".json"), results);
         } catch (IOException e) {

@@ -68,7 +68,7 @@ public class Feature extends Checkable {
 
     @Override
     public String getSummary() {
-        String spaces = "                                 ";
+        String spaces = "                                                       ";
         String score = points < 10 ? " " + points : points + "";
         String ec = extraCredit ? " (Extra credit)" : "";
         return name + spaces.substring(name.length()) + "%.1f / " + score + ec;

@@ -17,12 +17,15 @@ public class JsonWritableResults {
     private List<CheckResult> featureResults;
     private List<CheckResult> restrictionResults;
     private String comments;
+    private double latePenalty;
 
-    public JsonWritableResults(String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults, String comments) {
+    public JsonWritableResults(String userId, List<CheckResult> featureResults, List<CheckResult> restrictionResults,
+                               String comments, double latePenalty) {
         this.userId = userId;
         this.featureResults = featureResults;
         this.restrictionResults = restrictionResults;
         this.comments = comments;
+        this.latePenalty = latePenalty;
     }
 
     public String getUserId() {
@@ -39,5 +42,9 @@ public class JsonWritableResults {
 
     public String getComments() {
         return comments;
+    }
+
+    public double getLatePenalty() {
+        return latePenalty;
     }
 }

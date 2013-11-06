@@ -29,6 +29,7 @@ public class GradingEnvironment {
     private String editor;
     private String browser;
     private String classpath;
+    private String assignmentName;
 
     private GradingEnvironment() {
         osName = System.getProperty("os.name");
@@ -94,6 +95,14 @@ public class GradingEnvironment {
             System.out.println("Can't edit file/folder");
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+    }
+
+    public String getAssignmentName() {
+        return assignmentName;
+    }
+
+    public void setAssignmentName(String assignmentName) {
+        this.assignmentName = assignmentName;
     }
 
     // Singleton methods
