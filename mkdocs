@@ -1,0 +1,6 @@
+#!/bin/bash
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/
+export JAVA_HOME
+rm -rf docs/
+mvn javadoc:javadoc
+cp -r target/site/apidocs ./docs
