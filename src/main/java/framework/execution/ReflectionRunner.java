@@ -13,7 +13,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * Like AReflectionBasedProjectRunner
+ * Runs a project in the same JVM using reflection to invoke the main method.
+ * @see {@link grader.project.AReflectionBasedProjectRunner}
  */
 public class ReflectionRunner implements Runner {
 
@@ -23,11 +24,24 @@ public class ReflectionRunner implements Runner {
         this.project = project;
     }
 
+    /**
+     * Runs the project with no arguments
+     * @param input The input to provide
+     * @return A RunningProject object which you can use for synchronization and acquiring output
+     * @throws NotRunnableException
+     */
     @Override
     public RunningProject run(String input) throws NotRunnableException {
         return run(input, new String[]{});
     }
 
+    /**
+     * This runs the project with no arguments
+     * @param input Input to use as System.in
+     * @param args Arguments for the program
+     * @return A RunningProject object which you can use for synchronization and acquiring output
+     * @throws NotRunnableException
+     */
     @Override
     public RunningProject run(final String input, final String[] args) throws NotRunnableException {
         final RunningProject runner = new RunningProject();
@@ -77,6 +91,11 @@ public class ReflectionRunner implements Runner {
         return runner;
     }
 
+    /**
+     * Finds which class has the main method. This finds the first class with main
+     * @return The Class containing main
+     * @throws NotRunnableException
+     */
     private Class<?> getMainClass() throws NotRunnableException {
         if (project.getClassesManager().isDefined()) {
             ClassesManager manager = (ClassesManager) project.getClassesManager().get();
@@ -94,6 +113,12 @@ public class ReflectionRunner implements Runner {
             throw new NotRunnableException();
     }
 
+    /**
+     * This gets the main method giving a class. This also transforms the exception to a NotRunnableException
+     * @param mainClass The class containing main
+     * @return The main {@link Method}
+     * @throws NotRunnableException
+     */
     private Method getMainMethod(Class<?> mainClass) throws NotRunnableException {
         try {
             return mainClass.getMethod("main", String[].class);

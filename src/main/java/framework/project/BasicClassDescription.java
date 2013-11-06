@@ -8,11 +8,7 @@ import util.annotations.Tags;
 import java.io.File;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/3/13
- * Time: 2:31 PM
- * To change this template use File | Settings | File Templates.
+ * @see ClassDescription
  */
 public class BasicClassDescription implements ClassDescription {
 

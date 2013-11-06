@@ -9,11 +9,7 @@ import grader.checkers.ACheckResult;
 import grader.checkers.CheckResult;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/23/13
- * Time: 1:26 PM
- * To change this template use File | Settings | File Templates.
+ * This wraps a {@link Checkable} in a feature checker so as to handle the exceptions.
  */
 public class FeatureCheckerWrapper extends ErrorHandlingFeatureChecker {
 

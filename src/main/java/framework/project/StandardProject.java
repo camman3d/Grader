@@ -4,7 +4,7 @@ import framework.execution.NotRunnableException;
 import framework.execution.ProcessRunner;
 import framework.execution.ReflectionRunner;
 import framework.execution.RunningProject;
-import framework.utils.DirectoryUtils;
+import tools.DirectoryUtils;
 import scala.Option;
 
 import java.io.File;

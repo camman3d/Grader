@@ -2,7 +2,7 @@ package framework.project;
 
 import org.apache.commons.io.FileUtils;
 import scala.Option;
-import framework.utils.DirectoryUtils;
+import tools.DirectoryUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -14,11 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/3/13
- * Time: 1:46 PM
- * To change this template use File | Settings | File Templates.
+ * @see ClassesManager
  */
 public class ProjectClassesManager implements ClassesManager {
 
@@ -33,8 +29,11 @@ public class ProjectClassesManager implements ClassesManager {
         loadClasses(sourceFolder);
     }
 
-    /*
+    /**
      * This loads all the classes based on the source code files.
+     * @param sourceFolder The folder containing the source code
+     * @throws ClassNotFoundException
+     * @throws IOException
      */
     private void loadClasses(File sourceFolder) throws ClassNotFoundException, IOException {
         Set<File> javaFiles = DirectoryUtils.getFiles(sourceFolder, new FileFilter() {
@@ -56,8 +55,11 @@ public class ProjectClassesManager implements ClassesManager {
         }
     }
 
-    /*
+    /**
      * Given a file, this finds the canonical class name.
+     * @param file The Java file
+     * @return The canonical class name.
+     * @throws IOException
      */
     private String getClassName(File file) throws IOException {
 
@@ -79,6 +81,11 @@ public class ProjectClassesManager implements ClassesManager {
         return classLoader;
     }
 
+    /**
+     * Looks for a class description given a class name (simple or canonical)
+     * @param className The name of the class to find
+     * @return The class description wrapped in a {@link Option} in case none was found.
+     */
     @Override
     public Option<ClassDescription> findByClassName(String className) {
         // First search the simple names
@@ -95,6 +102,11 @@ public class ProjectClassesManager implements ClassesManager {
         return Option.empty();
     }
 
+    /**
+     * Looks for all class descriptions with a particular tag
+     * @param tag The tag to search for
+     * @return The set of matching class descriptions
+     */
     @Override
     public Set<ClassDescription> findByTag(String tag) {
         Set<ClassDescription> classes = new HashSet<ClassDescription>();
@@ -107,6 +119,9 @@ public class ProjectClassesManager implements ClassesManager {
         return classes;
     }
 
+    /**
+     * @return All class descriptions
+     */
     @Override
     public Set<ClassDescription> getClassDescriptions() {
         return classDescriptions;

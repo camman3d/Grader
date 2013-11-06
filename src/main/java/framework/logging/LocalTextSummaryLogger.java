@@ -8,11 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/7/13
- * Time: 7:10 AM
- * To change this template use File | Settings | File Templates.
+ * Saves a text summary to a local file.
  */
 public class LocalTextSummaryLogger implements Logger {
 

@@ -6,7 +6,7 @@ import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
-import gradingTools.assignment7.tools.RootTagFinder;
+import tools.classFinder.RootTagFinder;
 import scala.Option;
 
 /**

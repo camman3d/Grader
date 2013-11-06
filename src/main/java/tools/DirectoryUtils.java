@@ -1,4 +1,4 @@
-package framework.utils;
+package tools;
 
 import scala.Option;
 
@@ -9,13 +9,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/3/13
- * Time: 12:34 PM
- * To change this template use File | Settings | File Templates.
+ * A set of utilities to assist with the recursive nature of directories.
  */
 public class DirectoryUtils {
+
+    /**
+     * Finds the first file in the given folder that matches the provided filter
+     * @param folder The folder to look in
+     * @param filter The filter to apply
+     * @return The first found file wrapped in an {@link Option} in case none was found.
+     */
     public static Option<File> find(File folder, FileFilter filter) {
         File[] files = folder.listFiles(filter);
         if (files.length == 0)
@@ -24,6 +27,12 @@ public class DirectoryUtils {
             return Option.apply(files[0]);
     }
 
+    /**
+     * Looks for a folder with the given name recursively in a provided directory.
+     * @param currentDir The directory to start looking in
+     * @param folderName The name of the desired directory
+     * @return The located directory wrapped in an {@link Option} in case it wasn't found
+     */
     public static Option<File> locateFolder(File currentDir, final String folderName) {
         // Don't accept files (they don't make sense) or Mac meta folders
         if (!currentDir.isDirectory() || currentDir.getName().equals("__MACOSX"))
@@ -48,6 +57,12 @@ public class DirectoryUtils {
         }
     }
 
+    /**
+     * Looks for all files matching the provided filter recursively.
+     * @param dir The directory to start looking from
+     * @param filter The filter to apply
+     * @return The set all of all files that matched the filter
+     */
     public static Set<File> getFiles(File dir, final FileFilter filter) {
         // Get files in this folder
         File[] files = dir.listFiles(new FileFilter() {

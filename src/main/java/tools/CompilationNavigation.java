@@ -1,4 +1,4 @@
-package gradingTools.assignment8.tools;
+package tools;
 
 import com.github.antlrjavaparser.api.CompilationUnit;
 import com.github.antlrjavaparser.api.body.*;
@@ -7,11 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/29/13
- * Time: 11:43 AM
- * To change this template use File | Settings | File Templates.
+ * This is a utility to help with navigating the CompilationUnit that JavaParser returns.
  */
 public class CompilationNavigation {
 

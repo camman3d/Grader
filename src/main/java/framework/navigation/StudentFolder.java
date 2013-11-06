@@ -7,7 +7,7 @@ import scala.Option;
 import java.io.File;
 
 /**
- * Like StudentAssignment
+ * Based on {@link grader.sakai.StudentAssignment}
  */
 public interface StudentFolder<T extends Project> {
 
@@ -15,11 +15,6 @@ public interface StudentFolder<T extends Project> {
      * @return The student folder
      */
     public File getFolder();
-
-    /**
-     * @return A JODA {@link org.joda.time.DateTime} representing the submission time in an {@link scala.Option} if it doesn't exit
-     */
-    public Option<DateTime> getSubmissionTime();
 
     /**
      * @return The folder where feedback files will be stored
@@ -42,7 +37,7 @@ public interface StudentFolder<T extends Project> {
     public Option<T> getProject(String name);
 
     /**
-     * @return The time the project was turned in
+     * @return A JODA {@link org.joda.time.DateTime} representing the submission time in an {@link scala.Option} if it doesn't exit
      */
     public Option<DateTime> getTimestamp();
 }

@@ -8,11 +8,7 @@ import javax.swing.*;
 import java.util.Arrays;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/23/13
- * Time: 1:22 PM
- * To change this template use File | Settings | File Templates.
+ * This extends the abstract feature check so as to allow for exceptions to be thrown and turns them into failures.
  */
 public abstract class ErrorHandlingFeatureChecker extends AnAbstractFeatureChecker {
 

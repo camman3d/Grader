@@ -1,4 +1,4 @@
-package gradingTools.assignment7.tools;
+package tools.classFinder;
 
 import framework.project.ClassDescription;
 import framework.project.Project;
@@ -8,11 +8,8 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/14/13
- * Time: 12:24 PM
- * To change this template use File | Settings | File Templates.
+ * This keeps track of classes and their corresponding tags. If it has no tag then it asks the user.
+ * TODO: This whole class finder system is confusing and needs to be refactored.
  */
 public class CachedProjectClassFinder {
 

@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * Like Project
+ * Based on {@link grader.project.Project}
  */
 public interface Project {
 

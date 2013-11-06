@@ -10,11 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/7/13
- * Time: 9:51 AM
- * To change this template use File | Settings | File Templates.
+ * This is used to set, get, save, and load settings related to the grader.
+ * This is a singleton, so you'll have to do the following {@code GraderSettings.get()} before invoking any method.
+ * It looks for the file named ".gradersettings" in the current working directory for the saved settings.
+ * TODO: Move the name of the filename to a configuration file
  */
 public class GraderSettings {
 
@@ -34,18 +33,36 @@ public class GraderSettings {
         }
     }
 
+    /**
+     * Returns a setting associated with the key
+     * @param key The key to use
+     * @return The setting
+     */
     public String get(String key) {
         return settings.get(key);
     }
 
+    /**
+     * Sets the setting associating it with the given key
+     * @param key The key to the setting
+     * @param value The setting
+     */
     public void set(String key, String value) {
         settings.put(key, value);
     }
 
+    /**
+     * Checks if there is a setting with the given key.
+     * @param key The setting key
+     * @return If the setting exists
+     */
     public boolean has(String key) {
         return settings.containsKey(key);
     }
 
+    /**
+     * Saves the settings to the file, making it hidden.
+     */
     public void save() {
         try {
             FileWriter writer = new FileWriter(".gradersettings");

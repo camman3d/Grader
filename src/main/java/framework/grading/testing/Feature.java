@@ -6,11 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/4/13
- * Time: 10:09 AM
- * To change this template use File | Settings | File Templates.
+ * Features are aspects of the program that it "should" have.
+ * @see Restriction
  */
 public class Feature extends Checkable {
 

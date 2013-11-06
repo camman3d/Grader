@@ -1,11 +1,7 @@
 package framework.execution;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/7/13
- * Time: 12:35 PM
- * To change this template use File | Settings | File Templates.
+ * The interface for different runners to use
  */
 public interface Runner {
 

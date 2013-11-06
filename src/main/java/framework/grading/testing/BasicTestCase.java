@@ -1,11 +1,23 @@
 package framework.grading.testing;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/4/13
- * Time: 9:59 AM
- * To change this template use File | Settings | File Templates.
+ * All test cases should extend this class.
+ * Subclasses will implement the {@link TestCase#test(framework.project.Project, boolean)} method.
+ * This method should call and return one of the following helper functions:
+ * <ul>
+ *     <li>{@link framework.grading.testing.BasicTestCase#pass()}</li>
+ *     <li>{@link framework.grading.testing.BasicTestCase#pass(String)}</li>
+ *     <li>{@link framework.grading.testing.BasicTestCase#partialPass(double)}</li>
+ *     <li>{@link framework.grading.testing.BasicTestCase#partialPass(double, String)}</li>
+ *     <li>{@link framework.grading.testing.BasicTestCase#fail(String)}</li>
+ * </ul>
+ *
+ * An example:
+ * <pre>
+ * {@code
+ * return partialPass(0.5, "Only got half of the points");
+ * }
+ * </pre>
  */
 public abstract class BasicTestCase implements TestCase {
 

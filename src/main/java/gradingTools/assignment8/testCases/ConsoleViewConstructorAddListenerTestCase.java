@@ -10,9 +10,9 @@ import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
-import gradingTools.assignment7.tools.ManualClassFinder;
-import gradingTools.assignment7.tools.RootTagFinder;
-import gradingTools.assignment8.tools.CompilationNavigation;
+import tools.classFinder.ManualClassFinder;
+import tools.classFinder.RootTagFinder;
+import tools.CompilationNavigation;
 import scala.Option;
 
 import java.io.IOException;

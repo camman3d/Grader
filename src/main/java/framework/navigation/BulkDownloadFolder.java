@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Like BulkAssignmentFolder
+ * Based on {@link grader.sakai.BulkAssignmentFolder}
  */
 public interface BulkDownloadFolder {
 

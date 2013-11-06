@@ -1,4 +1,4 @@
-package gradingTools.assignment7.tools;
+package tools.classFinder;
 
 import framework.project.ClassDescription;
 import framework.project.Project;
@@ -8,11 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/14/13
- * Time: 12:18 PM
- * To change this template use File | Settings | File Templates.
+ * This is part of the manual class locator system.
  */
 public class ManualClassFinder {
 

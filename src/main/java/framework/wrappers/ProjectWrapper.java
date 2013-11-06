@@ -12,11 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/23/13
- * Time: 1:35 PM
- * To change this template use File | Settings | File Templates.
+ * This wraps a "grader" project in a "framework" project.
+ * This class and {@link TestCaseWrapper} are needed for the {@link ProjectStepperDisplayerWrapper} to work.
  */
 public class ProjectWrapper extends StandardProject {
 

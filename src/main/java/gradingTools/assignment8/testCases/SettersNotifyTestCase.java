@@ -9,7 +9,7 @@ import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
-import gradingTools.assignment8.tools.CompilationNavigation;
+import tools.CompilationNavigation;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;

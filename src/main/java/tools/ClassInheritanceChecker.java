@@ -1,12 +1,11 @@
-package gradingTools.assignment7.tools;
+package tools;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/14/13
- * Time: 11:20 AM
- * To change this template use File | Settings | File Templates.
+ * A utility for checking inheritance of classes.
+ *
+ * @deprecated Use the {@link Class#isAssignableFrom(Class)} method instead
  */
+@Deprecated
 public class ClassInheritanceChecker {
 
     public static boolean isSubclass(Class<?> query, Class<?> superclass) {

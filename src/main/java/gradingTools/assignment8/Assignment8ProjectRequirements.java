@@ -7,11 +7,8 @@ import gradingTools.assignment6.testCases.*;
 import gradingTools.assignment8.testCases.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/28/13
- * Time: 1:11 PM
- * To change this template use File | Settings | File Templates.
+ * Project 8 requirements.
+ * See the rubric here: http://www.cs.unc.edu/~dewan/comp401/current/Recitations/
  */
 public class Assignment8ProjectRequirements extends ProjectRequirements {
 
@@ -55,8 +52,6 @@ public class Assignment8ProjectRequirements extends ProjectRequirements {
         addRestriction(new Restriction("At least three packages.", -5, new ThreePackageTestCase("Three package test case")));
         addRestriction(new Restriction("Main class in correct package.", -5, new MainClassTestCase("Assignment8", "Main method test case")));
         addRestriction(new Restriction("No System.exit()", -5, new SystemExitTestCase("System.exit test case")));
-
-        // TODO: Warning restrictions
 
     }
 }

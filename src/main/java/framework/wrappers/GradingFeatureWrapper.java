@@ -6,11 +6,7 @@ import grader.checkers.FeatureChecker;
 import util.trace.Tracer;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/31/13
- * Time: 9:30 PM
- * To change this template use File | Settings | File Templates.
+ * This is a simple wrapper which prevents the text editor from opening when the checker returns null.
  */
 public class GradingFeatureWrapper extends AGradingFeature {
     public GradingFeatureWrapper(String aFeature, double aMaxScore) {

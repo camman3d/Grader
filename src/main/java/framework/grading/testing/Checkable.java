@@ -5,11 +5,7 @@ import framework.project.Project;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/4/13
- * Time: 10:04 AM
- * To change this template use File | Settings | File Templates.
+ * The idea for this class is that features and restrictions both check their test cases. This handles that process.
  */
 public abstract class Checkable implements Gradable {
 

@@ -21,11 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/31/13
- * Time: 9:48 PM
- * To change this template use File | Settings | File Templates.
+ * This wraps the "framework" GUI in a {@link ProjectStepperDisplayer}
  */
 public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, PropertyChangeListener {
 

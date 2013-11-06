@@ -3,11 +3,8 @@ package framework.execution;
 import java.util.concurrent.Semaphore;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/7/13
- * Time: 12:02 PM
- * To change this template use File | Settings | File Templates.
+ * This is a wrapper for a running project independent of the method of execution.
+ * This provides support for synchronization via semaphores and output manipulation.
  */
 public class RunningProject {
 

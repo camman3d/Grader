@@ -31,7 +31,7 @@ public class TestSakaiStudentFolder {
 
     @Test
     public void testGetSubmissionTime() {
-        Option<DateTime> time = folder.getSubmissionTime();
+        Option<DateTime> time = folder.getTimestamp();
         assertTrue("A timestamp should have been found", time.isDefined());
         assertTrue("Incorrect timestamp value", time.get().isAfter(early) && time.get().isBefore(late));
     }

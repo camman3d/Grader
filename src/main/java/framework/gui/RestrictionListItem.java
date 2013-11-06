@@ -1,11 +1,8 @@
 package framework.gui;
 
 import framework.grading.testing.CheckResult;
-import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.grading.testing.TestCaseResult;
-import framework.project.Project;
-import scala.Option;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -14,11 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/5/13
- * Time: 11:30 AM
- * To change this template use File | Settings | File Templates.
+ * This represents a row in the restriction list and handles setting up all the listeners.
  */
 public class RestrictionListItem {
 
@@ -27,10 +20,10 @@ public class RestrictionListItem {
     private JLabel max;
     private JButton notes;
     private JLabel status;
-//    private JButton restrictionResults;
+    private JButton restrictionResults;
     private TotalScoreUpdater updater;
 
-//    private Restriction restriction;
+    //    private Restriction restriction;
     private CheckResult result;
 
     public RestrictionListItem(JLabel name, final JSpinner score, JLabel max, final JButton notes, JLabel status,
@@ -40,7 +33,7 @@ public class RestrictionListItem {
         this.max = max;
         this.notes = notes;
         this.status = status;
-//        this.restrictionResults = restrictionResults;
+        this.restrictionResults = restrictionResults;
 
         result = new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, null);
 
@@ -100,6 +93,7 @@ public class RestrictionListItem {
         max.setVisible(false);
         notes.setVisible(false);
         status.setVisible(false);
+        restrictionResults.setVisible(false);
     }
 
     public void setUpdater(TotalScoreUpdater updater) {

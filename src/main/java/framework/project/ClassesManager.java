@@ -5,7 +5,7 @@ import scala.Option;
 import java.util.Set;
 
 /**
- * Like ClassesManager
+ * Based on {@link grader.project.ClassesManager}
  */
 public interface ClassesManager {
 

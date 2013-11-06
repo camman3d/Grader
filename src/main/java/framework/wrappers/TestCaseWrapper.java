@@ -7,11 +7,7 @@ import grader.checkers.*;
 import grader.checkers.CheckResult;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/31/13
- * Time: 10:11 PM
- * To change this template use File | Settings | File Templates.
+ * This wraps a feature in a test case so the "grader" checkers can run in the "framework" system.
  */
 public class TestCaseWrapper extends BasicTestCase {
 
@@ -24,6 +20,14 @@ public class TestCaseWrapper extends BasicTestCase {
         featureChecker = feature.getFeatureChecker();
     }
 
+    /**
+     * This should only ever be used with a
+     * @param project The project to test
+     * @param autoGrade
+     * @return
+     * @throws NotAutomatableException
+     * @throws NotGradableException
+     */
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
         featureChecker.setProject(((ProjectWrapper) project).getProject());

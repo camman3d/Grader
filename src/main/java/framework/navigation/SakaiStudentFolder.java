@@ -1,18 +1,17 @@
 package framework.navigation;
 
+import framework.project.StandardProject;
+import tools.DirectoryUtils;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
-import framework.project.StandardProject;
 import scala.Option;
 import util.misc.Common;
-import framework.utils.DirectoryUtils;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * A Sakai-structured student folder.
@@ -25,40 +24,46 @@ public class SakaiStudentFolder implements StudentFolder {
         this.folder = folder;
     }
 
+    /**
+     * @return The root folder
+     */
     @Override
     public File getFolder() {
         return folder;
     }
 
-    @Override
-    public Option<DateTime> getSubmissionTime() {
-        File timestampFile = new File(folder, "timestamp.txt");
-        if (!timestampFile.exists())
-            return Option.empty();
-        try {
-            Date date = Common.toDate(FileUtils.readFileToString(timestampFile));
-            return Option.apply(new DateTime(date));
-        } catch (IOException e) {
-            return Option.empty();
-        }
-    }
-
+    /**
+     * @return The feedback folder
+     */
     @Override
     public File getFeedbackFolder() {
         return new File(folder, "Feedback Attachment(s)");
     }
 
+    /**
+     * @return The student's ID, which is "Last Name, First Name(Onyen)"
+     */
     @Override
     public String getUserId() {
         return folder.getName();
     }
 
+    /**
+     * @return The student's Onyen
+     */
     @Override
     public String getOnyen() {
         String id = getUserId();
         return id.substring(id.indexOf('(') + 1, id.indexOf(')'));
     }
 
+    /**
+     * Looks for and returns the project that the student submitted. This is wrapped in an {@link Option} in case it
+     * doesn't exist.
+     *
+     * @param name The preferred name of the project. This will be used later when finding the main method in the code
+     * @return The wrapped project
+     */
     @Override
     public Option<StandardProject> getProject(String name) {
         // First, open up the submission folder.
@@ -113,6 +118,12 @@ public class SakaiStudentFolder implements StudentFolder {
         }
     }
 
+    /**
+     * Figures out the time the student submitted things. This is wrapped in an {@link Option} in case nothing was
+     * submitted.
+     *
+     * @return The time as a {@link DateTime} for better time manipulation.
+     */
     @Override
     public Option<DateTime> getTimestamp() {
         File timestampFile = new File(folder, "timestamp.txt");

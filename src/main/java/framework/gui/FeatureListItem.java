@@ -13,11 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/5/13
- * Time: 11:30 AM
- * To change this template use File | Settings | File Templates.
+ * This represents a row in the feature list and handles setting up all the listeners.
  */
 public class FeatureListItem {
 

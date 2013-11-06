@@ -10,11 +10,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/5/13
- * Time: 5:46 PM
- * To change this template use File | Settings | File Templates.
+ * This runs the program in a new process.
  */
 public class ProcessRunner implements Runner {
 
@@ -47,6 +43,12 @@ public class ProcessRunner implements Runner {
 //        }).start();
 //    }
 
+    /**
+     * This figures out what class is the "entry point", or, what class has main(args)
+     * @param project The project to run
+     * @return The class canonical name. i.e. "foo.bar.SomeClass"
+     * @throws NotRunnableException
+     */
     private String getEntryPoint(Project project) throws NotRunnableException {
         if (project.getClassesManager().isEmpty())
             throw new NotRunnableException();
@@ -93,11 +95,24 @@ public class ProcessRunner implements Runner {
 //        process.destroy();
 //    }
 
+    /**
+     * This runs the project with no arguments
+     * @param input The input to use as standard in for the process
+     * @return A RunningProject object which you can use for synchronization and acquiring output
+     * @throws NotRunnableException
+     */
     @Override
     public RunningProject run(String input) throws NotRunnableException {
         return run(input, new String[]{});
     }
 
+    /**
+     * This runs the project providing input and arguments
+     * @param input The input to use as standard in for the process
+     * @param args The arguments to pass in
+     * @return A RunningProject object which you can use for synchronization and acquiring output
+     * @throws NotRunnableException
+     */
     @Override
     public RunningProject run(String input, String[] args) throws NotRunnableException {
         final RunningProject runner = new RunningProject();

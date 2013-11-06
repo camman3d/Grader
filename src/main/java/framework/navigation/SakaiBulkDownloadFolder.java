@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/3/13
- * Time: 11:03 AM
- * To change this template use File | Settings | File Templates.
+ * This is a Sakai-specific implementation for handling bulk download folders.
  */
 public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
 
@@ -32,11 +28,17 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
         grades = foundFiles[0];
     }
 
+    /**
+     * @return The grades.csv file
+     */
     @Override
     public File getGrades() {
         return grades;
     }
 
+    /**
+     * @return The list of student folders
+     */
     @Override
     public List<StudentFolder> getStudentFolders() {
         File[] folders = folder.listFiles(new FileFilter() {
@@ -51,6 +53,12 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
         return studentFolders;
     }
 
+    /**
+     * Gets a segment of the student folder list
+     * @param start The onyen to start with
+     * @param end The onyen to end with
+     * @return The student folder that fall within the given onyen range
+     */
     @Override
     public List<StudentFolder> getStudentFolders(String start, String end) {
         List<StudentFolder> filteredFolders = new ArrayList<StudentFolder>();
@@ -66,6 +74,11 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
         return filteredFolders;
     }
 
+    /**
+     * Find's a particular student's folder
+     * @param onyen The student's Onyen
+     * @return The student folder associated with the given Onyen
+     */
     @Override
     public StudentFolder getStudentFolder(final String onyen) {
         File studentFolder = folder.listFiles(new FileFilter() {
@@ -77,6 +90,9 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
         return new SakaiStudentFolder(studentFolder);
     }
 
+    /**
+     * @return The Sakai bulk download folder
+     */
     @Override
     public File getFolder() {
         return folder;

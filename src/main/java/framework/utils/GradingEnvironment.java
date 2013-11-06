@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/5/13
- * Time: 12:07 PM
- * To change this template use File | Settings | File Templates.
+ * A singleton that investigates the machine for certain things. It looks for:
+ * <ul>
+ *     <li>Operating System</li>
+ *     <li>Text Editor (OS specific)</li>
+ *     <li>File Browser (OS specific)</li>
+ *     <li>Classpath (OS specific because Windows delimits with ';' rather than ':'</li>
+ * </ul>
  */
 public class GradingEnvironment {
 
@@ -79,6 +81,10 @@ public class GradingEnvironment {
         return osName;
     }
 
+    /**
+     * Opens a directory in the file browser
+     * @param file The directory
+     */
     public void open(File file) {
         try {
             new ProcessBuilder(browser, file.getAbsolutePath()).start();
@@ -88,6 +94,10 @@ public class GradingEnvironment {
         }
     }
 
+    /**
+     * Edits a directory or file in the text editor
+     * @param file The directory or file
+     */
     public void edit(File file) {
         try {
             new ProcessBuilder(editor, file.getAbsolutePath()).start();

@@ -1,4 +1,4 @@
-package gradingTools.assignment7.tools;
+package tools.classFinder;
 
 import framework.project.ClassDescription;
 import framework.project.Project;

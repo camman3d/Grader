@@ -3,7 +3,7 @@ package framework.project;
 import java.io.File;
 
 /**
- * Like ClassDescription
+ * Based on {@link grader.project.ClassDescription}
  */
 public interface ClassDescription {
 

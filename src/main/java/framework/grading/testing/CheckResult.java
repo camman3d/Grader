@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/4/13
- * Time: 10:17 AM
- * To change this template use File | Settings | File Templates.
+ * This represents the result of doing some "check" on the project.
  */
 @JsonIgnoreProperties({"status"})
 public class CheckResult implements Describable {
