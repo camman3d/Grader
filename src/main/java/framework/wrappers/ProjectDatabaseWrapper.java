@@ -13,24 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/23/13
- * Time: 1:45 PM
- * To change this template use File | Settings | File Templates.
+ * This extends the project database class to support adding ProjectRequirements
  */
 public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
     private ProjectRequirements projectRequirements;
 
+    /**
+     * If you don't pass in any arguments, then it attempts to find/create the folders.
+     * This requires that you register the download path in the GraderSettings singleton.
+     */
     public ProjectDatabaseWrapper() {
         super(getAssignmentFolder(), getDataFolder());
     }
 
+    public ProjectDatabaseWrapper(String aBulkAssignmentsFolderName, String anAssignmentsDataFolderName) {
+        super(aBulkAssignmentsFolderName, anAssignmentsDataFolderName);
+    }
+
+    /**
+     * @return The download path registered in the GraderSettings singleton.
+     */
     private static String getAssignmentFolder() {
         return GraderSettings.get().get("path");
     }
 
+    /**
+     * This attempts to find/make the data folder.
+     * @return The path of the data folder
+     */
     private static String getDataFolder() {
 
         // Make sure the appropriate folder exists
@@ -50,6 +61,10 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
         return dataFolder.getParentFile().getAbsolutePath();
     }
 
+    /**
+     * This generates grading features based on the project requirements
+     * @param requirements The ProjectRequirements to add to the project database
+     */
     public void addProjectRequirements(ProjectRequirements requirements) {
         projectRequirements = requirements;
         List<GradingFeature> gradingFeatures = new ArrayList<GradingFeature>();
