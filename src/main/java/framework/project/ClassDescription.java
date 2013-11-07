@@ -1,6 +1,9 @@
 package framework.project;
 
+import com.github.antlrjavaparser.api.CompilationUnit;
+
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Based on {@link grader.project.ClassDescription}
@@ -36,5 +39,10 @@ public interface ClassDescription {
      * @return The editable property that the class has been annotated with
      */
     public String[] getEditablePropertyNames();
+
+    /**
+     * @return The parsed code
+     */
+    public CompilationUnit parse() throws IOException;
 
 }

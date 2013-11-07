@@ -20,19 +20,19 @@ public class TestFeature {
 
     @Test
     public void testGetName() {
-        Feature checker = new Feature("checkable", 10, null);
+        Feature checker = new Feature("checkable", 10);
         assertEquals("Names should match", "checkable", checker.getName());
     }
 
     @Test
     public void testGetPoints() {
-        Feature checker = new Feature("checkable", 10, null);
+        Feature checker = new Feature("checkable", 10);
         assertTrue("Points should match", checker.getPoints() == 10);
     }
 
     @Test
     public void testGetExtraCredit() {
-        Feature checker = new Feature("checkable", 10, true, null);
+        Feature checker = new Feature("checkable", 10, true);
         assertTrue("Extra credit should match", checker.isExtraCredit());
     }
 

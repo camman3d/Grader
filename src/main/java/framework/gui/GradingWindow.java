@@ -33,7 +33,6 @@ public class GradingWindow {
     private JFrame frame;
 
     private JLabel userId;
-    private JTabbedPane tabbedPane1;
     private JButton saveAndContinueButton;
     private JButton saveAndQuitButton;
     private JButton leaveCommentsButton;
@@ -295,6 +294,7 @@ public class GradingWindow {
     private JButton gradeResults20;
     private JButton gradeResults21;
     private JButton gradeResults22;
+    private JTabbedPane Feature;
     private TotalScoreUpdater scoreUpdater;
 
     // Properties dealing with the project

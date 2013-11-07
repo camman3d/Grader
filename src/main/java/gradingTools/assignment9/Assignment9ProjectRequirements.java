@@ -3,7 +3,7 @@ package gradingTools.assignment9;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.Restriction;
 import gradingTools.assignment6.testCases.*;
-import gradingTools.assignment9.testCases.RefreshTestCase;
+import gradingTools.assignment9.testCases.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,29 +28,32 @@ public class Assignment9ProjectRequirements extends ProjectRequirements {
         addFeature("Interpreter controller listener", 5, new QuestionTestCase("Does the controller register a listener for the GUI object", "Controller object registers as a listener for GUI object test case"));
 
         // Part 2
-        addFeature("(1) Scene painter tagged class", 5);
-        addFeature("(1) View extends component", 5);
-        addFeature("(1) View is listener of shapes", 10);
-        addFeature("(1) paint() called when events fire", 5);
-        addFeature("(1) Overridden paint() draws everything", 25);
+        addFeature("(1) Scene painter tagged class", 5, new ScenePainterTagTestCase());
+        addFeature("(1) View extends component", 5, new ScenePainterExtendsComponentTestCase());
+        addFeature("(1) View is listener of shapes", 10, new ScenePainterListenerTestCase());
+        addFeature("(1) paint() called when events fire", 5, new ScenePainterPaintOnEventTestCase());
+        addFeature("(1) Overridden paint() draws everything", 25, new QuestionTestCase("Does the paint method draw everything in the view?", "Paint draws stuff test case."));
 
         // Part 2 (EC)
-        addFeature("(2) Listener & Painter tagged classes", 5);
-        addFeature("(2) Observable Painter extends component", 5);
-        addFeature("(2) Paint listener paint method", 5);
-        addFeature("(2) View classes register as listener", 20);
-        addFeature("(2) Listeners notify on fired events", 10);
-        addFeature("(2) Views paint objects", 25);
-        addFeature("(1 & 2) Background & bridge beneath avatars", 25);
+        addFeature("(2) Listener & Painter tagged classes", 5, new ListenerAndPainterTagTestCase());
+        addFeature("(2) Observable Painter extends component", 5, new ObservablePainterExtendsComponentTestCase());
+        addFeature("(2) Paint listener paint method", 5, new PaintListenerPaintMethodTestCase());
+        addFeature("(2) View classes register as listener", 20, new PaintListenerListenersTestCase());
+        addFeature("(2) Listeners notify on fired events", 10, new PaintListenerPaintOnEventTestCase());
+        addFeature("(2) Views paint objects", 25, new QuestionTestCase("Do the paint listener views do all the painting/drawing?", "Paint listener draw test case"));
+        addFeature("(1 & 2) Background & bridge beneath avatars", 25, new QuestionTestCase("Are the avatars drawn on top of the bridge and gorge?", "Avatars on top test case"));
 
         // Part 3
-        addFeature("Demo", 10);
+        addFeature("Demo", 10, new QuestionTestCase("Is there a demo?", "Demo test case"));
 
         // Extra Credit
-        addFeature("Command interpreter errors", 5, true);
-        addFeature("Progress bar", 5, true);
-        addFeature("Interpreter has 2+ actions", 5, true);
-        addFeature("Bridge scene controller", 5, true);
+        addFeature("Command interpreter errors", 5, true, new QuestionTestCase("Does the command interpreter display the error property?", "Command interpreter error test case"));
+        addFeature("Progress bar", 5, true, new QuestionTestCase("Is there a progress bar?", "Progress test case"));
+        addFeature("Interpreter has 2+ actions", 5, true, new QuestionTestCase("Does the interpreter have two or more action components?", "Interpreter has two or more actions test case"));
+        addFeature("Bridge scene controller", 10, true,
+                new BridgeSceneControllerTagTestCase(),
+                new QuestionTestCase("Does the bridge scene controller track the locations of mouse clicks?", "Mouse click tracking test case"),
+                new QuestionTestCase("Does the bridge scene controller support keyboard commands?", "Keyboard commands test case"));
 
 
         // Define the restrictions

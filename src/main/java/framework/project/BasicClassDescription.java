@@ -1,11 +1,14 @@
 package framework.project;
 
+import com.github.antlrjavaparser.JavaParser;
+import com.github.antlrjavaparser.api.CompilationUnit;
 import util.annotations.EditablePropertyNames;
 import util.annotations.PropertyNames;
 import util.annotations.StructurePattern;
 import util.annotations.Tags;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @see ClassDescription
@@ -14,6 +17,7 @@ public class BasicClassDescription implements ClassDescription {
 
     private Class<?> javaClass;
     private File source;
+    private CompilationUnit compilationUnit;
 
     public BasicClassDescription(Class<?> javaClass, File source) {
         this.javaClass = javaClass;
@@ -64,6 +68,13 @@ public class BasicClassDescription implements ClassDescription {
         } catch (Exception e) {
             return new String[]{};
         }
+    }
+
+    @Override
+    public CompilationUnit parse() throws IOException {
+        if (compilationUnit == null)
+            compilationUnit = JavaParser.parse(source);
+        return compilationUnit;
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.io.IOException;
  * This is the entry class for the grading tools that Maven will reference.
  */
 public class Driver {
+
     public static void main(String[] args) throws IOException {
 
         ProjectRequirements requirements = new Assignment9ProjectRequirements();

@@ -32,11 +32,14 @@ public class SystemExitTestCase extends BasicTestCase {
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().getClassDescriptions();
         for (ClassDescription description : classDescriptions) {
             try {
-                List<String> lines = FileUtils.readLines(description.getSource());
-                for (String line : lines) {
-                    if (line.trim().startsWith("System.exit("))
-                        return fail("System.exit() found in " + description.getJavaClass().getSimpleName());
-                }
+
+                // Get the source code as a string and remove comments
+                String code = FileUtils.readFileToString(description.getSource());
+                code = code.replaceAll("(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)", "");
+
+                // Fail if we find a System.exit
+                if (code.contains("System.exit("))
+                    return fail("Object editor refresh() call found in " + description.getJavaClass().getSimpleName());
             } catch (IOException e) {}
         }
         return pass();

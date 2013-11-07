@@ -33,11 +33,15 @@ public class RefreshTestCase extends BasicTestCase {
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().getClassDescriptions();
         for (ClassDescription description : classDescriptions) {
             try {
-                List<String> lines = FileUtils.readLines(description.getSource());
-                for (String line : lines) {
-                    if (line.trim().endsWith(".refresh();"))
-                        return fail("Object editor refresh() call found in " + description.getJavaClass().getSimpleName());
-                }
+
+                // Get the source code as a string and remove comments
+                String code = FileUtils.readFileToString(description.getSource());
+                code = code.replaceAll("(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)", "");
+
+                // Fail if we find a refresh method
+                if (code.contains(".refresh();"))
+                    return fail("Object editor refresh() call found in " + description.getJavaClass().getSimpleName());
+
             } catch (IOException e) {}
         }
         return pass();

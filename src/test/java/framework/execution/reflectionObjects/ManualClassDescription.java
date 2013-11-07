@@ -1,8 +1,10 @@
 package framework.execution.reflectionObjects;
 
+import com.github.antlrjavaparser.api.CompilationUnit;
 import framework.project.ClassDescription;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,5 +49,10 @@ public class ManualClassDescription implements ClassDescription {
     @Override
     public String[] getEditablePropertyNames() {
         return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public CompilationUnit parse() throws IOException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
