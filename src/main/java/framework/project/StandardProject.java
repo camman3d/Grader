@@ -1,9 +1,6 @@
 package framework.project;
 
-import framework.execution.NotRunnableException;
-import framework.execution.ProcessRunner;
-import framework.execution.ReflectionRunner;
-import framework.execution.RunningProject;
+import framework.execution.*;
 import tools.DirectoryUtils;
 import scala.Option;
 
@@ -85,6 +82,21 @@ public class StandardProject implements Project {
     @Override
     public RunningProject launch(String input) throws NotRunnableException {
         return new ProcessRunner(this).run(input);
+    }
+
+    @Override
+    public RunningProject start(String input, int timeout) throws NotRunnableException {
+        return new ReflectionRunner(this).run(input, timeout);
+    }
+
+    @Override
+    public RunningProject launch(String input, int timeout) throws NotRunnableException {
+        return new ProcessRunner(this).run(input, timeout);
+    }
+
+    @Override
+    public RunningProject launchInteractive() throws NotRunnableException {
+        return new InteractiveConsoleProcessRunner(this).run("");
     }
 
     @Override

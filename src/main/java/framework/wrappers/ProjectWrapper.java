@@ -1,5 +1,7 @@
 package framework.wrappers;
 
+import framework.execution.NotRunnableException;
+import framework.execution.RunningProject;
 import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
 import framework.project.StandardProject;

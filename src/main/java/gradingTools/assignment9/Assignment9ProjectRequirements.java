@@ -41,7 +41,7 @@ public class Assignment9ProjectRequirements extends ProjectRequirements {
         addFeature("(2) View classes register as listener", 20, new PaintListenerListenersTestCase());
         addFeature("(2) Listeners notify on fired events", 10, new PaintListenerPaintOnEventTestCase());
         addFeature("(2) Views paint objects", 25, new QuestionTestCase("Do the paint listener views do all the painting/drawing?", "Paint listener draw test case"));
-        addFeature("(1 & 2) Background & bridge beneath avatars", 25, new QuestionTestCase("Are the avatars drawn on top of the bridge and gorge?", "Avatars on top test case"));
+        addFeature("(1 & 2) Background & bridge beneath avatars", 5, new QuestionTestCase("Are the avatars drawn on top of the bridge and gorge?", "Avatars on top test case"));
 
         // Part 3
         addFeature("Demo", 10, new QuestionTestCase("Is there a demo?", "Demo test case"));

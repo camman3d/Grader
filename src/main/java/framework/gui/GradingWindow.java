@@ -388,7 +388,7 @@ public class GradingWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    project.get().launch("");
+                    project.get().launchInteractive();
                 } catch (NotRunnableException e1) {
                     JOptionPane.showMessageDialog(mainPanel, "Error running project.");
                 }

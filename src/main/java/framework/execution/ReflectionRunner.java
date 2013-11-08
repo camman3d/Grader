@@ -32,7 +32,13 @@ public class ReflectionRunner implements Runner {
      */
     @Override
     public RunningProject run(String input) throws NotRunnableException {
-        return run(input, new String[]{});
+        return run(input, new String[]{}, -1);
+    }
+
+    @Override
+    public RunningProject run(String input, int timeout) throws NotRunnableException {
+        // TODO: Add timeout
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     /**
@@ -43,7 +49,7 @@ public class ReflectionRunner implements Runner {
      * @throws NotRunnableException
      */
     @Override
-    public RunningProject run(final String input, final String[] args) throws NotRunnableException {
+    public RunningProject run(final String input, final String[] args, int timeout) throws NotRunnableException {
         final RunningProject runner = new RunningProject();
         try {
             runner.start();

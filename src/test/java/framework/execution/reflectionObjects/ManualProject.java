@@ -1,5 +1,6 @@
 package framework.execution.reflectionObjects;
 
+import framework.execution.NotRunnableException;
 import framework.execution.RunningProject;
 import framework.project.ClassesManager;
 import framework.project.Project;
@@ -33,6 +34,21 @@ public class ManualProject implements Project {
     public RunningProject launch(String input) {
         //To change body of implemented methods use File | Settings | File Templates.
         return null;
+    }
+
+    @Override
+    public RunningProject start(String input, int timeout) throws NotRunnableException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public RunningProject launch(String input, int timeout) throws NotRunnableException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public RunningProject launchInteractive() throws NotRunnableException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

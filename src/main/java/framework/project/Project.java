@@ -24,6 +24,19 @@ public interface Project {
     public RunningProject launch(String input) throws NotRunnableException;
 
     /**
+     * Attempts to start the project in the same process
+     */
+    public RunningProject start(String input, int timeout) throws NotRunnableException;
+
+    /**
+     * Attempts to launch the project in a new process
+     */
+    public RunningProject launch(String input, int timeout) throws NotRunnableException;
+
+
+    public RunningProject launchInteractive() throws NotRunnableException;
+
+    /**
      * @return The {@link ClassesManager} for this project. This can be used to look at the source code.
      */
     public Option<ClassesManager> getClassesManager();

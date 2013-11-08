@@ -61,6 +61,14 @@ public class ProjectRequirements {
         restrictions.add(restriction);
     }
 
+    public void addRestriction(String name, double points, TestCase ... testCases) {
+        addRestriction(new Restriction(name, points, testCases));
+    }
+
+    public void addRestriction(String name, double points, List<TestCase> testCases) {
+        addRestriction(new Restriction(name, points, testCases));
+    }
+
     public List<Feature> getFeatures() {
         return features;
     }
@@ -84,6 +92,8 @@ public class ProjectRequirements {
     }
 
     public double checkDueDate(DateTime dateTime) {
+        if (dueDates.isEmpty())
+            return 1;
         double percentage = 0;
         for (DueDate dueDate : dueDates) {
             if (dueDate.getCutoffDate().isAfter(dateTime))

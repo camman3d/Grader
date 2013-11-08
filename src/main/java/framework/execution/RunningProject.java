@@ -9,7 +9,7 @@ import java.util.concurrent.Semaphore;
 public class RunningProject {
 
     private Semaphore runningState = new Semaphore(1);
-    private String output;
+    private String output = "";
     private NotRunnableException exception;
 
     public RunningProject() {
