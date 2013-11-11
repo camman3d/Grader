@@ -233,7 +233,8 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		return featureGradeRecorder;
 	}
 
-	SakaiProject makeProject(StudentCodingAssignment anAssignment) {
+    // I changed this to protected to extending classes can call it. -- Josh
+	protected SakaiProject makeProject(StudentCodingAssignment anAssignment) {
 		RootFolderProxy projectFolder = anAssignment.getProjectFolder();
 
 		if (projectFolder == null) {
@@ -800,4 +801,17 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
         this.manualFeedback = manualFeedback;
     }
 
+    // Added by Josh
+    public void setBulkFolder(BulkAssignmentFolder bulkFolder) {
+        this.bulkFolder = bulkFolder;
+    }
+
+    // Added by Josh
+    public void setAssignmentDataFolder(AssignmentDataFolder assignmentDataFolder) {
+        this.assignmentDataFolder = assignmentDataFolder;
+    }
+
+    public void saveProject(String onyen, SakaiProject project) {
+        onyenToProject.put(onyen, project);
+    }
 }

@@ -4,6 +4,7 @@ import grader.file.FileProxy;
 import grader.file.FileProxyUtils;
 import util.misc.Common;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +38,13 @@ public class ASakaiStudentAssignment implements StudentAssignment {
             commentsFile = aFileProxy.getFileEntryFromLocalName(COMMENTS_LOCAL_NAME);
             commentsFileName = commentsFile.getAbsoluteName();
             timeStampFile = aFileProxy.getFileEntryFromLocalName(TIMESTAMP_LOCAL_NAME);
-            timeStamp = FileProxyUtils.toText(timeStampFile);
-            if (timeStamp != null) {
-                date = Common.toDate(timeStamp);
+            try {
+                timeStamp = FileProxyUtils.toText(timeStampFile);
+                if (timeStamp != null) {
+                    date = Common.toDate(timeStamp);
+                }
+            } catch (Exception e) {
+                // Don't stop here
             }
             submitted = timeStamp != null && date != null;
             findDocuments();

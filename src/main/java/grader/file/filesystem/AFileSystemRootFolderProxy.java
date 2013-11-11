@@ -25,6 +25,7 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
         rootName = aRootFolderName;
         localName = Common.toCanonicalFileName(rootFolder.getName());
         initEntries(rootFolder);
+        initChildrenRootData(); // I moved this out of init entries because it only needs to be called once and significantly reduces the loading time. --Josh
     }
 
     void initEntries(File aFolder) {
@@ -36,7 +37,6 @@ public class AFileSystemRootFolderProxy extends AnAbstractRootFolderProxy
                 initEntries(aFile);
             }
         }
-        initChildrenRootData();
     }
 
     @Override
