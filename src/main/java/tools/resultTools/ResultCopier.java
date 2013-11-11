@@ -12,8 +12,8 @@ import java.io.IOException;
 public class ResultCopier {
     public static void main(String[] args) {
 
-        String path = "/Users/josh/Dropbox/Assignment 8";
-        String logPath = "./log/Assignment8";
+        String path = "/Users/josh/Dropbox/Assignment 9";
+        String logPath = "./log/Assignment9";
 
         File folder = new File(path);
         File logFolder = new File(logPath);

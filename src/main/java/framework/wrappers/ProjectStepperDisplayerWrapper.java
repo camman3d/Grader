@@ -94,6 +94,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
             double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
 
             // TODO: Save the results and comments
+
             String comments = window.getComments();
 
             if (continueGrading)

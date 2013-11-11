@@ -4,6 +4,8 @@ import com.github.antlrjavaparser.api.CompilationUnit;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Based on {@link grader.project.ClassDescription}
@@ -44,5 +46,12 @@ public interface ClassDescription {
      * @return The parsed code
      */
     public CompilationUnit parse() throws IOException;
+
+    /**
+     * Looks for and returns all method within the class which have been tagged with the given tag
+     * @param tag The tag to search for
+     * @return Method with corresponding tags
+     */
+    public List<Method> getTaggedMethods(String tag);
 
 }

@@ -9,6 +9,9 @@ import util.annotations.Tags;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @see ClassDescription
@@ -75,6 +78,24 @@ public class BasicClassDescription implements ClassDescription {
         if (compilationUnit == null)
             compilationUnit = JavaParser.parse(source);
         return compilationUnit;
+    }
+
+    @Override
+    public List<Method> getTaggedMethods(String tag) {
+        List<Method> methods = new ArrayList<Method>();
+        // Look for the tagged method
+
+        for (Method method : javaClass.getDeclaredMethods()) {
+            try {
+                String[] tags = method.getAnnotation(Tags.class).value();
+                for (String t : tags)
+                    if (t.equalsIgnoreCase(tag))
+                        methods.add(method);
+            } catch (Exception e) {
+                // Move along
+            }
+        }
+        return methods;
     }
 
     @Override

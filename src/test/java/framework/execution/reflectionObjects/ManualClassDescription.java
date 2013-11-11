@@ -5,6 +5,8 @@ import framework.project.ClassDescription;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,6 +55,11 @@ public class ManualClassDescription implements ClassDescription {
 
     @Override
     public CompilationUnit parse() throws IOException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Method> getTaggedMethods(String tag) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
