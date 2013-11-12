@@ -4,6 +4,7 @@ import framework.execution.NotRunnableException;
 import framework.execution.RunningProject;
 import org.joda.time.DateTime;
 import scala.Option;
+import util.trace.TraceableLog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,4 +51,10 @@ public interface Project {
      * @return The bin/out/target folder
      */
     public File getBuildFolder(String preferredClass) throws FileNotFoundException;
+
+    /**
+     * When the project is run in the same JVM then it should log all tracer bus events. This returns that log
+     * @return The traceable log of events.
+     */
+    public TraceableLog getTraceableLog();
 }

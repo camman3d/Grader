@@ -1,8 +1,10 @@
 package framework.project;
 
 import framework.execution.*;
-import tools.DirectoryUtils;
 import scala.Option;
+import tools.DirectoryUtils;
+import util.trace.TraceableLog;
+import util.trace.TraceableLogFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +17,7 @@ public class StandardProject implements Project {
     private File directory;
     private File sourceFolder;
     private Option<ClassesManager> classesManager;
+    private TraceableLog traceableLog;
 
     /**
      * Basic constructor
@@ -38,6 +41,10 @@ public class StandardProject implements Project {
         } catch (Exception e) {
             classesManager = Option.empty();
         }
+
+        // Create the traceable log
+        traceableLog = TraceableLogFactory.getTraceableLog();
+
     }
 
     /**
@@ -72,6 +79,11 @@ public class StandardProject implements Project {
             } else
                 return dir;
         }
+    }
+
+    @Override
+    public TraceableLog getTraceableLog() {
+        return traceableLog;
     }
 
     @Override

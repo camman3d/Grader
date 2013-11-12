@@ -123,7 +123,7 @@ public class FeatureListItem {
             gradeResults.setEnabled(true);
         }
         if (_result.getStatus() == CheckResult.CheckStatus.NotGraded && manual) {
-            autoGrade.setEnabled(false);
+            autoGrade.setEnabled(true);
             gradeStatus.setText("Cannot Grade");
             gradeResults.setEnabled(false);
         }

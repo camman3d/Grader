@@ -2,6 +2,7 @@ package framework.wrappers;
 
 import framework.grading.testing.*;
 import framework.project.Project;
+import framework.wrappers.transformers.ProjectTransformer;
 import grader.assignment.GradingFeature;
 import grader.checkers.*;
 import grader.checkers.CheckResult;
@@ -30,7 +31,7 @@ public class TestCaseWrapper extends BasicTestCase {
      */
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
-        featureChecker.setProject(((ProjectWrapper) project).getProject());
+        featureChecker.setProject(((ProjectTransformer) project).getProject());
 
         CheckResult result = featureChecker.check();
         if (result == null)

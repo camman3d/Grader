@@ -11,6 +11,8 @@ import scala.Option;
 import tools.classFinder2.ClassFinder;
 
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,12 +35,18 @@ public class PreconditionTestCase extends BasicTestCase {
         if (project.getClassesManager().isEmpty())
             throw new NotGradableException();
 
-        // Look for the method pre{Tag} which has no arguments and returns a boolean.
+        // Look for the method pre{MethodName} which has no arguments and returns a boolean.
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("Bridge Scene", autoGrade);
         if (classDescription.isEmpty())
             return fail("No bridge scene class");
         Class<?> _class = classDescription.get().getJavaClass();
-        String name = "pre" + StringUtils.capitalize(tag);
+
+        // Look for the method
+        List<Method> methods = classDescription.get().getTaggedMethods(tag);
+        if (methods.isEmpty())
+            return fail("Could not find a method tagged with " + tag);
+
+        String name = "pre" + StringUtils.capitalize(methods.get(0).getName());
         try {
             Method method = _class.getMethod(name, new Class[]{});
             if (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class)

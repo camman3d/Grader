@@ -7,10 +7,14 @@ import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.navigation.StudentFolder;
 import framework.utils.GradingEnvironment;
+import framework.wrappers.transformers.ProjectTransformer;
 import grader.assignment.GradingFeature;
+import grader.assignment.GradingFeatureList;
 import grader.project.Project;
 import grader.sakai.project.ProjectStepper;
 import grader.sakai.project.ProjectStepperDisplayer;
+import grader.sakai.project.SakaiProject;
+import grader.sakai.project.SakaiProjectDatabase;
 import org.joda.time.DateTime;
 import scala.Option;
 
@@ -27,11 +31,14 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
     private ProjectRequirements requirements;
     private ProjectStepper projectStepper;
-    private Project project = null;
+    private SakaiProject project = null;
+    private SakaiProjectDatabase projectDatabase;
 
     @Override
     public Object display(ProjectStepper aProjectStepper) {
         projectStepper = aProjectStepper;
+        projectStepper.configureNavigationList();
+        projectDatabase = projectStepper.getProjectDatabase();
         aProjectStepper.addPropertyChangeListener(this);
         return null;
     }
@@ -61,7 +68,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
             // Make sure that the project requirements are all ready
             initRequirements();
-            StudentFolder studentFolder = ProjectWrapper.getStudentFolder(project);
+            StudentFolder studentFolder = ProjectTransformer.getStudentFolder(project);
             List<CheckResult> featureResults;
             List<CheckResult> restrictionResults;
             GradingWindow window;
@@ -69,7 +76,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
             try {
 
                 // Attempt to get the student's project and check it
-                framework.project.Project wrappedProject = new ProjectWrapper(this.project, GradingEnvironment.get().getAssignmentName());
+                framework.project.Project wrappedProject = new ProjectTransformer(this.project, GradingEnvironment.get().getAssignmentName());
                 featureResults = requirements.checkFeatures(wrappedProject);
                 restrictionResults = requirements.checkRestrictions(wrappedProject);
                 window = GradingWindow.create(requirements, studentFolder, Option.apply(wrappedProject), featureResults, restrictionResults);
@@ -93,8 +100,22 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
             Option<DateTime> timestamp = studentFolder.getTimestamp();
             double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
 
-            // TODO: Save the results and comments
+            // TODO: Save the results
+            GradingFeatureList features = projectDatabase.getGradingFeatures();
+            String studentName = project.getStudentAssignment().getStudentName();
+            String onyen = project.getStudentAssignment().getOnyen();
+            double total = 0;
+            for (int i = 0; i < features.size(); i++) {
+                // Save the score for the feature
+                double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
+                features.get(i).pureSetScore(score);
+                projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
+                total += score;
+            }
+            projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
+//            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
 
+            // TODO: Save the comments
             String comments = window.getComments();
 
             if (continueGrading)

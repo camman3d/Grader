@@ -3,12 +3,14 @@ package gradingTools;
 import framework.grading.GradingManager;
 import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
-import framework.utils.GraderSettings;
+import framework.logging.FeedbackJsonLogger;
+import framework.logging.FeedbackTextSummaryLogger;
+import framework.logging.LocalJsonLogger;
+import framework.logging.LocalTextSummaryLogger;
 import framework.utils.GradingEnvironment;
+import framework.logging.ConglomerateRecorder;
 import framework.wrappers.ProjectDatabaseWrapper;
 import framework.wrappers.ProjectStepperDisplayerWrapper;
-import grader.sakai.project.ASakaiProjectDatabase;
-import grader.sakai.project.SakaiProjectDatabase;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -32,6 +34,34 @@ public class Driver {
             Class<?> _class = Class.forName(configuration.getString("project.requirements"));
             ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
 
+            // Logging
+//            FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
+            ConglomerateRecorder recorder = new ConglomerateRecorder(requirements);
+            String[] loggingMethods = configuration.getString("grader.controller.logger", "csv").split("\\s*\\+\\s*");
+            for (String method :loggingMethods) {
+
+                // Add loggers
+                if (method.equals("local") || method.equals("local-txt"))
+                    recorder.addLogger(new LocalTextSummaryLogger());
+                if (method.equals("local") || method.equals("local-json"))
+                    recorder.addLogger(new LocalJsonLogger());
+                if (method.equals("feedback") || method.equals("feedback-txt"))
+                    recorder.addLogger(new FeedbackTextSummaryLogger());
+                if (method.equals("feedback") || method.equals("feedback-json"))
+                    recorder.addLogger(new FeedbackJsonLogger());
+
+                // TODO: Add feature recorders
+            }
+            System.exit(0);
+//            if (loggingMethod.equals("feedback")) {
+//                FeedbackRecorder feedbackRecorder = new
+//                        database.setFeatureGradeRecorder(feedbackRecorder);
+//                database.setTotalScoreRecorder(feedbackRecorder);
+//            }
+
+
+
+
             // Run the grading process
             String controller = configuration.getString("grader.controller", "GradingManager");
             if (controller.equals("GradingManager")) {
@@ -52,6 +82,7 @@ public class Driver {
                 boolean useFrameworkGUI = configuration.getBoolean("grader.controller.useFrameworkGUI", false);
                 if (useFrameworkGUI)
                     database.setProjectStepperDisplayer(new ProjectStepperDisplayerWrapper());
+
 
                 // TODO: Logging/results saving
                 // TODO: Feedback

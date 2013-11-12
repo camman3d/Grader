@@ -2,6 +2,7 @@ package gradingTools.assignment10;
 
 import framework.grading.ProjectRequirements;
 import gradingTools.assignment10.testCases.*;
+import gradingTools.assignment6.testCases.ManualTestCase;
 import gradingTools.assignment6.testCases.QuestionTestCase;
 
 /**
@@ -28,6 +29,7 @@ public class Assignment10ProjectRequirements extends ProjectRequirements {
                 new PreconditionTestCase("passed"),
                 new PreconditionTestCase("failed"));
         addFeature("Console view shows precond events", 12, new QuestionTestCase("Do all four precondition events show up in the console view?", "Console view shows precondition events test case"));
+//        addFeature("Console view shows precond events", 12, new PreconditionEventsTestCase());
 
         // Command Objects (21 pts)
         addFeature("Say & move cmd objects", 5,
@@ -41,6 +43,24 @@ public class Assignment10ProjectRequirements extends ProjectRequirements {
         addFeature("Command object invoked", 5, new SayMoveCommandInvokedTestCase());
 
         // Asynchronous Animations (55 pts)
+        addFeature("Animating methods", 5,
+                new AnimatingMethodTestCase("asynchronous Arthur"),
+                new AnimatingMethodTestCase("asynchronous Galahad"),
+                new AnimatingMethodTestCase("asynchronous Lancelot"),
+                new AnimatingMethodTestCase("asynchronous Robin"));
+        addFeature("Methods start new threads", 10,
+                new AnimatingMethodNewThreadTestCase("asynchronous Arthur"),
+                new AnimatingMethodNewThreadTestCase("asynchronous Galahad"),
+                new AnimatingMethodNewThreadTestCase("asynchronous Lancelot"),
+                new AnimatingMethodNewThreadTestCase("asynchronous Robin"));
+        addFeature("Animating command classes", 20, new QuestionTestCase("Does each async animation method use an animating command class (Runnable)?", "Animating command class"));
+        addFeature("Animator classes", 20, new QuestionTestCase("Are there animator classes with an animating method?", "Animator classes with method test case"));
 
+        // Extra Credit
+        addFeature("Guard animation", 5, true,
+                new AnimatingMethodTestCase("asynchronous guard"),
+                new AnimatingMethodNewThreadTestCase("asynchronous guard"));
+        addFeature("Precondition buttons", 10, true, new QuestionTestCase("Are there buttons that are dynamically enabled/disabled based on the preconditions?", "Precondition buttons test case"));
+        addFeature("Awesome demo", 5, true, new ManualTestCase("Awesome demo test case"));
     }
 }

@@ -5,6 +5,7 @@ import framework.execution.RunningProject;
 import framework.project.ClassesManager;
 import framework.project.Project;
 import scala.Option;
+import util.trace.TraceableLog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -64,5 +65,10 @@ public class ManualProject implements Project {
     @Override
     public File getBuildFolder(String preferredClass) throws FileNotFoundException {
         return new File("./");
+    }
+
+    @Override
+    public TraceableLog getTraceableLog() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

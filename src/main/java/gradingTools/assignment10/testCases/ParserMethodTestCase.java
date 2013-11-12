@@ -38,22 +38,6 @@ public class ParserMethodTestCase extends BasicTestCase {
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("Command Interpreter", autoGrade);
         if (classDescription.isEmpty())
             return fail("Looking for method in command interpreter, but the class was not found.");
-//        Class<?> _class = classDescription.get().getJavaClass();
-
-//        // Look for the tagged method
-//        for (Method method : _class.getDeclaredMethods()) {
-//            try {
-//                String[] tags = method.getAnnotation(Tags.class).value();
-//                for (String t : tags)
-//                    if (t.equalsIgnoreCase(tag)) {
-//
-//                        // Now check that it returns a Runnable
-
-//                    }
-//            } catch (Exception e) {
-//                // Move along
-//            }
-//        }
 
         List<Method> methods = classDescription.get().getTaggedMethods(tag);
         if (methods.isEmpty())
