@@ -64,12 +64,14 @@ public class ConglomerateRecorder {
             if (r.getTarget() == result.getTarget()) {
                 r.setScore(result.getScore());
                 r.setNotes(result.getNotes());
+                r.setResults(result.getResults());
                 return;
             }
         for (CheckResult r : recordingSession.getRestrictionResults())
             if (r.getTarget() == result.getTarget()) {
                 r.setScore(result.getScore());
                 r.setNotes(result.getNotes());
+                r.setResults(result.getResults());
                 return;
             }
     }

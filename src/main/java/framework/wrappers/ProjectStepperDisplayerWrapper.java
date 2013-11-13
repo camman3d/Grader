@@ -5,6 +5,7 @@ import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
+import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.StudentFolder;
 import framework.utils.GradingEnvironment;
 import framework.wrappers.transformers.ProjectTransformer;
@@ -95,28 +96,36 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
             // Do stuff when the grader is done
             boolean continueGrading = window.awaitDone();
+            ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
 
             // Figure out the late penalty
             Option<DateTime> timestamp = studentFolder.getTimestamp();
             double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
+            ConglomerateRecorder.getInstance().save(gradePercentage);
 
-            // TODO: Save the results
-            GradingFeatureList features = projectDatabase.getGradingFeatures();
-            String studentName = project.getStudentAssignment().getStudentName();
-            String onyen = project.getStudentAssignment().getOnyen();
-            double total = 0;
-            for (int i = 0; i < features.size(); i++) {
-                // Save the score for the feature
-                double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
-                features.get(i).pureSetScore(score);
-                projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
-                total += score;
-            }
-            projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
-//            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
+            // Save the results
+            ConglomerateRecorder.getInstance().save(featureResults);
+            ConglomerateRecorder.getInstance().save(restrictionResults);
 
-            // TODO: Save the comments
+
+//            GradingFeatureList features = projectDatabase.getGradingFeatures();
+//            String studentName = project.getStudentAssignment().getStudentName();
+//            String onyen = project.getStudentAssignment().getOnyen();
+//            double total = 0;
+//            for (int i = 0; i < features.size(); i++) {
+//                // Save the score for the feature
+//                double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
+//                features.get(i).pureSetScore(score);
+//                projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
+//                total += score;
+//            }
+//            projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
+////            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
+
+            // Save the comments
             String comments = window.getComments();
+            ConglomerateRecorder.getInstance().save(comments);
+            ConglomerateRecorder.getInstance().finish();
 
             if (continueGrading)
                 projectStepper.next();

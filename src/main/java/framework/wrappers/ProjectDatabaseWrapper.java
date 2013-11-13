@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This extends the project database class to support adding ProjectRequirements
@@ -37,6 +38,9 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
      */
     public ProjectDatabaseWrapper() {
         super(GraderSettings.get().get("path"), getDataFolder());
+
+        // We want to go alphabetically, so set the NavigationListCreator
+        setNavigationListCreator(new AlphabeticNavigationList());
     }
 
     public ProjectDatabaseWrapper(String aBulkAssignmentsFolderName, String anAssignmentsDataFolderName) {
@@ -171,5 +175,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
         return dataFolder.getParentFile().getAbsolutePath();
     }
+
+
 
 }

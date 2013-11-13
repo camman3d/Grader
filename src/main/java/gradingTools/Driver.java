@@ -51,17 +51,7 @@ public class Driver {
                     recorder.addLogger(new FeedbackTextSummaryLogger());
                 if (method.equals("feedback") || method.equals("feedback-json"))
                     recorder.addLogger(new FeedbackJsonLogger());
-
-                // TODO: Add feature recorders
             }
-//            if (loggingMethod.equals("feedback")) {
-//                FeedbackRecorder feedbackRecorder = new
-//                        database.setFeatureGradeRecorder(feedbackRecorder);
-//                database.setTotalScoreRecorder(feedbackRecorder);
-//            }
-
-
-
 
             // Run the grading process
             String controller = configuration.getString("grader.controller", "GradingManager");
@@ -70,6 +60,7 @@ public class Driver {
                 // Run the GraderManager
                 GradingManager manager = new GradingManager(projectName, requirements);
                 manager.run();
+
             } else if (controller.equals("SakaiProjectDatabase")) {
 
                 // Start the grading process by, first, getting the settings the running the project database
@@ -83,7 +74,6 @@ public class Driver {
                 boolean useFrameworkGUI = configuration.getBoolean("grader.controller.useFrameworkGUI", false);
                 if (useFrameworkGUI)
                     database.setProjectStepperDisplayer(new ProjectStepperDisplayerWrapper());
-
 
                 // TODO: Logging/results saving
                 // TODO: Feedback
