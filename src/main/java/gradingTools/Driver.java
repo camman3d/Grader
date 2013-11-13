@@ -3,12 +3,12 @@ package gradingTools;
 import framework.grading.GradingManager;
 import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
-import framework.logging.FeedbackJsonLogger;
-import framework.logging.FeedbackTextSummaryLogger;
-import framework.logging.LocalJsonLogger;
-import framework.logging.LocalTextSummaryLogger;
+import framework.logging.loggers.FeedbackJsonLogger;
+import framework.logging.loggers.FeedbackTextSummaryLogger;
+import framework.logging.loggers.LocalJsonLogger;
+import framework.logging.loggers.LocalTextSummaryLogger;
+import framework.logging.recorder.ConglomerateRecorder;
 import framework.utils.GradingEnvironment;
-import framework.logging.ConglomerateRecorder;
 import framework.wrappers.ProjectDatabaseWrapper;
 import framework.wrappers.ProjectStepperDisplayerWrapper;
 import org.apache.commons.configuration.ConfigurationException;
@@ -36,7 +36,9 @@ public class Driver {
 
             // Logging
 //            FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
-            ConglomerateRecorder recorder = new ConglomerateRecorder(requirements);
+            ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
+            recorder.setProjectRequirements(requirements);
+
             String[] loggingMethods = configuration.getString("grader.controller.logger", "csv").split("\\s*\\+\\s*");
             for (String method :loggingMethods) {
 
@@ -52,7 +54,6 @@ public class Driver {
 
                 // TODO: Add feature recorders
             }
-            System.exit(0);
 //            if (loggingMethod.equals("feedback")) {
 //                FeedbackRecorder feedbackRecorder = new
 //                        database.setFeatureGradeRecorder(feedbackRecorder);

@@ -5,7 +5,7 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.gui.SettingsWindow;
-import framework.logging.*;
+import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
@@ -31,20 +31,24 @@ public class GradingManager {
 
     private String projectName;
     private ProjectRequirements projectRequirements;
-    private List<Logger> loggers;
+//    private List<Logger> loggers;
 
     // Settings that affect what to grade
     private String downloadPath;
     private String start;
     private String end;
 
+    // Logger
+//    private Logger logger;
+
     public GradingManager(String projectName, ProjectRequirements projectRequirements) {
         this.projectName = projectName;
         this.projectRequirements = projectRequirements;
-        loggers = new ArrayList<Logger>() {{
-            add(new LocalJsonLogger());
-            add(new LocalTextSummaryLogger());
-        }};
+//        loggers = new ArrayList<Logger>() {{
+//            add(new LocalJsonLogger());
+//            add(new LocalTextSummaryLogger());
+//        }};
+//        this.logger = logger;
     }
 
     public void run() {
@@ -54,11 +58,12 @@ public class GradingManager {
             // Get the student folders, starting and ending with the specified onyens
             BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(downloadPath);
             List<StudentFolder> folders = downloadFolder.getStudentFolders(start, end);
-            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
-            loggers.add(new FeedbackTextSummaryLogger(downloadFolder.getFolder()));
+//            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
+//            loggers.add(new FeedbackTextSummaryLogger(downloadFolder.getFolder()));
 
             // Grade each one
             for (StudentFolder folder : folders) {
+
                 Option<Project> project = folder.getProject(projectName);
                 List<CheckResult> featureResults;
                 List<CheckResult> restrictionResults;
@@ -89,8 +94,13 @@ public class GradingManager {
                 Option<DateTime> timestamp = folder.getTimestamp();
                 double gradePercentage = timestamp.isDefined() ? projectRequirements.checkDueDate(timestamp.get()) : 0;
 
-                // Log the results
-                logResults(folder, featureResults, restrictionResults, comments, gradePercentage);
+                // Save the results
+                ConglomerateRecorder.getInstance().newSession(folder.getOnyen());
+                ConglomerateRecorder.getInstance().save(featureResults);
+                ConglomerateRecorder.getInstance().save(restrictionResults);
+                ConglomerateRecorder.getInstance().save(comments);
+                ConglomerateRecorder.getInstance().save(gradePercentage);
+                ConglomerateRecorder.getInstance().finish();
 
                 if (!continueGrading)
                     System.exit(0);
@@ -110,12 +120,12 @@ public class GradingManager {
         end = window.getEnd();
     }
 
-    private void logResults(StudentFolder folder, List<CheckResult> featureResults,
-                            List<CheckResult> restrictionResults, String comments, double gradePercentage) {
-
-        // Log the results
-        for (Logger logger : loggers)
-            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments, gradePercentage);
-    }
+//    private void logResults(StudentFolder folder, List<CheckResult> featureResults,
+//                            List<CheckResult> restrictionResults, String comments, double gradePercentage) {
+//
+//        // Log the results
+//        for (Logger logger : loggers)
+//            logger.save(projectName, folder.getUserId(), featureResults, restrictionResults, comments, gradePercentage);
+//    }
 
 }
