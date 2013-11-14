@@ -6,6 +6,7 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.logging.loggers.Logger;
 import framework.utils.GraderSettings;
+import grader.spreadsheet.FeatureGradeRecorder;
 import tools.DirectoryUtils;
 
 import java.io.File;
@@ -20,7 +21,7 @@ import java.util.List;
  * Time: 2:47 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConglomerateRecorder {
+public class ConglomerateRecorder implements FeatureGradeRecorder {
 
     // Static singleton boilerplate code
 
@@ -33,7 +34,7 @@ public class ConglomerateRecorder {
     // Actual definition
 
     private ProjectRequirements projectRequirements;
-    private RecordingSession recordingSession;
+    private RecordingSession recordingSession = null;
     private List<Logger> loggers;
 
     private ConglomerateRecorder() {
@@ -103,6 +104,8 @@ public class ConglomerateRecorder {
             }
     }
 
+    // Session methods
+
     public void newSession(final String onyen) {
 
         // Get the user id from the onyen
@@ -128,7 +131,52 @@ public class ConglomerateRecorder {
     public void finish() {
         for (Logger logger : loggers)
             logger.save(recordingSession);
+        recordingSession = null;
     }
 
+    public void ensureSession(String onyen) {
+        if (recordingSession == null)
+            newSession(onyen);
+    }
 
+    /*
+        The following was added so that the ConglomerateRecorder can word as the recorder within ASakaiProjectDatabase.
+        To use it there, just do:
+            FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
+        Before creating the project database.
+     */
+
+    // Feature score setters
+    @Override
+    public void setGrade(String aStudentName, String anOnyen, String aFeature, double aScore) {
+        ensureSession(anOnyen);
+        save(aFeature, aScore);
+    }
+
+    /**
+     * The ConglomerateRecorder is for recording only. This will return 0 always.
+     * @deprecated Don't use this. Write only
+     */
+    @Override
+    @Deprecated
+    public double getGrade(String aStudentName, String anOnyen, String aFeature) {
+        return 0;
+    }
+
+    // Final score setters
+    @Override
+    public void setGrade(String aStudentName, String anOnyen, double aScore) {
+        ensureSession(anOnyen);
+        finish();
+    }
+
+    /**
+     * The ConglomerateRecorder is for recording only. This will return 0 always.
+     * @deprecated Don't use this. Write only
+     */
+    @Override
+    @Deprecated
+    public double getGrade(String aStudentName, String anOnyen) {
+        return 0;
+    }
 }

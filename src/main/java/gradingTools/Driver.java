@@ -8,9 +8,11 @@ import framework.logging.loggers.FeedbackTextSummaryLogger;
 import framework.logging.loggers.LocalJsonLogger;
 import framework.logging.loggers.LocalTextSummaryLogger;
 import framework.logging.recorder.ConglomerateRecorder;
+import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GradingEnvironment;
 import framework.wrappers.ProjectDatabaseWrapper;
 import framework.wrappers.ProjectStepperDisplayerWrapper;
+import grader.spreadsheet.FeatureGradeRecorderSelector;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -35,8 +37,9 @@ public class Driver {
             ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
 
             // Logging
-//            FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
+            //FeatureGradeRecorder
             ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
+            FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
             recorder.setProjectRequirements(requirements);
 
             String[] loggingMethods = configuration.getString("grader.controller.logger", "csv").split("\\s*\\+\\s*");

@@ -64,7 +64,6 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt);
 
         // The score event only gets fired once every project load, so we're going to go off of that
         if (evt.getPropertyName().equalsIgnoreCase("Score")) {
@@ -102,38 +101,38 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
                 // Do stuff when the grader is done
                 boolean continueGrading = window.awaitDone();
-                ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
+//                ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
 
                 // Figure out the late penalty
                 Option<DateTime> timestamp = studentFolder.getTimestamp();
                 double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
-                ConglomerateRecorder.getInstance().save(gradePercentage);
+//                ConglomerateRecorder.getInstance().save(gradePercentage);
 
                 // Save the results
-                ConglomerateRecorder.getInstance().save(featureResults);
-                ConglomerateRecorder.getInstance().save(restrictionResults);
+//                ConglomerateRecorder.getInstance().save(featureResults);
+//                ConglomerateRecorder.getInstance().save(restrictionResults);
 
 
-    //            GradingFeatureList features = projectDatabase.getGradingFeatures();
-    //            String studentName = project.getStudentAssignment().getStudentName();
-    //            String onyen = project.getStudentAssignment().getOnyen();
-    //            double total = 0;
-    //            for (int i = 0; i < features.size(); i++) {
-    //                // Save the score for the feature
-    //                double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
-    //                features.get(i).pureSetScore(score);
-    //                projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
-    //                total += score;
-    //            }
-    //            projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
-    ////            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
+                GradingFeatureList features = projectDatabase.getGradingFeatures();
+                String studentName = project.getStudentAssignment().getStudentName();
+                String onyen = project.getStudentAssignment().getOnyen();
+                double total = 0;
+                for (int i = 0; i < features.size(); i++) {
+                    // Save the score for the feature
+                    double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
+//                    features.get(i).pureSetScore(score);
+                    projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
+                    total += score;
+                }
+                projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
+
+    //            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
 
                 // Save the comments
                 String comments = window.getComments();
-                ConglomerateRecorder.getInstance().save(comments);
-                ConglomerateRecorder.getInstance().finish();
+//                ConglomerateRecorder.getInstance().save(comments);
+//                ConglomerateRecorder.getInstance().finish();
 
-                System.out.println("   *********************************");
                 if (continueGrading)
                     projectStepper.next();
                 else
