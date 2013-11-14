@@ -4,4 +4,16 @@
 [X] Move the Logging from the displayer wrapper to actual recorders
 [X] Add spreadsheet logger
 [ ] Save comments via auto/manual feedback recorder
+        Within AGradingFeature it calls:
+            projectDatabase.getAutoFeedback().recordAutoGrade(this, result);
+            projectDatabase.getManualFeedback().comment(this);
+        setScore in AGradingFeature calls comment();
+            setScore is never called? That means that manual feedback is never used. We only care about auto feedback
+        So the idea is to use the conglomerate recorder as the auto feedback recorder.
+    [X] Remove GradingFeatureWrapper
+    [X] Get feedback saving correctly
+    [X] Make ConglomerateRecorder be an auto feedback
+    [X] Integrate it (Setters)
+[ ] Don't skip on missing projects
 [ ] Work on wrappers
+[ ] Use configuration for GraderData folder (ProjectDatabaseWrapper line 30)

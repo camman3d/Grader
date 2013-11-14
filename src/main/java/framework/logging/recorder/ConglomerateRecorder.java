@@ -4,8 +4,12 @@ import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
+import framework.grading.testing.TestCaseResult;
 import framework.logging.loggers.Logger;
 import framework.utils.GraderSettings;
+import grader.assignment.GradingFeature;
+import grader.feedback.AutoFeedback;
+import grader.feedback.ManualFeedback;
 import grader.spreadsheet.FeatureGradeRecorder;
 import tools.DirectoryUtils;
 
@@ -21,7 +25,7 @@ import java.util.List;
  * Time: 2:47 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConglomerateRecorder implements FeatureGradeRecorder {
+public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback, ManualFeedback {
 
     // Static singleton boilerplate code
 
@@ -36,6 +40,8 @@ public class ConglomerateRecorder implements FeatureGradeRecorder {
     private ProjectRequirements projectRequirements;
     private RecordingSession recordingSession = null;
     private List<Logger> loggers;
+    private String featureComments;
+    private List<TestCaseResult> featureResults;
 
     private ConglomerateRecorder() {
         loggers = new ArrayList<Logger>();
@@ -86,20 +92,40 @@ public class ConglomerateRecorder implements FeatureGradeRecorder {
     }
 
     public void save(String featureName, double score) {
-        save(featureName, score, "");
-    }
-
-    public void save(String featureName, double score, String notes) {
         for (CheckResult r : recordingSession.getFeatureResults())
             if (r.getTarget().getName().equals(featureName)) {
                 r.setScore(score);
-                r.setNotes(notes);
                 return;
             }
         for (CheckResult r : recordingSession.getRestrictionResults())
             if (r.getTarget().getName().equals(featureName)) {
                 r.setScore(score);
+                return;
+            }
+    }
+
+    public void save(String featureName, String notes) {
+        for (CheckResult r : recordingSession.getFeatureResults())
+            if (r.getTarget().getName().equals(featureName)) {
                 r.setNotes(notes);
+                return;
+            }
+        for (CheckResult r : recordingSession.getRestrictionResults())
+            if (r.getTarget().getName().equals(featureName)) {
+                r.setNotes(notes);
+                return;
+            }
+    }
+
+    public void save(String featureName, List<TestCaseResult> results) {
+        for (CheckResult r : recordingSession.getFeatureResults())
+            if (r.getTarget().getName().equals(featureName)) {
+                r.setResults(results);
+                return;
+            }
+        for (CheckResult r : recordingSession.getRestrictionResults())
+            if (r.getTarget().getName().equals(featureName)) {
+                r.setResults(results);
                 return;
             }
     }
@@ -132,24 +158,22 @@ public class ConglomerateRecorder implements FeatureGradeRecorder {
         for (Logger logger : loggers)
             logger.save(recordingSession);
         recordingSession = null;
-    }
-
-    public void ensureSession(String onyen) {
-        if (recordingSession == null)
-            newSession(onyen);
+        featureComments = "";
     }
 
     /*
-        The following was added so that the ConglomerateRecorder can word as the recorder within ASakaiProjectDatabase.
+        The following was added so that the ConglomerateRecorder can work as the recorder within ASakaiProjectDatabase.
         To use it there, just do:
             FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
         Before creating the project database.
      */
 
-    // Feature score setters
+    /**
+     * Feature score setter.
+     * This is needed so that when setScore or pureSetScore are called it comes here.
+     */
     @Override
     public void setGrade(String aStudentName, String anOnyen, String aFeature, double aScore) {
-        ensureSession(anOnyen);
         save(aFeature, aScore);
     }
 
@@ -163,11 +187,13 @@ public class ConglomerateRecorder implements FeatureGradeRecorder {
         return 0;
     }
 
-    // Final score setters
+    /**
+     * This method is supposed to save the total score, but the conglomerate recorder only saves and writes things out
+     * when the {@link #finish()} method is called. The {@link framework.wrappers.ProjectStepperDisplayerWrapper} calls
+     * finish so it's ok that this is empty.
+     */
     @Override
     public void setGrade(String aStudentName, String anOnyen, double aScore) {
-        ensureSession(anOnyen);
-        finish();
     }
 
     /**
@@ -178,5 +204,34 @@ public class ConglomerateRecorder implements FeatureGradeRecorder {
     @Deprecated
     public double getGrade(String aStudentName, String anOnyen) {
         return 0;
+    }
+
+    /*
+        The following was added so that auto feedback gets mixed into the score.
+     */
+
+    @Override
+    public void recordAutoGrade(GradingFeature aGradingFeature, grader.checkers.CheckResult result) {
+        System.out.println("TODO: recordAutoGrade");
+    }
+
+    /*
+        The following was added so that manual feedback is used.
+     */
+
+    @Override
+    public void comment(GradingFeature aGradingFeature) {
+        // Instead of asking the user, pull it from a variable which is updated.
+        save(aGradingFeature.getFeature(), featureComments);
+        if (featureResults != null)
+            save(aGradingFeature.getFeature(), featureResults);
+    }
+
+    public void setFeatureComments(String comments) {
+        featureComments = comments;
+    }
+
+    public void setFeatureResults(List<TestCaseResult> results) {
+        featureResults = results;
     }
 }

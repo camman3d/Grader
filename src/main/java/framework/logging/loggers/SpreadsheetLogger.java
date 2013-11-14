@@ -66,6 +66,8 @@ public class SpreadsheetLogger implements Logger {
 
         // Save the workbook to the file
         try {
+            // Delete the old one just to avoid problems
+            spreadsheetFile.delete();
             workbook.write(new FileOutputStream(spreadsheetFile));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -87,8 +89,10 @@ public class SpreadsheetLogger implements Logger {
     private void loadWorkbook() {
         try {
             workbook = new XSSFWorkbook(new FileInputStream(spreadsheetFile));
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (Exception e) {
+            System.out.println("Error creating spreadsheet. Creating new");
+            spreadsheetFile.delete();
+            createWorkbook();
         }
     }
 

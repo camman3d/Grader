@@ -235,11 +235,12 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 		
 	}
 
+    // Josh: We want to know when a project is set, so I'm adding the project property change event here.
 	@Visible(false)
 	public boolean setProject(SakaiProject newVal) {
 		if (newVal == null) {
-            // Josh: I added this so that an event will file when there is no project.
-            propertyChangeSupport.firePropertyChange("Score", null, 0);
+            // Josh: Added event
+            propertyChangeSupport.firePropertyChange("Project", null, null);
             return false;
         }
 		writeScores(this);
@@ -261,6 +262,10 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 			setInternalScore(getGrade());
 
 //			setInternalScore(gradeRecorder.getGrade(project.getStudentAssignment().getStudentName(), project.getStudentAssignment().getOnyen()));
+
+        // Josh: Added event
+        propertyChangeSupport.firePropertyChange("Project", null, project);
+
 		return true;
 	}
 	

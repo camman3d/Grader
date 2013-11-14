@@ -34,9 +34,7 @@ public class Driver {
             ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
 
             // Logging
-            //FeatureGradeRecorder
             ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
-            FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
             recorder.setProjectRequirements(requirements);
 
             String[] loggingMethods = configuration.getString("grader.logger", "csv").split("\\s*\\+\\s*");
@@ -69,6 +67,10 @@ public class Driver {
                 SettingsWindow settingsWindow = SettingsWindow.create();
                 settingsWindow.awaitBegin();
 
+                // Logging/results saving
+                FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
+
+                // Create the database
                 ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
                 database.addProjectRequirements(requirements);
 
@@ -77,8 +79,9 @@ public class Driver {
                 if (useFrameworkGUI)
                     database.setProjectStepperDisplayer(new ProjectStepperDisplayerWrapper());
 
-                // TODO: Logging/results saving
-                // TODO: Feedback
+                // Feedback
+//                database.setAutoFeedback(ConglomerateRecorder.getInstance());
+                database.setManualFeedback(ConglomerateRecorder.getInstance());
 
                 database.runProjectsInteractively();
             }

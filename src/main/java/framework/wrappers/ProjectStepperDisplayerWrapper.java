@@ -65,11 +65,11 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        // The score event only gets fired once every project load, so we're going to go off of that
-        if (evt.getPropertyName().equalsIgnoreCase("Score")) {
+        // Go off the project event
+        if (evt.getPropertyName().equalsIgnoreCase("Project")) {
 
-            // If the project is the same then that means there was no project submitted, so we'll move along
-            if (project != projectStepper.getProject()) {
+            // If the new value is null then the next submission didn't have a project.
+            if (evt.getNewValue() != null) {
                 project = projectStepper.getProject();
 
                 // Make sure that the project requirements are all ready
@@ -101,44 +101,46 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
                 // Do stuff when the grader is done
                 boolean continueGrading = window.awaitDone();
-//                ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
+                ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
 
                 // Figure out the late penalty
                 Option<DateTime> timestamp = studentFolder.getTimestamp();
                 double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
-//                ConglomerateRecorder.getInstance().save(gradePercentage);
-
-                // Save the results
-//                ConglomerateRecorder.getInstance().save(featureResults);
-//                ConglomerateRecorder.getInstance().save(restrictionResults);
-
-
-                GradingFeatureList features = projectDatabase.getGradingFeatures();
-                String studentName = project.getStudentAssignment().getStudentName();
-                String onyen = project.getStudentAssignment().getOnyen();
-                double total = 0;
-                for (int i = 0; i < features.size(); i++) {
-                    // Save the score for the feature
-                    double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
-//                    features.get(i).pureSetScore(score);
-                    projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
-                    total += score;
-                }
-                projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
-
-    //            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
+                ConglomerateRecorder.getInstance().save(gradePercentage);
 
                 // Save the comments
                 String comments = window.getComments();
-//                ConglomerateRecorder.getInstance().save(comments);
-//                ConglomerateRecorder.getInstance().finish();
+                ConglomerateRecorder.getInstance().save(comments);
+
+                // Save the results (grades + notes)
+                GradingFeatureList features = projectDatabase.getGradingFeatures();
+                String studentName = project.getStudentAssignment().getStudentName();
+                String onyen = project.getStudentAssignment().getOnyen();
+//                double total = 0;
+                for (int i = 0; i < features.size(); i++) {
+                    // Save the score for the feature
+                    double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
+
+                    // Save the comments. We save them in the ConglomerateRecorder so that, if it is being used as the
+                    // manual feedback, they will be pulled in.
+                    ConglomerateRecorder.getInstance().setFeatureComments(featureResults.get(i).getNotes());
+                    ConglomerateRecorder.getInstance().setFeatureResults(featureResults.get(i).getResults());
+                    features.get(i).setScore(score);
+
+                    // Save the score
+                    projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
+//                    total += score;
+                }
+
+                // Finish up
+//                projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
+                ConglomerateRecorder.getInstance().finish();
 
                 if (continueGrading)
                     projectStepper.next();
                 else
                     System.exit(0);
-            } else
-                projectStepper.next();
+            }
         }
     }
 

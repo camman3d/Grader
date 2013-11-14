@@ -802,6 +802,11 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
     }
 
     // Added by Josh
+    public void setAutoFeedback(AutoFeedback autoFeedback) {
+        this.autoFeedback = autoFeedback;
+    }
+
+    // Added by Josh
     public void setBulkFolder(BulkAssignmentFolder bulkFolder) {
         this.bulkFolder = bulkFolder;
     }

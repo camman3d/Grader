@@ -5,6 +5,7 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
+import grader.assignment.AGradingFeature;
 import grader.assignment.AnAssignmenDataFolder;
 import grader.assignment.GradingFeature;
 import grader.file.RootFolderProxy;
@@ -57,12 +58,12 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
         // Add the features
         for (Feature feature : requirements.getFeatures()) {
-            gradingFeatures.add(new GradingFeatureWrapper(feature.getName(), feature.getPoints(), new FeatureCheckerWrapper(feature), feature.isExtraCredit()));
+            gradingFeatures.add(new AGradingFeature(feature.getName(), feature.getPoints(), new FeatureCheckerWrapper(feature), feature.isExtraCredit()));
         }
 
         // Add the restrictions
         for (Restriction restriction : requirements.getRestrictions()) {
-            gradingFeatures.add(new GradingFeatureWrapper(restriction.getName(), restriction.getPoints(), new FeatureCheckerWrapper(restriction)));
+            gradingFeatures.add(new AGradingFeature(restriction.getName(), restriction.getPoints(), new FeatureCheckerWrapper(restriction)));
         }
 
         addGradingFeatures(gradingFeatures);
