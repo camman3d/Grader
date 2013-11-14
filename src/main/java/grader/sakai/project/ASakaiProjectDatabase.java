@@ -233,7 +233,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 		return featureGradeRecorder;
 	}
 
-    // I changed this to protected to extending classes can call it. -- Josh
+    // I changed this to protected so extending classes can call it. -- Josh
 	protected SakaiProject makeProject(StudentCodingAssignment anAssignment) {
 		RootFolderProxy projectFolder = anAssignment.getProjectFolder();
 

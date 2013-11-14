@@ -64,73 +64,82 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (project != projectStepper.getProject()) {
-            project = projectStepper.getProject();
+        System.out.println(evt);
 
-            // Make sure that the project requirements are all ready
-            initRequirements();
-            StudentFolder studentFolder = ProjectTransformer.getStudentFolder(project);
-            List<CheckResult> featureResults;
-            List<CheckResult> restrictionResults;
-            GradingWindow window;
+        // The score event only gets fired once every project load, so we're going to go off of that
+        if (evt.getPropertyName().equalsIgnoreCase("Score")) {
 
-            try {
+            // If the project is the same then that means there was no project submitted, so we'll move along
+            if (project != projectStepper.getProject()) {
+                project = projectStepper.getProject();
 
-                // Attempt to get the student's project and check it
-                framework.project.Project wrappedProject = new ProjectTransformer(this.project, GradingEnvironment.get().getAssignmentName());
-                featureResults = requirements.checkFeatures(wrappedProject);
-                restrictionResults = requirements.checkRestrictions(wrappedProject);
-                window = GradingWindow.create(requirements, studentFolder, Option.apply(wrappedProject), featureResults, restrictionResults);
-            } catch (FileNotFoundException e) {
+                // Make sure that the project requirements are all ready
+                initRequirements();
+                StudentFolder studentFolder = ProjectTransformer.getStudentFolder(project);
+                List<CheckResult> featureResults;
+                List<CheckResult> restrictionResults;
+                GradingWindow window;
 
-                // We were unable to load the project for some reason, so start with all zeros
-                featureResults = new ArrayList<CheckResult>();
-                restrictionResults = new ArrayList<CheckResult>();
-                for (Feature feature : requirements.getFeatures())
-                    featureResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, feature));
-                for (Restriction restriction : requirements.getRestrictions())
-                    restrictionResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, restriction));
-                Option<framework.project.Project> wrappedProject = Option.empty();
-                window = GradingWindow.create(requirements, studentFolder, wrappedProject, featureResults, restrictionResults);
-            }
+                try {
 
-            // Do stuff when the grader is done
-            boolean continueGrading = window.awaitDone();
-            ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
+                    // Attempt to get the student's project and check it
+                    framework.project.Project wrappedProject = new ProjectTransformer(this.project, GradingEnvironment.get().getAssignmentName());
+                    featureResults = requirements.checkFeatures(wrappedProject);
+                    restrictionResults = requirements.checkRestrictions(wrappedProject);
+                    window = GradingWindow.create(requirements, studentFolder, Option.apply(wrappedProject), featureResults, restrictionResults);
+                } catch (FileNotFoundException e) {
 
-            // Figure out the late penalty
-            Option<DateTime> timestamp = studentFolder.getTimestamp();
-            double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
-            ConglomerateRecorder.getInstance().save(gradePercentage);
+                    // We were unable to load the project for some reason, so start with all zeros
+                    featureResults = new ArrayList<CheckResult>();
+                    restrictionResults = new ArrayList<CheckResult>();
+                    for (Feature feature : requirements.getFeatures())
+                        featureResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, feature));
+                    for (Restriction restriction : requirements.getRestrictions())
+                        restrictionResults.add(new CheckResult(0, "", CheckResult.CheckStatus.NotGraded, restriction));
+                    Option<framework.project.Project> wrappedProject = Option.empty();
+                    window = GradingWindow.create(requirements, studentFolder, wrappedProject, featureResults, restrictionResults);
+                }
 
-            // Save the results
-            ConglomerateRecorder.getInstance().save(featureResults);
-            ConglomerateRecorder.getInstance().save(restrictionResults);
+                // Do stuff when the grader is done
+                boolean continueGrading = window.awaitDone();
+                ConglomerateRecorder.getInstance().newSession(project.getStudentAssignment().getOnyen());
+
+                // Figure out the late penalty
+                Option<DateTime> timestamp = studentFolder.getTimestamp();
+                double gradePercentage = timestamp.isDefined() ? requirements.checkDueDate(timestamp.get()) : 0;
+                ConglomerateRecorder.getInstance().save(gradePercentage);
+
+                // Save the results
+                ConglomerateRecorder.getInstance().save(featureResults);
+                ConglomerateRecorder.getInstance().save(restrictionResults);
 
 
-//            GradingFeatureList features = projectDatabase.getGradingFeatures();
-//            String studentName = project.getStudentAssignment().getStudentName();
-//            String onyen = project.getStudentAssignment().getOnyen();
-//            double total = 0;
-//            for (int i = 0; i < features.size(); i++) {
-//                // Save the score for the feature
-//                double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
-//                features.get(i).pureSetScore(score);
-//                projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
-//                total += score;
-//            }
-//            projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
-////            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
+    //            GradingFeatureList features = projectDatabase.getGradingFeatures();
+    //            String studentName = project.getStudentAssignment().getStudentName();
+    //            String onyen = project.getStudentAssignment().getOnyen();
+    //            double total = 0;
+    //            for (int i = 0; i < features.size(); i++) {
+    //                // Save the score for the feature
+    //                double score = (i < featureResults.size()) ? featureResults.get(i).getScore() : restrictionResults.get(i - featureResults.size()).getScore();
+    //                features.get(i).pureSetScore(score);
+    //                projectDatabase.getFeatureGradeRecorder().setGrade(studentName, onyen, features.get(i).getFeature(), score);
+    //                total += score;
+    //            }
+    //            projectDatabase.getTotalScoreRecorder().setGrade(studentName, onyen, total);
+    ////            projectStepper.getProjectDatabase().getAutoFeedback().recordAutoGrade();getManualFeedback().comment(this);
 
-            // Save the comments
-            String comments = window.getComments();
-            ConglomerateRecorder.getInstance().save(comments);
-            ConglomerateRecorder.getInstance().finish();
+                // Save the comments
+                String comments = window.getComments();
+                ConglomerateRecorder.getInstance().save(comments);
+                ConglomerateRecorder.getInstance().finish();
 
-            if (continueGrading)
+                System.out.println("   *********************************");
+                if (continueGrading)
+                    projectStepper.next();
+                else
+                    System.exit(0);
+            } else
                 projectStepper.next();
-            else
-                System.exit(0);
         }
     }
 

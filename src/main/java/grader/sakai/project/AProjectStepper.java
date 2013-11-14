@@ -237,7 +237,11 @@ public class AProjectStepper extends AClearanceManager implements ProjectStepper
 
 	@Visible(false)
 	public boolean setProject(SakaiProject newVal) {
-		if (newVal == null) return false;
+		if (newVal == null) {
+            // Josh: I added this so that an event will file when there is no project.
+            propertyChangeSupport.firePropertyChange("Score", null, 0);
+            return false;
+        }
 		writeScores(this);
 		runExecuted = false;
 		project = newVal;

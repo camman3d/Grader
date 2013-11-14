@@ -1,0 +1,7 @@
+# Things to do
+
+This list is a 
+
+[ ] Get the project stepper displayer wrapper to work with missing projects
+[ ] Move the Logging from the displayer wrapper to actual recorders
+[ ] Work on wrappers
