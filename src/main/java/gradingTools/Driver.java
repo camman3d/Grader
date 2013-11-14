@@ -3,10 +3,7 @@ package gradingTools;
 import framework.grading.GradingManager;
 import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
-import framework.logging.loggers.FeedbackJsonLogger;
-import framework.logging.loggers.FeedbackTextSummaryLogger;
-import framework.logging.loggers.LocalJsonLogger;
-import framework.logging.loggers.LocalTextSummaryLogger;
+import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GradingEnvironment;
@@ -42,7 +39,7 @@ public class Driver {
             FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
             recorder.setProjectRequirements(requirements);
 
-            String[] loggingMethods = configuration.getString("grader.controller.logger", "csv").split("\\s*\\+\\s*");
+            String[] loggingMethods = configuration.getString("grader.logger", "csv").split("\\s*\\+\\s*");
             for (String method :loggingMethods) {
 
                 // Add loggers
@@ -54,6 +51,8 @@ public class Driver {
                     recorder.addLogger(new FeedbackTextSummaryLogger());
                 if (method.equals("feedback") || method.equals("feedback-json"))
                     recorder.addLogger(new FeedbackJsonLogger());
+                if (method.equals("spreadsheet"))
+                    recorder.addLogger(new SpreadsheetLogger(requirements));
             }
 
             // Run the grading process

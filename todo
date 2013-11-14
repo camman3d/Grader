@@ -2,6 +2,6 @@
 
 [X] Get the project stepper displayer wrapper to work with missing projects
 [X] Move the Logging from the displayer wrapper to actual recorders
-[ ] Add spreadsheet logger
+[X] Add spreadsheet logger
 [ ] Save comments via auto/manual feedback recorder
 [ ] Work on wrappers
