@@ -20,7 +20,7 @@ public class Assignment10ProjectRequirements extends ProjectRequirements {
         addDueDate("11/07/2013 00:30:00", 1.05);
         addDueDate("11/09/2013 00:30:00", 1);
         addDueDate("11/12/2013 11:30:00", 0.9);
-        addDueDate("10/14/2013 11:30:00", 0.75);
+        addDueDate("11/14/2013 11:30:00", 0.75);
 
         // Precondition Methods (24 pts)
         addFeature("Precondition methods", 12,

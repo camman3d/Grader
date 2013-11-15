@@ -3,7 +3,7 @@
 [X] Get the project stepper displayer wrapper to work with missing projects
 [X] Move the Logging from the displayer wrapper to actual recorders
 [X] Add spreadsheet logger
-[ ] Save comments via auto/manual feedback recorder
+[X] Save comments via auto/manual feedback recorder
         Within AGradingFeature it calls:
             projectDatabase.getAutoFeedback().recordAutoGrade(this, result);
             projectDatabase.getManualFeedback().comment(this);
@@ -14,6 +14,6 @@
     [X] Get feedback saving correctly
     [X] Make ConglomerateRecorder be an auto feedback
     [X] Integrate it (Setters)
-[ ] Don't skip on missing projects
+[X] Don't skip on missing projects
 [ ] Work on wrappers
 [ ] Use configuration for GraderData folder (ProjectDatabaseWrapper line 30)

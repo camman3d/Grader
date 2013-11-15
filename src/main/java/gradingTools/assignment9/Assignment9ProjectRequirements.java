@@ -20,7 +20,7 @@ public class Assignment9ProjectRequirements extends ProjectRequirements {
         addDueDate("10/31/2013 00:30:00", 1.05);
         addDueDate("11/02/2013 00:30:00", 1);
         addDueDate("11/05/2013 11:30:00", 0.9);
-        addDueDate("10/07/2013 11:30:00", 0.75);
+        addDueDate("11/07/2013 11:30:00", 0.75);
 
         // Part 1
         addFeature("Interpreter controller setter", 15, new QuestionTestCase("Does the controller call the interpreter setter?", "Controller object calls Interpreter’s setter test case"));

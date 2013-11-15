@@ -66,9 +66,14 @@ public class SpreadsheetLogger implements Logger {
 
         // Save the workbook to the file
         try {
-            // Delete the old one just to avoid problems
-            spreadsheetFile.delete();
-            workbook.write(new FileOutputStream(spreadsheetFile));
+
+            FileOutputStream outputStream = new FileOutputStream(spreadsheetFile);
+            workbook.write(outputStream);
+            outputStream.close();
+
+            // Reload the workbook. We have to do this to avoid issues.
+            // See: http://stackoverflow.com/questions/18261152/org-apache-xmlbeans-impl-values-xmlvaluedisconnectedexception-when-write-workboo
+            loadWorkbook();
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -78,7 +83,7 @@ public class SpreadsheetLogger implements Logger {
         String id = recordingSession.getUserId();
         String onyen = id.substring(id.indexOf("(") + 1, id.indexOf(")"));
         XSSFSheet sheet = workbook.getSheetAt(0);
-        for (int i = 0; i < sheet.getLastRowNum(); i++) {
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
             XSSFRow row = sheet.getRow(i);
             if (row.getCell(0).getStringCellValue().equals(onyen))
                 return row;

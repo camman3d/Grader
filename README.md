@@ -47,7 +47,14 @@ what and how to run. There are the following settings that you can set:
 criteria.
 * `project.name`: The name of the project. Something like "Assignment4".
 * `grader.controller`: This specifies which controller is used to load projects and dictate the grading process.
-* `grader.logger`: This setting allows you to set how results will be saved.
+* `grader.logger`: This setting allows you to set how results will be saved. You can choose which loggers are used by selecting any of the following concatenated with '+':
+* * `feedback-txt`: This saves a text file in the students' feedback folder
+* * `feedback-json`: This saves a json file in the students' feedback folder
+* * `feedback`: Equivalent to "feedback-txt + feedback-json"
+* * `local-txt`: This saves a text file in a local log folder
+* * `local-json`: This saves a json file in the local log folder
+* * `local`: Equivalent to "local-txt + local-json"
+* * `spreadsheet`: This saves all the scores in a spreadsheet
 
 # Examples
 

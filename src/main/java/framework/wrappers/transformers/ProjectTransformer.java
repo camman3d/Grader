@@ -3,12 +3,15 @@ package framework.wrappers.transformers;
 import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
 import framework.project.StandardProject;
+import framework.utils.GraderSettings;
 import grader.project.Project;
 import grader.sakai.project.SakaiProject;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import tools.DirectoryUtils;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 
 /**
@@ -68,5 +71,15 @@ public class ProjectTransformer extends StandardProject {
     public static StudentFolder getStudentFolder(Project project) {
         File path = new File(project.getProjectFolderName());
         return new SakaiStudentFolder(path.getParentFile().getParentFile());
+    }
+
+    public static StudentFolder getStudentFolder(final String onyen) {
+        File folder = DirectoryUtils.find(new File(GraderSettings.get().get("path")), new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().contains("(" + onyen + ")");
+            }
+        }).get();
+        return new SakaiStudentFolder(folder);
     }
 }
