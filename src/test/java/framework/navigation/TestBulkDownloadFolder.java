@@ -1,6 +1,8 @@
 package framework.navigation;
 
+import org.junit.Before;
 import org.junit.Test;
+import tools.TestConfig;
 
 import java.io.File;
 import java.util.List;
@@ -12,8 +14,14 @@ import static org.junit.Assert.*;
  */
 public class TestBulkDownloadFolder {
 
-    private String bulkFolder = "/Users/josh/Downloads/Assignment 2 All";
-    private String onyen = "jmonson";
+    private String bulkFolder;
+    private String onyen;
+
+    @Before
+    public void setUp() throws Exception {
+        bulkFolder = TestConfig.getConfig().getString("test.exampleSakai.path");
+        onyen = TestConfig.getConfig().getString("test.exampleSakai.example1.onyen");
+    }
 
     @Test
     public void testValidCreation() {
