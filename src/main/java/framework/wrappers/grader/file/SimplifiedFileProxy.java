@@ -1,10 +1,10 @@
-package framework.wrappers;
+package framework.wrappers.grader.file;
 
 import grader.file.FileProxy;
-import grader.file.filesystem.AFileSystemFileProxy;
 import tools.DirectoryUtils;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,8 +46,16 @@ public class SimplifiedFileProxy implements FileProxy {
 
     @Override
     public List<FileProxy> getFileEntries() {
-        System.out.println("**** TODO: getFileEntries");
-        return null;
+        Set<File> entries = DirectoryUtils.getFiles(file, new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return true;
+            }
+        });
+        List<FileProxy> entryProxies = new ArrayList<FileProxy>();
+        for (File entry : entries)
+            entryProxies.add(new SimplifiedFileProxy(entry));
+        return entryProxies;
     }
 
     @Override

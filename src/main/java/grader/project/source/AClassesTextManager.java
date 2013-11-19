@@ -36,7 +36,7 @@ public class AClassesTextManager implements ClassesTextManager {
             out.print(allText);
             out.close();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace(); // Commented out by Josh
         }
     }
 

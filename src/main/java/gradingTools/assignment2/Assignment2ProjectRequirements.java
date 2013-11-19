@@ -1,6 +1,6 @@
 package gradingTools.assignment2;
 
-import framework.grading.ProjectRequirements;
+import framework.grading.FrameworkProjectRequirements;
 import gradingTools.assignment2.testCases.*;
 import gradingTools.assignment6.testCases.ManualTestCase;
 
@@ -11,7 +11,7 @@ import gradingTools.assignment6.testCases.ManualTestCase;
  * Time: 9:15 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Assignment2ProjectRequirements extends ProjectRequirements {
+public class Assignment2ProjectRequirements extends FrameworkProjectRequirements {
     public Assignment2ProjectRequirements() {
 
         // Functionality

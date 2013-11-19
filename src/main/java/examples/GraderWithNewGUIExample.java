@@ -1,6 +1,6 @@
 package examples;
 
-import framework.wrappers.ProjectStepperDisplayerWrapper;
+import framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 import grader.assignment.AGradingFeature;
 import grader.assignment.GradingFeature;
 import grader.sakai.project.ASakaiProjectDatabase;

@@ -1,6 +1,6 @@
 package framework.logging.recorder;
 
-import framework.grading.ProjectRequirements;
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
@@ -37,7 +37,7 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
     // Actual definition
 
-    private ProjectRequirements projectRequirements;
+    private FrameworkProjectRequirements projectRequirements;
     private RecordingSession recordingSession = null;
     private List<Logger> loggers;
     private String featureComments;
@@ -47,11 +47,11 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
         loggers = new ArrayList<Logger>();
     }
 
-    public ProjectRequirements getProjectRequirements() {
+    public FrameworkProjectRequirements getProjectRequirements() {
         return projectRequirements;
     }
 
-    public void setProjectRequirements(ProjectRequirements projectRequirements) {
+    public void setProjectRequirements(FrameworkProjectRequirements projectRequirements) {
         this.projectRequirements = projectRequirements;
     }
 
@@ -174,6 +174,7 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
      */
     @Override
     public void setGrade(String aStudentName, String anOnyen, String aFeature, double aScore) {
+        checkSession(anOnyen);
         save(aFeature, aScore);
     }
 
@@ -189,11 +190,12 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
     /**
      * This method is supposed to save the total score, but the conglomerate recorder only saves and writes things out
-     * when the {@link #finish()} method is called. The {@link framework.wrappers.ProjectStepperDisplayerWrapper} calls
+     * when the {@link #finish()} method is called. The {@link framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper} calls
      * finish so it's ok that this is empty.
      */
     @Override
     public void setGrade(String aStudentName, String anOnyen, double aScore) {
+        checkSession(anOnyen);
     }
 
     /**
@@ -204,6 +206,15 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
     @Deprecated
     public double getGrade(String aStudentName, String anOnyen) {
         return 0;
+    }
+
+    private void checkSession(String onyen) {
+        if (recordingSession == null)
+            newSession(onyen);
+        else if (!recordingSession.getUserId().contains("(" + onyen + ")")) {
+            finish();
+            newSession(onyen);
+        }
     }
 
     /*

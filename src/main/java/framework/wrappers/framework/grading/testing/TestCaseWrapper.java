@@ -1,11 +1,13 @@
-package framework.wrappers;
+package framework.wrappers.framework.grading.testing;
 
 import framework.grading.testing.*;
 import framework.project.Project;
-import framework.wrappers.transformers.ProjectTransformer;
+import framework.wrappers.framework.project.ProjectWrapper;
+import framework.wrappers.grader.sakai.project.SakaiProjectWrapper;
 import grader.assignment.GradingFeature;
 import grader.checkers.*;
 import grader.checkers.CheckResult;
+import grader.sakai.project.SakaiProject;
 
 /**
  * This wraps a feature in a test case so the "grader" checkers can run in the "framework" system.
@@ -21,17 +23,17 @@ public class TestCaseWrapper extends BasicTestCase {
         featureChecker = feature.getFeatureChecker();
     }
 
-    /**
-     * This should only ever be used with a
-     * @param project The project to test
-     * @param autoGrade
-     * @return
-     * @throws NotAutomatableException
-     * @throws NotGradableException
-     */
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
-        featureChecker.setProject(((ProjectTransformer) project).getProject());
+        // Get a SakaiProject out of the Project
+        SakaiProject sakaiProject;
+        if (project instanceof ProjectWrapper)
+            sakaiProject = ((ProjectWrapper) project).getProject();
+        else {
+            sakaiProject = new SakaiProjectWrapper(project);
+            sakaiProject.maybeMakeClassDescriptions();
+        }
+        featureChecker.setProject(sakaiProject);
 
         CheckResult result = featureChecker.check();
         if (result == null)

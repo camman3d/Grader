@@ -1,13 +1,13 @@
 package examples;
 
-import framework.grading.ProjectRequirements;
-import framework.wrappers.ProjectDatabaseWrapper;
+import framework.grading.FrameworkProjectRequirements;
+import framework.wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import examples.checkers.testCases.ErrorTestCase;
 import examples.checkers.testCases.FailingTestCase;
 import examples.checkers.testCases.PassingTestCase;
 
 /**
- * This demonstrates how you can use the ProjectRequirements object with the "grader" system
+ * This demonstrates how you can use the FrameworkProjectRequirements object with the "grader" system
  */
 public class GraderWithProjectRequirementsExample {
 
@@ -19,7 +19,7 @@ public class GraderWithProjectRequirementsExample {
         ProjectDatabaseWrapper database = new ProjectDatabaseWrapper(bulkFolder, dataFolder);
 
         // Create the project requirements and add them to the database. Nothing special is needed
-        ProjectRequirements requirements = new ProjectRequirements() {{
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements() {{
             addFeature("Test feature 1", 20, new PassingTestCase());
             addFeature("Test feature 2", 15, new FailingTestCase());
             addFeature("Test feature 3", 10, new ErrorTestCase());

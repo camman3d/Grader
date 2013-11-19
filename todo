@@ -15,5 +15,7 @@
     [X] Make ConglomerateRecorder be an auto feedback
     [X] Integrate it (Setters)
 [X] Don't skip on missing projects
+
 [ ] Work on wrappers
+    [ ] Be able to use alternative to ProjectRequirements
 [ ] Use configuration for GraderData folder (ProjectDatabaseWrapper line 30)

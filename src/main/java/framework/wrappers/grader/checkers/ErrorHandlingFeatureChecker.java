@@ -1,4 +1,4 @@
-package framework.wrappers;
+package framework.wrappers.grader.checkers;
 
 import grader.checkers.ACheckResult;
 import grader.checkers.AnAbstractFeatureChecker;

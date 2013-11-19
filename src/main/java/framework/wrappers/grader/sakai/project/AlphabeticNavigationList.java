@@ -1,4 +1,4 @@
-package framework.wrappers;
+package framework.wrappers.grader.sakai.project;
 
 import framework.utils.GraderSettings;
 import grader.sakai.project.NavigationListCreator;

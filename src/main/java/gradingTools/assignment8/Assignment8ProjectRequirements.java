@@ -1,6 +1,6 @@
 package gradingTools.assignment8;
 
-import framework.grading.ProjectRequirements;
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import gradingTools.assignment6.testCases.*;
@@ -10,7 +10,7 @@ import gradingTools.assignment8.testCases.*;
  * Project 8 requirements.
  * See the rubric here: http://www.cs.unc.edu/~dewan/comp401/current/Recitations/
  */
-public class Assignment8ProjectRequirements extends ProjectRequirements {
+public class Assignment8ProjectRequirements extends FrameworkProjectRequirements {
 
     public Assignment8ProjectRequirements() {
 

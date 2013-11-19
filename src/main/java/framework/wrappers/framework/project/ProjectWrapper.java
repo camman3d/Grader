@@ -1,4 +1,4 @@
-package framework.wrappers.transformers;
+package framework.wrappers.framework.project;
 
 import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
@@ -16,14 +16,14 @@ import java.io.FileNotFoundException;
 
 /**
  * This transforms a "grader" project into a "framework" project.
- * This class and {@link framework.wrappers.TestCaseWrapper} are needed for the
- * {@link framework.wrappers.ProjectStepperDisplayerWrapper} to work properly.
+ * This class and {@link framework.wrappers.framework.grading.testing.TestCaseWrapper} are needed for the
+ * {@link framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper} to work properly.
  */
-public class ProjectTransformer extends StandardProject {
+public class ProjectWrapper extends StandardProject {
 
     private Project project;
 
-    public ProjectTransformer(Project project, String name) throws FileNotFoundException {
+    public ProjectWrapper(Project project, String name) throws FileNotFoundException {
         super(getDirectory(project), name);
         this.project = project;
     }

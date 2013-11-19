@@ -1,5 +1,6 @@
-package framework.wrappers;
+package framework.wrappers.grader.sakai.project;
 
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
@@ -9,7 +10,8 @@ import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.StudentFolder;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.transformers.ProjectTransformer;
+import framework.wrappers.framework.project.ProjectWrapper;
+import framework.wrappers.framework.grading.testing.TestCaseWrapper;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.sakai.project.*;
@@ -50,7 +52,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
             if (projectStepper.getProjectDatabase() instanceof ProjectDatabaseWrapper)
                 requirements = ((ProjectDatabaseWrapper) projectStepper.getProjectDatabase()).getProjectRequirements();
             else {
-                requirements = new ProjectRequirements();
+                requirements = new FrameworkProjectRequirements();
                 for (GradingFeature feature : projectStepper.getProjectDatabase().getGradingFeatures()) {
                     requirements.addFeature(feature.getFeature(), feature.getMax(), feature.isExtraCredit(), new TestCaseWrapper(feature));
                 }
@@ -82,7 +84,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
 
             // Make sure that the project requirements are all ready
             initRequirements();
-            StudentFolder studentFolder = ProjectTransformer.getStudentFolder(onyen);
+            StudentFolder studentFolder = ProjectWrapper.getStudentFolder(onyen);
             List<CheckResult> featureResults;
             List<CheckResult> restrictionResults;
             GradingWindow window;
@@ -92,7 +94,10 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
                     throw new FileNotFoundException();
 
                 // Attempt to get the student's project and check it
-                framework.project.Project wrappedProject = new ProjectTransformer(this.project, GradingEnvironment.get().getAssignmentName());
+                project.setCanBeRun(true);
+                project.setHasBeenRun(true);
+                project.maybeMakeClassDescriptions();
+                framework.project.Project wrappedProject = new ProjectWrapper(this.project, GradingEnvironment.get().getAssignmentName());
                 featureResults = requirements.checkFeatures(wrappedProject);
                 restrictionResults = requirements.checkRestrictions(wrappedProject);
                 window = GradingWindow.create(requirements, studentFolder, Option.apply(wrappedProject), featureResults, restrictionResults);

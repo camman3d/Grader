@@ -1,6 +1,6 @@
 package gradingTools.assignment3;
 
-import framework.grading.ProjectRequirements;
+import framework.grading.FrameworkProjectRequirements;
 import gradingTools.assignment2.testCases.BeanClassTestCase;
 import gradingTools.assignment3.testCases.NamingConventionsTestCase;
 import gradingTools.assignment3.testCases.ScannerBeanWordOutputTestCase;
@@ -13,7 +13,7 @@ import gradingTools.assignment6.testCases.MainClassTestCase;
  * Time: 10:31 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Assignment3ProjectRequirements extends ProjectRequirements {
+public class Assignment3ProjectRequirements extends FrameworkProjectRequirements {
     public Assignment3ProjectRequirements() {
 
         // Naming conventions

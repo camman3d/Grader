@@ -3,10 +3,10 @@ package examples;
 import examples.checkers.testCases.ErrorTestCase;
 import examples.checkers.testCases.FailingTestCase;
 import examples.checkers.testCases.PassingTestCase;
-import framework.grading.ProjectRequirements;
+import framework.grading.FrameworkProjectRequirements;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.ProjectDatabaseWrapper;
-import framework.wrappers.ProjectStepperDisplayerWrapper;
+import framework.wrappers.grader.sakai.project.ProjectDatabaseWrapper;
+import framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,7 +26,7 @@ public class GraderWithFrameworkExample {
         ProjectDatabaseWrapper database = new ProjectDatabaseWrapper(bulkFolder, dataFolder);
 
         // Create the project requirements and add them to the database. Nothing special is needed
-        ProjectRequirements requirements = new ProjectRequirements() {{
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements() {{
             addFeature("Test feature 1", 20, new PassingTestCase());
             addFeature("Test feature 2", 15, new FailingTestCase());
             addFeature("Test feature 3", 10, new ErrorTestCase());

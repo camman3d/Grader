@@ -1,7 +1,7 @@
 package framework.logging.loggers;
 
 import au.com.bytecode.opencsv.CSVReader;
-import framework.grading.ProjectRequirements;
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
@@ -23,11 +23,11 @@ public class SpreadsheetLogger implements Logger {
 
     private static final String SakaiGradesSpreadsheetFilename = "grades.csv";
 
-    private ProjectRequirements projectRequirements;
+    private FrameworkProjectRequirements projectRequirements;
     private File spreadsheetFile;
     private XSSFWorkbook workbook;
 
-    public SpreadsheetLogger(ProjectRequirements projectRequirements) throws ConfigurationException {
+    public SpreadsheetLogger(FrameworkProjectRequirements projectRequirements) throws ConfigurationException {
         this.projectRequirements = projectRequirements;
 
         // Get the spreadsheet file

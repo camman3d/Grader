@@ -1,29 +1,32 @@
-package framework.wrappers;
+package framework.wrappers.grader.sakai.project;
 
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
+import framework.wrappers.grader.checkers.FeatureCheckerWrapper;
+import framework.wrappers.grader.sakai.NonNestedBulkAssignmentFolder;
+import framework.wrappers.grader.sakai.project.AlphabeticNavigationList;
 import grader.assignment.AGradingFeature;
 import grader.assignment.AnAssignmenDataFolder;
 import grader.assignment.GradingFeature;
-import grader.file.RootFolderProxy;
-import grader.sakai.*;
+import grader.sakai.ASakaiStudentCodingAssignmentsDatabase;
+import grader.sakai.BulkAssignmentFolder;
+import grader.sakai.GenericStudentAssignmentDatabase;
+import grader.sakai.StudentCodingAssignment;
 import grader.sakai.project.ASakaiProjectDatabase;
 import grader.sakai.project.SakaiProject;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
- * This extends the project database class to support adding ProjectRequirements
+ * This extends the project database class to support adding FrameworkProjectRequirements
  */
 public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
@@ -50,7 +53,8 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
     /**
      * This generates grading features based on the project requirements
-     * @param requirements The ProjectRequirements to add to the project database
+     *
+     * @param requirements The FrameworkProjectRequirements to add to the project database
      */
     public void addProjectRequirements(ProjectRequirements requirements) {
         projectRequirements = requirements;
@@ -128,6 +132,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
     /**
      * This attempts to find/make the data folder.
+     *
      * @return The path of the data folder
      */
     private static String getDataFolder() {
@@ -142,7 +147,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
         for (File file : new File(GraderSettings.get().get("path")).listFiles()) {
             if (file.isDirectory()) {
                 String name = file.getName();
-                String onyen = name.substring(name.indexOf("(")+1, name.indexOf(")"));
+                String onyen = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
                 if (onyen.equals(GraderSettings.get().get("start")))
                     include = true;
                 if (include)
@@ -176,7 +181,6 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
         return dataFolder.getParentFile().getAbsolutePath();
     }
-
 
 
 }

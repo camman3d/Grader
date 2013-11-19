@@ -1,7 +1,7 @@
 package examples;
 
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
-import framework.grading.ProjectRequirements;
 import examples.checkers.testCases.ErrorTestCase;
 import examples.checkers.testCases.FailingTestCase;
 import examples.checkers.testCases.PassingTestCase;
@@ -14,8 +14,8 @@ import java.io.IOException;
 public class FrameworkExample {
     public static void main(String[] args) throws IOException {
 
-        // Project grading criteria are saved in a ProjectRequirements object
-        ProjectRequirements requirements = new ProjectRequirements() {{
+        // Project grading criteria are saved in a FrameworkProjectRequirements object
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements() {{
             addFeature("Test feature 1", 20, new PassingTestCase());
             addFeature("Test feature 2", 15, new FailingTestCase());
             addFeature("Test feature 3", 10, new ErrorTestCase());

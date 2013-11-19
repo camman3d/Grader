@@ -1,14 +1,14 @@
 package gradingTools;
 
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
-import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
 import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.ProjectDatabaseWrapper;
-import framework.wrappers.ProjectStepperDisplayerWrapper;
+import framework.wrappers.grader.sakai.project.ProjectDatabaseWrapper;
+import framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -31,7 +31,7 @@ public class Driver {
 
             // Get the project requirements
             Class<?> _class = Class.forName(configuration.getString("project.requirements"));
-            ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
+            FrameworkProjectRequirements requirements = (FrameworkProjectRequirements) _class.newInstance();
 
             // Logging
             ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();

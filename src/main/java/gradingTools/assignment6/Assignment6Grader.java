@@ -1,7 +1,7 @@
 package gradingTools.assignment6;
 
+import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
-import framework.grading.ProjectRequirements;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import gradingTools.assignment6.testCases.*;
@@ -16,7 +16,7 @@ import gradingTools.assignment6.testCases.*;
 public class Assignment6Grader {
     public static void main(String[] args) {
 
-        ProjectRequirements requirements = new ProjectRequirements();
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements();
 
         // Define the features
 

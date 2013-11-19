@@ -3,14 +3,12 @@ package framework.grading;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
-import framework.grading.testing.TestCase;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 import testObjects.SimpleTestCase;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -26,7 +24,7 @@ public class TestProjectRequirements {
 
     @Test
     public void testFeatures() {
-        ProjectRequirements requirements = new ProjectRequirements();
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements();
         requirements.addFeature(new Feature("A", 12,
                 new SimpleTestCase(1, "", "Test A 1"),
                 new SimpleTestCase(0.5, "", "Test A 2"),
@@ -43,7 +41,7 @@ public class TestProjectRequirements {
 
     @Test
     public void testRestrictions() {
-        ProjectRequirements requirements = new ProjectRequirements();
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements();
         requirements.addRestriction(new Restriction("B", 5,
                 new SimpleTestCase(1, "", "Test B 1"),
                 new SimpleTestCase(0, "", "Test B 2")
@@ -59,7 +57,7 @@ public class TestProjectRequirements {
 
     @Test
     public void testCheckDueDate() throws Exception {
-        ProjectRequirements requirements = new ProjectRequirements();
+        FrameworkProjectRequirements requirements = new FrameworkProjectRequirements();
         requirements.addDueDate("10/15/2013 11:00:00", 1.5);
         requirements.addDueDate("10/15/2013 12:00:00", 1);
         requirements.addDueDate("10/15/2013 13:00:00", 0.5);

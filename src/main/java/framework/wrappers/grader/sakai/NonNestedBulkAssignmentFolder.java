@@ -1,18 +1,14 @@
-package framework.wrappers;
+package framework.wrappers.grader.sakai;
 
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
+import framework.wrappers.grader.file.SimplifiedFileProxy;
 import grader.file.FileProxy;
-import grader.file.RootFolderFactory;
-import grader.file.RootFolderProxy;
-import grader.file.filesystem.AFileSystemFileProxy;
 import grader.sakai.BulkAssignmentFolder;
-import tools.DirectoryUtils;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
