@@ -1,11 +1,7 @@
 package framework.grading.testing;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/4/13
- * Time: 9:54 AM
- * To change this template use File | Settings | File Templates.
+ * A container which transports information about the result of running a test case.
  */
 public class TestCaseResult {
 

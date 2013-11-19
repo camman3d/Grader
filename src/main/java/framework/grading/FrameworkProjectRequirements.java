@@ -14,11 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/4/13
- * Time: 12:50 PM
- * To change this template use File | Settings | File Templates.
+ * This is the fundamental container which holds all the features and restrictions on which programs are graded.
  */
 public class FrameworkProjectRequirements implements ProjectRequirements {
 
@@ -27,15 +23,16 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
 
     private List<DueDate> dueDates = new ArrayList<DueDate>();
 
+    /**
+     * It's important that there is a nullary constructor because this needs to be able to be simply instantiated via
+     * reflection.
+     */
     public FrameworkProjectRequirements() {
         features = new ArrayList<Feature>();
         restrictions = new ArrayList<Restriction>();
     }
 
-//    public FrameworkProjectRequirements(List<Feature> features, List<Restriction> restrictions) {
-//        this.features = features;
-//        this.restrictions = restrictions;
-//    }
+    // Feature adding methods
 
     public void addFeature(Feature feature) {
         features.add(feature);
@@ -57,6 +54,8 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         addFeature(new Feature(name, points, extraCredit, testCases));
     }
 
+    // Restriction adding methods
+
     public void addRestriction(Restriction restriction) {
         restrictions.add(restriction);
     }
@@ -69,38 +68,7 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         addRestriction(new Restriction(name, points, testCases));
     }
 
-    public List<Feature> getFeatures() {
-        return features;
-    }
-
-    public List<Restriction> getRestrictions() {
-        return restrictions;
-    }
-
-    public List<CheckResult> checkFeatures(Project project) {
-        List<CheckResult> results = new LinkedList<CheckResult>();
-        for (Feature feature : features)
-            results.add(feature.check(project));
-        return results;
-    }
-
-    public List<CheckResult> checkRestrictions(Project project) {
-        List<CheckResult> results = new LinkedList<CheckResult>();
-        for (Restriction restriction : restrictions)
-            results.add(restriction.check(project));
-        return results;
-    }
-
-    public double checkDueDate(DateTime dateTime) {
-        if (dueDates.isEmpty())
-            return 1;
-        double percentage = 0;
-        for (DueDate dueDate : dueDates) {
-            if (dueDate.getCutoffDate().isAfter(dateTime))
-                percentage = Math.max(percentage, dueDate.getPercentage());
-        }
-        return percentage;
-    }
+    // Due date adding methods
 
     public void addDueDate(DateTime dateTime, double percentage) {
         dueDates.add(new DueDate(dateTime, percentage));
@@ -110,6 +78,58 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
         DateTime dt = formatter.parseDateTime(dateTime);
         addDueDate(dt, percentage);
+    }
+
+    // Getters
+
+    public List<Feature> getFeatures() {
+        return features;
+    }
+
+    public List<Restriction> getRestrictions() {
+        return restrictions;
+    }
+
+    // Grading methods
+
+    /**
+     * Given a project, this checks all the features against it.
+     * @param project The project to check, or grade.
+     * @return A list of {@link CheckResult} corresponding to the features
+     */
+    public List<CheckResult> checkFeatures(Project project) {
+        List<CheckResult> results = new LinkedList<CheckResult>();
+        for (Feature feature : features)
+            results.add(feature.check(project));
+        return results;
+    }
+
+    /**
+     * Given a project, this checks all the restrictions against it.
+     * @param project The project to check, or grade.
+     * @return A list of {@link CheckResult} corresponding to the restrictions
+     */
+    public List<CheckResult> checkRestrictions(Project project) {
+        List<CheckResult> results = new LinkedList<CheckResult>();
+        for (Restriction restriction : restrictions)
+            results.add(restriction.check(project));
+        return results;
+    }
+
+    /**
+     * Given a due date, this figures out what score modifier (a percentage) should be given.
+     * @param dateTime The submission time of the project
+     * @return A score modifier percentage
+     */
+    public double checkDueDate(DateTime dateTime) {
+        if (dueDates.isEmpty())
+            return 1;
+        double percentage = 0;
+        for (DueDate dueDate : dueDates) {
+            if (dueDate.getCutoffDate().isAfter(dateTime))
+                percentage = Math.max(percentage, dueDate.getPercentage());
+        }
+        return percentage;
     }
 
 }
