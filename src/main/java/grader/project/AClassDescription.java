@@ -166,7 +166,12 @@ public class AClassDescription  implements ClassDescription {
 		}
 		return javacSourceClass;
 	}
-	
+
+    @Override
+    public Class<?> getJavaClass() {
+        return javaClass;
+    }
+
 //	public String getComment() {
 //		return getQdoxClass().getComment();
 //	}

@@ -1,9 +1,11 @@
 package gradingTools.assignment11;
 
-import framework.grading.FrameworkProjectRequirements;
-import framework.wrappers.framework.grading.ExtendedProjectRequirements;
-import gradingTools.assignment11.checkers.AbstractClassesChecker;
-import gradingTools.assignment11.testCases.PassAndFailTestCase;
+import gradingTools.assignment11.checkers.AdditionalCommandObjectsChecker;
+import gradingTools.assignment11.checkers.CommandListChecker;
+import gradingTools.assignment11.testCases.AbstractAncestorTokenTestCase;
+import gradingTools.assignment11.testCases.AbstractBoundedShapeTestCase;
+import gradingTools.assignment11.testCases.AbstractLocatableTestCase;
+import wrappers.framework.grading.ExtendedProjectRequirements;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,13 +23,16 @@ public class Assignment11ProjectRequirements extends ExtendedProjectRequirements
         addDueDate("11/23/2013 00:30:00", 0.75);
 
         // Abstract classes (3)
-        addFeature("Abstract classes", 3, new AbstractClassesChecker());
+        addFeature("Abstract classes", 3,
+                new AbstractLocatableTestCase(),
+                new AbstractBoundedShapeTestCase(),
+                new AbstractAncestorTokenTestCase());
 
         // New commands (17)
-        addFeature("Passed & failed", 2, new PassAndFailTestCase());
+//        addFeature("Passed & failed", 2, new PassAndFailTestCase());
 
-//        addFeature("Passed failed approach cmd obj", 5);
-//        addFeature("Command list cmd obj", 5);
+        addFeature("Passed failed approach cmd obj", 5, new AdditionalCommandObjectsChecker());
+        addFeature("Command list cmd obj", 5, new CommandListChecker());
 //        addFeature("Repeat command", 5);
 //
 //        //Parsing (70)

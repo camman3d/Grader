@@ -1,4 +1,4 @@
-package framework.wrappers.grader.sakai.project;
+package wrappers.grader.sakai.project;
 
 import framework.grading.FrameworkProjectRequirements;
 import framework.grading.ProjectRequirements;
@@ -10,8 +10,8 @@ import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.StudentFolder;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.framework.project.ProjectWrapper;
-import framework.wrappers.framework.grading.testing.TestCaseWrapper;
+import wrappers.framework.project.ProjectWrapper;
+import wrappers.framework.grading.testing.TestCaseWrapper;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.sakai.project.*;

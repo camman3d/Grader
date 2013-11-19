@@ -1,8 +1,8 @@
-package framework.wrappers.grader.sakai;
+package wrappers.grader.sakai;
 
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.grader.file.SimplifiedFileProxy;
+import wrappers.grader.file.SimplifiedFileProxy;
 import grader.file.FileProxy;
 import grader.sakai.BulkAssignmentFolder;
 

@@ -190,7 +190,7 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
     /**
      * This method is supposed to save the total score, but the conglomerate recorder only saves and writes things out
-     * when the {@link #finish()} method is called. The {@link framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper} calls
+     * when the {@link #finish()} method is called. The {@link wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper} calls
      * finish so it's ok that this is empty.
      */
     @Override

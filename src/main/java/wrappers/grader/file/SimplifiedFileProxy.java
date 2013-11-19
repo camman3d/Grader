@@ -1,4 +1,4 @@
-package framework.wrappers.grader.file;
+package wrappers.grader.file;
 
 import grader.file.FileProxy;
 import tools.DirectoryUtils;

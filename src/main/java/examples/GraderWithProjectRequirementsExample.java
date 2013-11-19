@@ -1,7 +1,7 @@
 package examples;
 
 import framework.grading.FrameworkProjectRequirements;
-import framework.wrappers.grader.sakai.project.ProjectDatabaseWrapper;
+import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import examples.checkers.testCases.ErrorTestCase;
 import examples.checkers.testCases.FailingTestCase;
 import examples.checkers.testCases.PassingTestCase;

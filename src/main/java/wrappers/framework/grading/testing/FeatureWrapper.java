@@ -1,4 +1,4 @@
-package framework.wrappers.framework.grading.testing;
+package wrappers.framework.grading.testing;
 
 import framework.grading.testing.Feature;
 import grader.assignment.GradingFeature;

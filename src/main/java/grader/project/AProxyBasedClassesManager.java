@@ -42,6 +42,9 @@ public class AProxyBasedClassesManager extends AClassesManager implements ProxyB
                 StringBuffer text = Common.toText(aFile.getInputStream());
                 ClassDescription classDescription = new AClassDescription(className, text, aFile.getTime(), aClassLoder, aProject, aFile);
                 put(className, classDescription);
+
+                // Added by Josh: The tag to class description map is never added to. This is doing just that.
+                put(classDescription.getTags(), classDescription);
             }
         }
     }

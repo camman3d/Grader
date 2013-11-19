@@ -26,6 +26,7 @@ public interface ClassDescription {
 	JavaClass getQdoxClass();
 	JavaSource getQdoxSource();
 	SourceClass getJavacSourceClass();
+    Class<?> getJavaClass();
 
     CompilationUnit getCompilationUnit() throws IOException;
 

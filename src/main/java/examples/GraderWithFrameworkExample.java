@@ -5,8 +5,8 @@ import examples.checkers.testCases.FailingTestCase;
 import examples.checkers.testCases.PassingTestCase;
 import framework.grading.FrameworkProjectRequirements;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.grader.sakai.project.ProjectDatabaseWrapper;
-import framework.wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
+import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
+import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,11 +1,11 @@
-package framework.wrappers.grader.checkers;
+package wrappers.grader.checkers;
 
 import framework.grading.testing.Checkable;
 import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.Project;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.framework.project.ProjectWrapper;
+import wrappers.framework.project.ProjectWrapper;
 import grader.checkers.ACheckResult;
 import grader.checkers.CheckResult;
 

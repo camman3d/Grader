@@ -1,9 +1,9 @@
-package framework.wrappers.framework.grading.testing;
+package wrappers.framework.grading.testing;
 
 import framework.grading.testing.*;
 import framework.project.Project;
-import framework.wrappers.framework.project.ProjectWrapper;
-import framework.wrappers.grader.sakai.project.SakaiProjectWrapper;
+import wrappers.framework.project.ProjectWrapper;
+import wrappers.grader.sakai.project.SakaiProjectWrapper;
 import grader.assignment.GradingFeature;
 import grader.checkers.*;
 import grader.checkers.CheckResult;

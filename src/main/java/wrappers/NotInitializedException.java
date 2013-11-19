@@ -1,4 +1,4 @@
-package framework.wrappers;
+package wrappers;
 
 /**
  * Created with IntelliJ IDEA.

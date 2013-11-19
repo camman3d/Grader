@@ -94,9 +94,14 @@ public class AClassesManager implements ClassesManager {
     @Override
     public void putTag(String aTag, ClassDescription aClass) {
         Set<ClassDescription> classes = tagToDescription.get(aTag);
-        if (classes == null)
+        if (classes == null) {
             classes = new HashSet();
+
+            // Added by Josh. The classes object is never added to the tagToDescription map
+            tagToDescription.put(aTag, classes);
+        }
         classes.add(aClass);
+
 
     }
 
@@ -143,6 +148,9 @@ public class AClassesManager implements ClassesManager {
                 StringBuffer text = Common.toText(aFile.getAbsolutePath());
                 ClassDescription classDescription = new AClassDescription(className, text, aFile.lastModified(), null, null, null);
                 put(className, classDescription);
+
+                // Added by Josh: The tag to class description map is never added to. This is doing just that.
+                put(classDescription.getTags(), classDescription);
             }
         }
 

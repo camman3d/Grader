@@ -1,7 +1,7 @@
-package framework.wrappers.framework.grading;
+package wrappers.framework.grading;
 
 import framework.grading.FrameworkProjectRequirements;
-import framework.wrappers.framework.grading.testing.FeatureWrapper;
+import wrappers.framework.grading.testing.FeatureWrapper;
 import grader.assignment.AGradingFeature;
 import grader.assignment.GradingFeature;
 import grader.checkers.FeatureChecker;

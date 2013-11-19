@@ -1,13 +1,12 @@
-package framework.wrappers.grader.sakai.project;
+package wrappers.grader.sakai.project;
 
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
-import framework.wrappers.grader.checkers.FeatureCheckerWrapper;
-import framework.wrappers.grader.sakai.NonNestedBulkAssignmentFolder;
-import framework.wrappers.grader.sakai.project.AlphabeticNavigationList;
+import wrappers.grader.checkers.FeatureCheckerWrapper;
+import wrappers.grader.sakai.NonNestedBulkAssignmentFolder;
 import grader.assignment.AGradingFeature;
 import grader.assignment.AnAssignmenDataFolder;
 import grader.assignment.GradingFeature;

@@ -1,7 +1,7 @@
-package framework.wrappers.grader.sakai.project;
+package wrappers.grader.sakai.project;
 
 import framework.project.Project;
-import framework.wrappers.grader.file.SimplifiedFileProxy;
+import wrappers.grader.file.SimplifiedFileProxy;
 import grader.sakai.ASakaiStudentCodingAssignment;
 import grader.sakai.StudentCodingAssignment;
 import grader.sakai.project.ASakaiProject;
