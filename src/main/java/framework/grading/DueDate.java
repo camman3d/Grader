@@ -3,11 +3,7 @@ package framework.grading;
 import org.joda.time.DateTime;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/28/13
- * Time: 2:15 PM
- * To change this template use File | Settings | File Templates.
+ * A representation of a due due. It contains the date and the percentage that is awarded if turned in by that date.
  */
 public class DueDate {
 
