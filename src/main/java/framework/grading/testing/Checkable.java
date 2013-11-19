@@ -18,6 +18,8 @@ public abstract class Checkable implements Gradable {
      * @return The results of the check
      */
     protected CheckResult check(double points, List<TestCase> testCases, Project project, boolean autoMode) {
+        if (testCases.isEmpty())
+            return new CheckResult(0, "", CheckResult.CheckStatus.Failed, this);
         double pointWeight = points / testCases.size();
         CheckResult result = new CheckResult(pointWeight, this);
         try {
