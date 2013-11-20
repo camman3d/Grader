@@ -66,8 +66,11 @@ public class AClassDescription  implements ClassDescription {
 			
 		} catch (Exception e) {
 			Tracer.error("Missing class file for:" + aClassName);
-			e.printStackTrace();
-		}	
+//			e.printStackTrace();
+		} catch (Error e) { // Added by Josh, the loadClass method may throw a IncompatibleClassChangeError
+            Tracer.error("Missing class file for:" + aClassName);
+        }
+
 		className = aClassName;
 		packageName = Common.classNameToPackageName(aClassName);
 //		qdoxClass = getQdoxClass();

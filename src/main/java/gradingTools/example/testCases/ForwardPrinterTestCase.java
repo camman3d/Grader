@@ -18,8 +18,11 @@ public class ForwardPrinterTestCase extends BasicTestCase {
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
         try {
 
+            // This is how you can run a project with any input and collect the output
             RunningProject runningProject = project.launch("Hello world\n");
             String output = runningProject.await();
+
+            // Now you can test the output for certain things
             if (output.contains("Hello world"))
                 return pass();
             else

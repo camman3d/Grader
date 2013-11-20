@@ -142,13 +142,18 @@ public class AProject implements Project {
 
         if (madeClassDescriptions)
             return;
-        classesManager.makeClassDescriptions(this);
-        classViewManager = new AClassViewManager(classesManager);
-        classesTextManager = new AClassesTextManager(classViewManager);
-        classesTextManager.initializeAllSourcesText();
-        System.out.println("Write sources to:" + sourceFileName);
-        classesTextManager.writeAllSourcesText(sourceFileName);
-        madeClassDescriptions = true;
+
+        try { // Added by Josh: Exceptions can occur when making class descriptions
+            classesManager.makeClassDescriptions(this);
+            classViewManager = new AClassViewManager(classesManager);
+            classesTextManager = new AClassesTextManager(classViewManager);
+            classesTextManager.initializeAllSourcesText();
+            System.out.println("Write sources to:" + sourceFileName);
+            classesTextManager.writeAllSourcesText(sourceFileName);
+            madeClassDescriptions = true;
+        } catch (Exception e) {
+            System.out.println("Error making class descriptions");
+        }
     }
 
     public String getOutputFileName() {
