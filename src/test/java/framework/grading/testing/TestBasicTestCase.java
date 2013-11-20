@@ -24,7 +24,7 @@ public class TestBasicTestCase {
     @Test
     public void testSetChecker() {
         SimpleTestCase testCase = new SimpleTestCase("Foo bar");
-        Checkable checkable = new Feature("The checkable", 5, null);
+        Checkable checkable = new Feature("The checkable", 5);
         testCase.setCheckable(checkable);
         assertEquals("setCheckable should set the checkable", checkable, testCase.getChecker());
     }
