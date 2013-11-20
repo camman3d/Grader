@@ -18,7 +18,7 @@ public class FeedbackTextSummaryLogger implements Logger {
         String text = SerializationUtils.getSerializer("text").serialize(recordingSession);
 
         // Maybe write this to a file
-        File file = new File(GraderSettings.get().get("path") + "/" + recordingSession.getUserId() + "/Feedback Attachments(s)/feedback.txt");
+        File file = new File(GraderSettings.get().get("path") + "/" + recordingSession.getUserId() + "/Feedback Attachment(s)/feedback.txt");
         try {
             FileUtils.writeStringToFile(file, text);
         } catch (IOException e) {

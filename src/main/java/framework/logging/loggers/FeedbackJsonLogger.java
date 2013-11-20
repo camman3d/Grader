@@ -17,7 +17,7 @@ public class FeedbackJsonLogger implements Logger {
         String text = SerializationUtils.getSerializer("json").serialize(recordingSession);
 
         // Maybe write this to a file
-        File file = new File(GraderSettings.get().get("path") + "/" + recordingSession.getUserId() + "/Feedback Attachments(s)/results.json");
+        File file = new File(GraderSettings.get().get("path") + "/" + recordingSession.getUserId() + "/Feedback Attachment(s)/results.json");
         try {
             FileUtils.writeStringToFile(file, text);
         } catch (IOException e) {
