@@ -4,10 +4,11 @@ import framework.project.ClassDescription;
 import framework.project.ClassesManager;
 import framework.project.Project;
 import framework.utils.GradingEnvironment;
-import org.apache.commons.io.IOUtils;
 import tools.TimedProcess;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
@@ -30,6 +31,7 @@ public class ProcessRunner implements Runner {
 
     /**
      * This figures out what class is the "entry point", or, what class has main(args)
+     *
      * @param project The project to run
      * @return The class canonical name. i.e. "foo.bar.SomeClass"
      * @throws NotRunnableException
@@ -44,6 +46,7 @@ public class ProcessRunner implements Runner {
                 description.getJavaClass().getMethod("main", String[].class);
                 return description.getJavaClass().getCanonicalName();
             } catch (NoSuchMethodException e) {
+                // Move along
             }
         }
         throw new NotRunnableException();
@@ -51,6 +54,7 @@ public class ProcessRunner implements Runner {
 
     /**
      * This runs the project with no arguments
+     *
      * @param input The input to use as standard in for the process
      * @return A RunningProject object which you can use for synchronization and acquiring output
      * @throws NotRunnableException
@@ -62,7 +66,8 @@ public class ProcessRunner implements Runner {
 
     /**
      * This runs the project with no arguments with a timeout
-     * @param input The input to use as standard in for the process
+     *
+     * @param input   The input to use as standard in for the process
      * @param timeout The timeout, in seconds. Set to -1 for no timeout
      * @return A RunningProject object which you can use for synchronization and acquiring output
      * @throws NotRunnableException
@@ -74,8 +79,9 @@ public class ProcessRunner implements Runner {
 
     /**
      * This runs the project providing input and arguments
-     * @param input The input to use as standard in for the process
-     * @param args The arguments to pass in
+     *
+     * @param input   The input to use as standard in for the process
+     * @param args    The arguments to pass in
      * @param timeout The timeout, in seconds. Set to -1 for no timeout
      * @return A RunningProject object which you can use for synchronization and acquiring output
      * @throws NotRunnableException
@@ -90,6 +96,8 @@ public class ProcessRunner implements Runner {
             // Prepare to run the process
             ProcessBuilder builder = new ProcessBuilder("java", "-cp", GradingEnvironment.get().getClasspath(), entryPoint);
             builder.directory(folder);
+            System.out.println("Running process: java -cp \"" + GradingEnvironment.get().getClasspath() + "\" " + entryPoint);
+            System.out.println("Running in folder: " + folder.getAbsolutePath());
 
             // Start the process
             TimedProcess process = new TimedProcess(builder, timeout);
@@ -100,6 +108,7 @@ public class ProcessRunner implements Runner {
             final Scanner scanner = new Scanner(processOut);
             final Semaphore outputSemaphore = new Semaphore(1);
             outputSemaphore.acquire();
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {

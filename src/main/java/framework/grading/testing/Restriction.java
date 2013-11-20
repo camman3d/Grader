@@ -53,7 +53,7 @@ public class Restriction extends Checkable {
 
     @Override
     public String getSummary() {
-        String spaces = "                                 ";
+        String spaces = "                                            ";
         String score = points < 10 ? " " + points : points + "";
         return name + spaces.substring(name.length()) + "%.1f / " + score;
     }
