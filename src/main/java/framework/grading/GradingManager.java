@@ -30,7 +30,7 @@ import java.util.List;
 public class GradingManager {
 
     private String projectName;
-    private FrameworkProjectRequirements projectRequirements;
+    private ProjectRequirements projectRequirements;
 //    private List<Logger> loggers;
 
     // Settings that affect what to grade
@@ -41,7 +41,7 @@ public class GradingManager {
     // Logger
 //    private Logger logger;
 
-    public GradingManager(String projectName, FrameworkProjectRequirements projectRequirements) {
+    public GradingManager(String projectName, ProjectRequirements projectRequirements) {
         this.projectName = projectName;
         this.projectRequirements = projectRequirements;
 //        loggers = new ArrayList<Logger>() {{

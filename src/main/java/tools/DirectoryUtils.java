@@ -21,7 +21,7 @@ public class DirectoryUtils {
      */
     public static Option<File> find(File folder, FileFilter filter) {
         File[] files = folder.listFiles(filter);
-        if (files.length == 0)
+        if (files == null || files.length == 0)
             return Option.empty();
         else
             return Option.apply(files[0]);

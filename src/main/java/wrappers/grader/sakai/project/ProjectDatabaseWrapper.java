@@ -5,6 +5,7 @@ import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
+import util.misc.Common;
 import wrappers.grader.checkers.FeatureCheckerWrapper;
 import wrappers.grader.sakai.NonNestedBulkAssignmentFolder;
 import grader.assignment.AGradingFeature;
@@ -33,6 +34,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
     private ProjectRequirements projectRequirements;
     private boolean projectsMade = false;
+    private static boolean graderDataMade = false;
     private ASakaiStudentCodingAssignmentsDatabase studentAssignmentDatabase;
 
     /**
@@ -138,47 +140,52 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
         // Make sure the appropriate folder exists
         File dataFolder = new File(GraderPath + GradingEnvironment.get().getAssignmentName());
-        dataFolder.mkdirs();
 
-        // Make sure the onyens.txt file exists
-        String onyens = "";
-        Boolean include = false;
-        for (File file : new File(GraderSettings.get().get("path")).listFiles()) {
-            if (file.isDirectory()) {
-                String name = file.getName();
-                String onyen = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
-                if (onyen.equals(GraderSettings.get().get("start")))
-                    include = true;
-                if (include)
-                    onyens += (onyens.isEmpty() ? "" : "\n") + onyen;
-                if (onyen.equals(GraderSettings.get().get("end")))
-                    include = false;
+        if (!graderDataMade) {
+            dataFolder.mkdirs();
+
+            // Make sure the onyens.txt file exists
+            String onyens = "";
+            Boolean include = false;
+            for (File file : new File(GraderSettings.get().get("path")).listFiles()) {
+                if (file.isDirectory()) {
+                    String name = file.getName();
+                    String onyen = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
+                    if (onyen.equals(GraderSettings.get().get("start")))
+                        include = true;
+                    if (include)
+                        onyens += (onyens.isEmpty() ? "" : "\n") + onyen;
+                    if (onyen.equals(GraderSettings.get().get("end")))
+                        include = false;
+                }
             }
-        }
-        try {
-            FileUtils.writeStringToFile(new File(dataFolder, "onyens.txt"), onyens);
-        } catch (IOException e) {
-            System.out.println("Error creating onyens.txt file.");
+            try {
+                FileUtils.writeStringToFile(new File(dataFolder, "onyens.txt"), onyens);
+            } catch (IOException e) {
+                System.out.println("Error creating onyens.txt file.");
+            }
+
+            // Make sure the log.txt file exits
+            try {
+                new File(dataFolder, "log.txt").createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating log.txt file.");
+            }
+
+            // Make sure that there is input
+            File inputFolder = new File(dataFolder, "input");
+            inputFolder.mkdir();
+            try {
+                FileUtils.writeStringToFile(new File(inputFolder, "Input1.txt"), "");
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            graderDataMade = true;
         }
 
-        // Make sure the log.txt file exits
-        try {
-            new File(dataFolder, "log.txt").createNewFile();
-        } catch (IOException e) {
-            System.out.println("Error creating log.txt file.");
-        }
-
-        // Make sure that there is input
-        File inputFolder = new File(dataFolder, "input");
-        inputFolder.mkdir();
-        try {
-            FileUtils.writeStringToFile(new File(inputFolder, "Input1.txt"), "");
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-
-        return dataFolder.getParentFile().getAbsolutePath();
+//        return dataFolder.getParentFile().getAbsolutePath();
+        String path = dataFolder.getParentFile().getAbsolutePath();
+        return Common.toCanonicalFileName(path);
     }
 
 

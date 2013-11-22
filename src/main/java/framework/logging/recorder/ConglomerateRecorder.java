@@ -1,6 +1,7 @@
 package framework.logging.recorder;
 
 import framework.grading.FrameworkProjectRequirements;
+import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
@@ -37,7 +38,7 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
 
     // Actual definition
 
-    private FrameworkProjectRequirements projectRequirements;
+    private ProjectRequirements projectRequirements;
     private RecordingSession recordingSession = null;
     private List<Logger> loggers;
     private String featureComments;
@@ -47,11 +48,11 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
         loggers = new ArrayList<Logger>();
     }
 
-    public FrameworkProjectRequirements getProjectRequirements() {
+    public ProjectRequirements getProjectRequirements() {
         return projectRequirements;
     }
 
-    public void setProjectRequirements(FrameworkProjectRequirements projectRequirements) {
+    public void setProjectRequirements(ProjectRequirements projectRequirements) {
         this.projectRequirements = projectRequirements;
     }
 

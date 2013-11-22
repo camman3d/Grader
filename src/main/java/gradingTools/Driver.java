@@ -2,6 +2,7 @@ package gradingTools;
 
 import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
+import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
 import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
@@ -32,7 +33,7 @@ public class Driver {
 
             // Get the project requirements
             Class<?> _class = Class.forName(configuration.getString("project.requirements"));
-            FrameworkProjectRequirements requirements = (FrameworkProjectRequirements) _class.newInstance();
+            ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
 
             // Logging
             ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
@@ -84,7 +85,7 @@ public class Driver {
 //                database.setAutoFeedback(ConglomerateRecorder.getInstance());
                 database.setManualFeedback(ConglomerateRecorder.getInstance());
 
-                database.runProjectsInteractively();
+                database.nonBlockingRunProjectsInteractively();
             }
 
 
