@@ -6,6 +6,13 @@ The purpose of this project is to provide a framework and tools to allow for the
 Java-based programs. It employs several methods to check code validity including reflection-based invocation,
 abstract syntax tree inspection, output parsing, source code validation, and JVM modification.
 
+**Table of Contents**
+
+* <a href="#quick-start-with-eclipse">Quick Start with Eclipse</a>
+* <a href="#project-setup">Project Setup</a>
+* <a href="#configuration">Configuration</a>
+* <a href="#examples">Examples</a>
+
 # Quick Start with Eclipse
 
 The following is a guide to getting up an running as quickly as possible. The only assumption this quick start guide
