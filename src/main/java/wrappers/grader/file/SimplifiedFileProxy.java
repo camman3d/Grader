@@ -2,6 +2,7 @@ package wrappers.grader.file;
 
 import grader.file.FileProxy;
 import tools.DirectoryUtils;
+import util.misc.Common;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class SimplifiedFileProxy implements FileProxy {
 
     @Override
     public String getAbsoluteName() {
-        return file.getAbsolutePath();
+//        return file.getAbsolutePath();
+        return Common.toCanonicalFileName(file.getAbsolutePath());
     }
 
     @Override
@@ -36,7 +38,8 @@ public class SimplifiedFileProxy implements FileProxy {
 
     @Override
     public String getMixedCaseAbsoluteName() {
-        return file.getAbsolutePath();
+//        return file.getAbsolutePath();
+        return Common.toCanonicalFileName(file.getAbsolutePath());
     }
 
     @Override
@@ -101,7 +104,7 @@ public class SimplifiedFileProxy implements FileProxy {
         });
         Set<String> names = new HashSet<String>();
         for (File f : files)
-            names.add(f.getAbsolutePath());
+            names.add(Common.toCanonicalFileName(f.getAbsolutePath()));
         return names;
     }
 
@@ -115,7 +118,7 @@ public class SimplifiedFileProxy implements FileProxy {
     public Set<String> getChildrenNames() {
         Set<String> names = new HashSet<String>();
         for (File f : file.listFiles())
-            names.add(f.getAbsolutePath());
+            names.add(Common.toCanonicalFileName(f.getAbsolutePath()));
         return names;
     }
 
@@ -129,7 +132,7 @@ public class SimplifiedFileProxy implements FileProxy {
         });
         Set<String> names = new HashSet<String>();
         for (File f : files)
-            names.add(f.getAbsolutePath());
+            names.add(Common.toCanonicalFileName(f.getAbsolutePath()));
         return names;
     }
 
