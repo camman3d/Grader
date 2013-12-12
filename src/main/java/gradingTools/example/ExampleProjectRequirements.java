@@ -38,5 +38,6 @@ public class ExampleProjectRequirements extends FrameworkProjectRequirements {
         // This is how to add restrictions. Restrictions are graded differently than features; if the test cases pass
         // Then zero points are awarded, otherwise the negative points are applied.
         addRestriction("Doesn't use StringBuilder or StringBuffer", -5, new NoStringToolsTestCase());
+        addRestriction("Doesn't use StringBuilder.reverse", -5, new NoStringBuilderReverseTestCase());
     }
 }

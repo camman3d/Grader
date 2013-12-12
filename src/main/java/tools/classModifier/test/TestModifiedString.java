@@ -1,12 +1,12 @@
 package tools.classModifier.test;
 
-
 import util.trace.TraceableLogFactory;
 
 import java.util.List;
 
 /*
- * This tests to see if the modified String works.
+ * Run with the following VM option:
+ * -Xbootclasspath/p:./modifiedClasses
  */
 public class TestModifiedString {
     public static void main(String[] args) throws Exception {

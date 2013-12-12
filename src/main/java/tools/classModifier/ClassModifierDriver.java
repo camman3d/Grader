@@ -10,7 +10,8 @@ import java.io.File;
 public class ClassModifierDriver {
 
     private static ClassModifier[] classModifiers = new ClassModifier[]{
-            new ThreadModifier()//,
+            new ThreadModifier(),
+            new StringBuilderModifier()
 //            new StringModifier()
     };
 
