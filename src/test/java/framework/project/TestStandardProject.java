@@ -1,6 +1,8 @@
 package framework.project;
 
+import org.junit.Before;
 import org.junit.Test;
+import tools.TestConfig;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,8 +19,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestStandardProject {
 
-    private File directory = new File("/Users/josh/Downloads/Assignment 4/Abbey, Wesley(wabbey)/Submission attachment(s)/Assignment4");
-    private String name = "Assignment4";
+    private File directory;
+    private String name;
+
+    @Before
+    public void setUp() throws Exception {
+        String directoryPath = TestConfig.getConfig().getString("test.exampleSakai.example1.project");
+        directory = new File(directoryPath);
+        name = TestConfig.getConfig().getString("test.exampleSakai.projectName");
+    }
 
     @Test
     public void testCreation() throws FileNotFoundException {
@@ -29,7 +38,7 @@ public class TestStandardProject {
     @Test
     public void testCreationFail() throws FileNotFoundException {
         try {
-            Project project = new StandardProject(new File("/tmp"), name);
+            Project project = new StandardProject(new File("/"), name);
             assertTrue("Creation should fail", false);
         } catch (Exception e) {
             assertTrue(true);

@@ -6,7 +6,7 @@
 
     <groupId>edu.unc</groupId>
     <artifactId>comp401-grader</artifactId>
-    <version>11.1</version>
+    <version>11.2</version>
 
     <dependencies>
 

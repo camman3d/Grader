@@ -1,7 +1,9 @@
 package framework.project;
 
+import org.junit.Before;
 import org.junit.Test;
 import scala.Option;
+import tools.TestConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,15 +17,22 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestProjectClassesManager {
 
-    private String validBuildLocation = "/Users/josh/Downloads/Assignment 4/Weatherly, Nathan(nweather)/Submission attachment(s)/NathanWeatherly_Assignment4/NathanWeatherly_Assignment4/bin";
-    private String validSrcLocation = "/Users/josh/Downloads/Assignment 4/Weatherly, Nathan(nweather)/Submission attachment(s)/NathanWeatherly_Assignment4/NathanWeatherly_Assignment4/src";
-    private String invalidLocation = "/tmp";
-    private String simpleClassName = "ABeanScannertype";
-    private String canonicalClassName = "main.Assignment4";
-    private String invalidClassName = "doesntexist";
-    private String validTag = "scanner bean";
-    private String invalidTag = "Foo bar";
+    private String validBuildLocation;
+    private String validSrcLocation;
+    private String simpleClassName;
+    private String canonicalClassName;
+    private String invalidName;
+    private String validTag;
 
+    @Before
+    public void setUp() throws Exception {
+        validBuildLocation = TestConfig.getConfig().getString("test.exampleSakai.example1.build");
+        validSrcLocation = TestConfig.getConfig().getString("test.exampleSakai.example1.source");
+        validTag = TestConfig.getConfig().getString("test.exampleSakai.example1.tag");
+        simpleClassName = TestConfig.getConfig().getString("test.exampleSakai.example1.simpleName");
+        canonicalClassName = TestConfig.getConfig().getString("test.exampleSakai.example1.canonicalName");
+        invalidName = "__doesntexist__";
+    }
 
     @Test
     public void testCreation() {
@@ -38,6 +47,7 @@ public class TestProjectClassesManager {
     @Test
     public void testFailedCreation() {
         try {
+            String invalidLocation = "/";
             new ProjectClassesManager(new File(invalidLocation), new File(invalidLocation));
             assertTrue("Creation should fail", false);
         } catch (Exception e) {
@@ -68,7 +78,7 @@ public class TestProjectClassesManager {
     @Test
     public void testFindByClassNameInvalid() throws IOException, ClassNotFoundException {
         ClassesManager classesManager = new ProjectClassesManager(new File(validBuildLocation), new File(validSrcLocation));
-        Option<ClassDescription> description = classesManager.findByClassName(invalidClassName);
+        Option<ClassDescription> description = classesManager.findByClassName(invalidName);
         assertTrue("Class should not exist", description.isEmpty());
     }
 
@@ -82,7 +92,7 @@ public class TestProjectClassesManager {
     @Test
     public void testFindByTagInvalid() throws IOException, ClassNotFoundException {
         ClassesManager classesManager = new ProjectClassesManager(new File(validBuildLocation), new File(validSrcLocation));
-        Set<ClassDescription> description = classesManager.findByTag(invalidTag);
+        Set<ClassDescription> description = classesManager.findByTag(invalidName);
         assertTrue("Class should not exist", description.isEmpty());
     }
 

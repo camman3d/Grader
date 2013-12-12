@@ -20,7 +20,7 @@ public class SpreadsheetGenerator {
     public static void main(String[] args) throws IOException {
 
         // Get the log files
-        String logPath = "./log/Assignment10";
+        String logPath = "./log/Assignment11";
         File logFolder = new File(logPath);
         File[] files = logFolder.listFiles(new FileFilter() {
             @Override

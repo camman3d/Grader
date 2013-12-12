@@ -1,5 +1,6 @@
 package framework.project;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -16,15 +17,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestBasicClassDescription {
 
-//    private String binLocation = "/Users/josh/Downloads/Assignment 4/Weatherly, Nathan(nweather)/Submission attachment(s)/NathanWeatherly_Assignment4/NathanWeatherly_Assignment4/bin";
-//    private String className = "main.ABeanScannerType";
-//    private String sourceFileLocation = "/Users/josh/Downloads/Assignment 4/Weatherly, Nathan(nweather)/Submission attachment(s)/NathanWeatherly_Assignment4/NathanWeatherly_Assignment4/src/main/ABeanScannerType.java";
-
     private File sourceFile;
     private Class _class;
     ClassDescription classDescription;
 
-    public TestBasicClassDescription() throws MalformedURLException, ClassNotFoundException {
+    @Before
+    public void setUp() throws Exception {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         _class = classLoader.loadClass("testObjects.AnnotatedClass");
         sourceFile = new File("./src/test/java/testObjects/AnnotatedClass.java");
