@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: commons-io:commons-io:1.3.2">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar" />
+  </library>
+  <library name="Maven: net.lingala.zip4j:zip4j:1.3.1">
+    <archive path="C:/Users/Andrew/.m2/repository/net/lingala/zip4j/zip4j/1.3.1/zip4j-1.3.1.jar" />
+  </library>
+  <library name="Maven: joda-time:joda-time:2.3">
+    <archive path="C:/Users/Andrew/.m2/repository/joda-time/joda-time/2.3/joda-time-2.3.jar" />
+  </library>
+  <library name="Maven: org.apache.poi:poi-ooxml:3.9">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/poi/poi-ooxml/3.9/poi-ooxml-3.9.jar" />
+  </library>
+  <library name="Maven: org.apache.poi:poi:3.9">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/poi/poi/3.9/poi-3.9.jar" />
+  </library>
+  <library name="Maven: commons-codec:commons-codec:1.5">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-codec/commons-codec/1.5/commons-codec-1.5.jar" />
+  </library>
+  <library name="Maven: org.apache.poi:poi-ooxml-schemas:3.9">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/poi/poi-ooxml-schemas/3.9/poi-ooxml-schemas-3.9.jar" />
+  </library>
+  <library name="Maven: org.apache.xmlbeans:xmlbeans:2.3.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar" />
+  </library>
+  <library name="Maven: stax:stax-api:1.0.1">
+    <archive path="C:/Users/Andrew/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar" />
+  </library>
+  <library name="Maven: dom4j:dom4j:1.6.1">
+    <archive path="C:/Users/Andrew/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" />
+  </library>
+  <library name="Maven: xml-apis:xml-apis:1.0.b2">
+    <archive path="C:/Users/Andrew/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar" />
+  </library>
+  <library name="Maven: net.sf.opencsv:opencsv:2.3">
+    <archive path="C:/Users/Andrew/.m2/repository/net/sf/opencsv/opencsv/2.3/opencsv-2.3.jar" />
+  </library>
+  <library name="Maven: org.scala-lang:scala-library:2.10.3">
+    <archive path="C:/Users/Andrew/.m2/repository/org/scala-lang/scala-library/2.10.3/scala-library-2.10.3.jar" />
+  </library>
+  <library name="Maven: junit:junit:4.11">
+    <archive path="C:/Users/Andrew/.m2/repository/junit/junit/4.11/junit-4.11.jar" />
+  </library>
+  <library name="Maven: org.hamcrest:hamcrest-core:1.3">
+    <archive path="C:/Users/Andrew/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" />
+  </library>
+  <library name="Maven: com.intellij:forms_rt:7.0.3">
+    <archive path="C:/Users/Andrew/.m2/repository/com/intellij/forms_rt/7.0.3/forms_rt-7.0.3.jar" />
+  </library>
+  <library name="Maven: asm:asm-commons:3.0">
+    <archive path="C:/Users/Andrew/.m2/repository/asm/asm-commons/3.0/asm-commons-3.0.jar" />
+  </library>
+  <library name="Maven: asm:asm-tree:3.0">
+    <archive path="C:/Users/Andrew/.m2/repository/asm/asm-tree/3.0/asm-tree-3.0.jar" />
+  </library>
+  <library name="Maven: asm:asm:3.0">
+    <archive path="C:/Users/Andrew/.m2/repository/asm/asm/3.0/asm-3.0.jar" />
+  </library>
+  <library name="Maven: com.jgoodies:forms:1.1-preview">
+    <archive path="C:/Users/Andrew/.m2/repository/com/jgoodies/forms/1.1-preview/forms-1.1-preview.jar" />
+  </library>
+  <library name="Maven: jdom:jdom:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/jdom/jdom/1.0/jdom-1.0.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.13/jackson-mapper-asl-1.9.13.jar" />
+  </library>
+  <library name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.13/jackson-core-asl-1.9.13.jar" />
+  </library>
+  <library name="Maven: edu.unc:oeall:22">
+    <archive path="C:/Users/Andrew/.m2/repository/edu/unc/oeall/22/oeall-22.jar" />
+  </library>
+  <library name="Maven: qdox:qdox:1.6.1">
+    <archive path="C:/Users/Andrew/.m2/repository/qdox/qdox/1.6.1/qdox-1.6.1.jar" />
+  </library>
+  <library name="Maven: commons-configuration:commons-configuration:1.9">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-configuration/commons-configuration/1.9/commons-configuration-1.9.jar" />
+  </library>
+  <library name="Maven: commons-lang:commons-lang:2.6">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar" />
+  </library>
+  <library name="Maven: commons-logging:commons-logging:1.1.1">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
+  </library>
+  <library name="Maven: com.google.code.gson:gson:2.2.4">
+    <archive path="C:/Users/Andrew/.m2/repository/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" />
+  </library>
+  <library name="Maven: checkstyle:checkstyle:5.0">
+    <archive path="C:/Users/Andrew/.m2/repository/checkstyle/checkstyle/5.0/checkstyle-5.0.jar" />
+  </library>
+  <library name="Maven: antlr:antlr:2.7.6">
+    <archive path="C:/Users/Andrew/.m2/repository/antlr/antlr/2.7.6/antlr-2.7.6.jar" />
+  </library>
+  <library name="Maven: commons-beanutils:commons-beanutils-core:1.7.0">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-beanutils/commons-beanutils-core/1.7.0/commons-beanutils-core-1.7.0.jar" />
+  </library>
+  <library name="Maven: commons-collections:commons-collections:2.0">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-collections/commons-collections/2.0/commons-collections-2.0.jar" />
+  </library>
+  <library name="Maven: commons-cli:commons-cli:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-cli/commons-cli/1.0/commons-cli-1.0.jar" />
+  </library>
+  <library name="Maven: com.google.collections:google-collections:0.9">
+    <archive path="C:/Users/Andrew/.m2/repository/com/google/collections/google-collections/0.9/google-collections-0.9.jar" />
+  </library>
+  <library name="Maven: com.github.antlrjavaparser:antlr-java-parser:1.0.14">
+    <archive path="C:/Users/Andrew/.m2/repository/com/github/antlrjavaparser/antlr-java-parser/1.0.14/antlr-java-parser-1.0.14.jar" />
+  </library>
+  <library name="Maven: org.antlr:antlr4:4.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/antlr/antlr4/4.0/antlr4-4.0.jar" />
+  </library>
+  <library name="Maven: org.antlr:antlr4-runtime:4.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/antlr/antlr4-runtime/4.0/antlr4-runtime-4.0.jar" />
+  </library>
+  <library name="Maven: org.abego.treelayout:org.abego.treelayout.core:1.0.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/abego/treelayout/org.abego.treelayout.core/1.0.1/org.abego.treelayout.core-1.0.1.jar" />
+  </library>
+  <library name="Maven: org.antlr:antlr-runtime:3.5">
+    <archive path="C:/Users/Andrew/.m2/repository/org/antlr/antlr-runtime/3.5/antlr-runtime-3.5.jar" />
+  </library>
+  <library name="Maven: org.antlr:stringtemplate:3.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/antlr/stringtemplate/3.2.1/stringtemplate-3.2.1.jar" />
+  </library>
+  <library name="Maven: org.antlr:ST4:4.0.7">
+    <archive path="C:/Users/Andrew/.m2/repository/org/antlr/ST4/4.0.7/ST4-4.0.7.jar" />
+  </library>
+  <library name="Maven: javassist:javassist:3.12.1.GA">
+    <archive path="C:/Users/Andrew/.m2/repository/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.plugins:maven-javadoc-plugin:2.9.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/plugins/maven-javadoc-plugin/2.9.1/maven-javadoc-plugin-2.9.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-core:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-core/2.2.1/maven-core-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-settings:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-model:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-utils:3.0.5">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-utils/3.0.5/plexus-utils-3.0.5.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-interpolation:1.11">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-container-default:1.0-alpha-9">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9/plexus-container-default-1.0-alpha-9.jar" />
+  </library>
+  <library name="Maven: classworlds:classworlds:1.1">
+    <archive path="C:/Users/Andrew/.m2/repository/classworlds/classworlds/1.1/classworlds-1.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-file:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-file/1.0-beta-6/wagon-file-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-provider-api:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-plugin-parameter-documenter:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-plugin-parameter-documenter/2.2.1/maven-plugin-parameter-documenter-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-6/wagon-http-lightweight-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-http-shared:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-http-shared/1.0-beta-6/wagon-http-shared-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: nekohtml:xercesMinimal:1.9.6.2">
+    <archive path="C:/Users/Andrew/.m2/repository/nekohtml/xercesMinimal/1.9.6.2/xercesMinimal-1.9.6.2.jar" />
+  </library>
+  <library name="Maven: nekohtml:nekohtml:1.9.6.2">
+    <archive path="C:/Users/Andrew/.m2/repository/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-http:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-http/1.0-beta-6/wagon-http-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-webdav-jackrabbit/1.0-beta-6/wagon-webdav-jackrabbit-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.apache.jackrabbit:jackrabbit-webdav:1.5.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/jackrabbit/jackrabbit-webdav/1.5.0/jackrabbit-webdav-1.5.0.jar" />
+  </library>
+  <library name="Maven: org.apache.jackrabbit:jackrabbit-jcr-commons:1.5.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/jackrabbit/jackrabbit-jcr-commons/1.5.0/jackrabbit-jcr-commons-1.5.0.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-api:1.5.6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar" />
+  </library>
+  <library name="Maven: commons-httpclient:commons-httpclient:3.0">
+    <archive path="C:/Users/Andrew/.m2/repository/commons-httpclient/commons-httpclient/3.0/commons-httpclient-3.0.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-nop:1.5.3">
+    <archive path="C:/Users/Andrew/.m2/repository/org/slf4j/slf4j-nop/1.5.3/slf4j-nop-1.5.3.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-jdk14:1.5.6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/slf4j/slf4j-jdk14/1.5.6/slf4j-jdk14-1.5.6.jar" />
+  </library>
+  <library name="Maven: org.slf4j:jcl-over-slf4j:1.5.6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/slf4j/jcl-over-slf4j/1.5.6/jcl-over-slf4j-1.5.6.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.reporting:maven-reporting-api:3.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-sink-api:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.0/doxia-sink-api-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-profile:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-artifact:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-repository-metadata:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-error-diagnostics:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-error-diagnostics/2.2.1/maven-error-diagnostics-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-project:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-artifact-manager:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar" />
+  </library>
+  <library name="Maven: backport-util-concurrent:backport-util-concurrent:3.1">
+    <archive path="C:/Users/Andrew/.m2/repository/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-plugin-registry:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-plugin-api:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-plugin-api/2.2.1/maven-plugin-api-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-ssh-external:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-ssh-external/1.0-beta-6/wagon-ssh-external-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-ssh-common:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-ssh-common/1.0-beta-6/wagon-ssh-common-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-interactivity-api:1.0-alpha-4">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-plugin-descriptor:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-plugin-descriptor/2.2.1/maven-plugin-descriptor-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-monitor:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-monitor/2.2.1/maven-monitor-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.wagon:wagon-ssh:1.0-beta-6">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/wagon/wagon-ssh/1.0-beta-6/wagon-ssh-1.0-beta-6.jar" />
+  </library>
+  <library name="Maven: com.jcraft:jsch:0.1.38">
+    <archive path="C:/Users/Andrew/.m2/repository/com/jcraft/jsch/0.1.38/jsch-0.1.38.jar" />
+  </library>
+  <library name="Maven: org.sonatype.plexus:plexus-sec-dispatcher:1.3">
+    <archive path="C:/Users/Andrew/.m2/repository/org/sonatype/plexus/plexus-sec-dispatcher/1.3/plexus-sec-dispatcher-1.3.jar" />
+  </library>
+  <library name="Maven: org.sonatype.plexus:plexus-cipher:1.4">
+    <archive path="C:/Users/Andrew/.m2/repository/org/sonatype/plexus/plexus-cipher/1.4/plexus-cipher-1.4.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-toolchain:2.2.1">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-toolchain/2.2.1/maven-toolchain-2.2.1.jar" />
+  </library>
+  <library name="Maven: org.apache.maven:maven-archiver:2.5">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/maven-archiver/2.5/maven-archiver-2.5.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-archiver:2.1.2">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-archiver/2.1.2/plexus-archiver-2.1.2.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-io:2.0.4">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-io/2.0.4/plexus-io-2.0.4.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.shared:maven-invoker:2.0.9">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/shared/maven-invoker/2.0.9/maven-invoker-2.0.9.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.shared:maven-common-artifact-filters:1.3">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/shared/maven-common-artifact-filters/1.3/maven-common-artifact-filters-1.3.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-site-renderer:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-site-renderer/1.0/doxia-site-renderer-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-core:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-core/1.0/doxia-core-1.0.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-i18n:1.0-beta-7">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-i18n/1.0-beta-7/plexus-i18n-1.0-beta-7.jar" />
+  </library>
+  <library name="Maven: org.codehaus.plexus:plexus-velocity:1.1.7">
+    <archive path="C:/Users/Andrew/.m2/repository/org/codehaus/plexus/plexus-velocity/1.1.7/plexus-velocity-1.1.7.jar" />
+  </library>
+  <library name="Maven: org.apache.velocity:velocity:1.5">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar" />
+  </library>
+  <library name="Maven: oro:oro:2.0.8">
+    <archive path="C:/Users/Andrew/.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-decoration-model:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-decoration-model/1.0/doxia-decoration-model-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-module-apt:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-module-apt/1.0/doxia-module-apt-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-module-fml:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-module-fml/1.0/doxia-module-fml-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-module-xdoc:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-module-xdoc/1.0/doxia-module-xdoc-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.maven.doxia:doxia-module-xhtml:1.0">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/maven/doxia/doxia-module-xhtml/1.0/doxia-module-xhtml-1.0.jar" />
+  </library>
+  <library name="Maven: org.apache.httpcomponents:httpclient:4.2.3">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/httpcomponents/httpclient/4.2.3/httpclient-4.2.3.jar" />
+  </library>
+  <library name="Maven: org.apache.httpcomponents:httpcore:4.2.2">
+    <archive path="C:/Users/Andrew/.m2/repository/org/apache/httpcomponents/httpcore/4.2.2/httpcore-4.2.2.jar" />
+  </library>
+  <library name="Maven: log4j:log4j:1.2.14">
+    <archive path="C:/Users/Andrew/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar" />
+  </library>
+  <library name="Maven: com.thoughtworks.qdox:qdox:1.12.1">
+    <archive path="C:/Users/Andrew/.m2/repository/com/thoughtworks/qdox/qdox/1.12.1/qdox-1.12.1.jar" />
+  </library>
+</eclipse-userlibraries>
+

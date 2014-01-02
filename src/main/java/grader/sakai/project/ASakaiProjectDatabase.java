@@ -79,7 +79,7 @@ public class ASakaiProjectDatabase implements SakaiProjectDatabase {
 	AutoFeedback autoFeedback;
 	ManualFeedback manualFeedback;
 	SourceDisplayer sourceDisplayer;
-	 MainClassFinder mainClassFinder;
+	MainClassFinder mainClassFinder;
 
 
 	public ASakaiProjectDatabase(String aBulkAssignmentsFolderName,

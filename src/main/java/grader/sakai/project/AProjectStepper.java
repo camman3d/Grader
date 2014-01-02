@@ -1,39 +1,23 @@
 package grader.sakai.project;
 
+import bus.uigen.ObjectEditor;
 import grader.assignment.GradingFeature;
 import grader.assignment.GradingFeatureList;
 import grader.documents.DocumentDisplayerRegistry;
-import grader.file.FileProxy;
 import grader.file.FileProxyUtils;
-import grader.project.Project;
 import grader.spreadsheet.FeatureGradeRecorder;
 import grader.spreadsheet.FinalGradeRecorder;
-import grader.spreadsheet.FinalGradeRecorderFactory;
-import grader.spreadsheet.TotalScoreRecorderSelector;
+import util.annotations.*;
+import util.misc.AClearanceManager;
+import util.misc.Common;
+import util.trace.Tracer;
 
-import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
-import bus.uigen.uiFrameList;
-import util.annotations.Column;
-import util.annotations.ComponentWidth;
-import util.annotations.Row;
-import util.annotations.StructurePattern;
-import util.annotations.StructurePatternNames;
-import util.annotations.Visible;
-import util.misc.AClearanceManager;
-import util.misc.Common;
-import util.misc.ThreadSupport;
-import util.trace.Tracer;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 public class AProjectStepper extends AClearanceManager implements ProjectStepper{
 	PropertyChangeSupport propertyChangeSupport =new PropertyChangeSupport(this);

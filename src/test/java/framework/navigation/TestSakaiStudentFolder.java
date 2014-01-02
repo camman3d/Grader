@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * Tests for {@link SakaiStudentFolder}
  */
 public class TestSakaiStudentFolder {
-
+/*
     // Values for testing
 //    private String onTimeStudentFolder = "/Users/josh/Downloads/Assignment 2 All/Alakkat, Grishma(alakkat)";
 //    private String noSubmissionStudentFolder = "/Users/josh/Downloads/Assignment 2 All/Monson, Joshua(jmonson)";
@@ -87,5 +87,5 @@ public class TestSakaiStudentFolder {
         Option<StandardProject> project = folder2.getProject(assignmentName);
         assertTrue("Project should not be found", project.isEmpty());
     }
-
+*/
 }

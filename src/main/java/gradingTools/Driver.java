@@ -1,6 +1,7 @@
 package gradingTools;
 
-import framework.grading.FrameworkProjectRequirements;
+import framework.grading.AGUIGradingManager;
+import framework.grading.AHeadlessGradingManager;
 import framework.grading.GradingManager;
 import framework.grading.ProjectRequirements;
 import framework.gui.SettingsWindow;
@@ -8,7 +9,6 @@ import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GradingEnvironment;
-import util.misc.Common;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
@@ -56,11 +56,17 @@ public class Driver {
             }
 
             // Run the grading process
-            String controller = configuration.getString("grader.controller", "GradingManager");
-            if (controller.equals("GradingManager")) {
+            String controller = configuration.getString("grader.controller", "AGUIGradingManager");
+            if (controller.equals("AGUIGradingManager")) {
 
                 // Run the GraderManager
-                GradingManager manager = new GradingManager(projectName, requirements);
+                GradingManager manager = new AGUIGradingManager(projectName, requirements);
+                manager.run();
+
+            } else if (controller.equals("AHeadlessGradingManager")) {
+
+                // Run the GraderManager
+                GradingManager manager = new AHeadlessGradingManager(projectName, requirements);
                 manager.run();
 
             } else if (controller.equals("SakaiProjectDatabase")) {

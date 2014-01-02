@@ -1,10 +1,11 @@
 package examples;
 
+import framework.grading.AGUIGradingManager;
 import framework.grading.FrameworkProjectRequirements;
-import framework.grading.GradingManager;
 import examples.checkers.testCases.ErrorTestCase;
 import examples.checkers.testCases.FailingTestCase;
 import examples.checkers.testCases.PassingTestCase;
+import framework.grading.GradingManager;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public class FrameworkExample {
         }};
 
         // The GraderManager is responsible for running the grading process
-        GradingManager manager = new GradingManager("Example Assignment", requirements);
+        GradingManager manager = new AGUIGradingManager("Example Assignment", requirements);
         manager.run();
 
     }

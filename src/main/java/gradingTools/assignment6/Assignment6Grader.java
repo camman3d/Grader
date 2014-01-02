@@ -1,5 +1,6 @@
 package gradingTools.assignment6;
 
+import framework.grading.AGUIGradingManager;
 import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
 import framework.grading.testing.Feature;
@@ -67,7 +68,7 @@ public class Assignment6Grader {
 
         // Now start the grading process
 
-        GradingManager manager = new GradingManager("Assignment6", requirements);
+        GradingManager manager = new AGUIGradingManager("Assignment6", requirements);
         manager.run();
     }
 }
