@@ -25,7 +25,6 @@ public class ShapesRegisterListenerTestCase extends BasicTestCase {
 
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
-
         // Look for the classes that implement or interfaces that extend PropertyListenerRegisterer
         if (project.getClassesManager().isEmpty())
             throw new NotGradableException();

@@ -3,7 +3,6 @@ package framework.grading;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
-import framework.gui.GradingWindow;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
