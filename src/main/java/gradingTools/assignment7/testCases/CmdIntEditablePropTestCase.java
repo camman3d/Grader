@@ -42,8 +42,8 @@ public class CmdIntEditablePropTestCase extends BasicTestCase {
         Method[] methods = _class.getMethods();
         for (Method method : methods) {
             if (method.getName().startsWith("set"))
-                return pass();
+                return pass(autoGrade);
         }
-        return fail("Couldn't find an editable property");
+        return fail("Couldn't find an editable property", autoGrade);
     }
 }

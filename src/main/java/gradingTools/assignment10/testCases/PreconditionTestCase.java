@@ -38,7 +38,7 @@ public class PreconditionTestCase extends BasicTestCase {
         // First get the bridge scene class
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("Bridge Scene", autoGrade);
         if (classDescription.isEmpty())
-            return fail("No bridge scene class");
+            return fail("No bridge scene class", autoGrade);
         Class<?> _class = classDescription.get().getJavaClass();
 
         // Look for the method pre{MethodName} or pre{Tag} which has no arguments and returns a boolean.
@@ -53,18 +53,18 @@ public class PreconditionTestCase extends BasicTestCase {
             // Next look for pre{MethodName}
             List<Method> methods = classDescription.get().getTaggedMethods(tag);
             if (methods.isEmpty())
-                return fail("Could not find a precondition method associated with: " + tag);
+                return fail("Could not find a precondition method associated with: " + tag, autoGrade);
             name = "pre" + StringUtils.capitalize(methods.get(0).getName());
             try {
                 method = _class.getMethod(name, new Class[]{});
             } catch (NoSuchMethodException e1) {
-                return fail("Could not find a precondition method associated with: " + tag);
+                return fail("Could not find a precondition method associated with: " + tag, autoGrade);
             }
         }
 
         if (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class)
-            return pass();
+            return pass(autoGrade);
         else
-            return partialPass(0.5, "Precondition method should return a boolean");
+            return partialPass(0.5, "Precondition method should return a boolean", autoGrade);
     }
 }

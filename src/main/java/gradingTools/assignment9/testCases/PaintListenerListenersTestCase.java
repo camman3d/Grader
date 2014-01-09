@@ -35,7 +35,7 @@ public class PaintListenerListenersTestCase extends BasicTestCase {
             throw new NotGradableException();
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().findByTag("Paint Listener");
         if (classDescriptions.isEmpty())
-            return fail("No class tagged \"Paint Listener\"");
+            return fail("No class tagged \"Paint Listener\"", autoGrade);
         ClassDescription classDescription = new ArrayList<ClassDescription>(classDescriptions).get(0);
 
         // Get the views
@@ -75,6 +75,6 @@ public class PaintListenerListenersTestCase extends BasicTestCase {
         }
 
         double count = views.size();
-        return partialPass(listenerCount / count, notes);
+        return partialPass(listenerCount / count, notes, autoGrade);
     }
 }

@@ -29,11 +29,11 @@ public class QuotedStringTestCase extends BasicTestCase {
             // Check that the program
             String output = runner.runWithSpaces();
             if (isValidOutput(output))
-                return pass();
+                return pass(autoGrade);
             output = runner.runNoSpaces();
             if (isValidOutput(output))
-                return pass();
-            return fail("Program should work with quoted strings.");
+                return pass(autoGrade);
+            return fail("Program should work with quoted strings.", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

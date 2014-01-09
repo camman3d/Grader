@@ -24,9 +24,9 @@ public class ForwardPrinterTestCase extends BasicTestCase {
 
             // Now you can test the output for certain things
             if (output.contains("Hello world"))
-                return pass();
+                return pass(autoGrade);
             else
-                return fail("Did not print out normally");
+                return fail("Did not print out normally", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

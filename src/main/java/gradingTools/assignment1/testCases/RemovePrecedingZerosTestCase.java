@@ -28,11 +28,11 @@ public class RemovePrecedingZerosTestCase extends BasicTestCase {
 
             String output = runner.runWithSpaces();
             if (output.matches("[^0]23"))
-                return pass();
+                return pass(autoGrade);
             output = runner.runNoSpaces();
             if (output.matches("[^0]23"))
-                return pass();
-            return fail("Program should remove preceding zeros.");
+                return pass(autoGrade);
+            return fail("Program should remove preceding zeros.", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

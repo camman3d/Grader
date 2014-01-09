@@ -60,6 +60,6 @@ public class LocatablePropertiesTestCase extends BasicTestCase {
         // Check for absent methods
         for (String methodName : validMethods)
             notes += "Missing method: " + methodName + ". ";
-        return partialPass(methodCount / 4, notes);
+        return partialPass(methodCount / 4, notes, autoGrade);
     }
 }

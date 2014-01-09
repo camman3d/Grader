@@ -24,8 +24,8 @@ public class ScenePainterTagTestCase extends BasicTestCase {
             throw new NotGradableException();
 
         if (project.getClassesManager().get().findByTag("Inheriting Bridge Scene Painter").isEmpty())
-            return fail("No class found with tag \"Inheriting Bridge Scene Painter\"");
+            return fail("No class found with tag \"Inheriting Bridge Scene Painter\"", autoGrade);
         else
-            return pass();
+            return pass(autoGrade);
     }
 }

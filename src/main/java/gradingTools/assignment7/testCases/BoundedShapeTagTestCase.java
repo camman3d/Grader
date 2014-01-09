@@ -30,7 +30,7 @@ public class BoundedShapeTagTestCase extends BasicTestCase {
         // Look for a class with the "Locatable" tag and that isn't inheriting from something else
         Option<ClassDescription> classDescription = new RootTagFinder(project).findClass("Bounded Shape");
         if (classDescription.isDefined())
-            return pass();
-        return fail("No superclass tagged \"Bounded Shape\"");
+            return pass(autoGrade);
+        return fail("No superclass tagged \"Bounded Shape\"", autoGrade);
     }
 }

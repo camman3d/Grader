@@ -20,6 +20,6 @@ public class FailingTestCase extends BasicTestCase {
 
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
-        return fail("Just for fun.");
+        return fail("Just for fun.", autoGrade);
     }
 }

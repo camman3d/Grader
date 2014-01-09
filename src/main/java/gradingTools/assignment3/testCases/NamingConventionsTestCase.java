@@ -63,6 +63,6 @@ public class NamingConventionsTestCase extends BasicTestCase {
             }
         }
 
-        return partialPass(checkPass / checkCount, notes);
+        return partialPass(checkPass / checkCount, notes, autoGrade);
     }
 }

@@ -40,7 +40,7 @@ public class SayMoveCommandInvokedTestCase extends BasicTestCase {
         // Get the command interpreter
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("Command Interpreter", autoGrade);
         if (classDescription.isEmpty())
-            return fail("Command interpreter not found.");
+            return fail("Command interpreter not found.", autoGrade);
         Class<?> _class = classDescription.get().getJavaClass();
 
         // The approach to check this is to check
@@ -51,7 +51,7 @@ public class SayMoveCommandInvokedTestCase extends BasicTestCase {
         Option<Method> sayMethod = getMethodOption(classDescription, "say parser");
         Option<Method> moveMethod = getMethodOption(classDescription, "move parser");
         if (sayMethod.isEmpty() && moveMethod.isEmpty())
-            return fail("Could not find parser methods");
+            return fail("Could not find parser methods", autoGrade);
 
         // Find where the parser methods are called.
         Set<MethodDeclaration> callers = new HashSet<MethodDeclaration>();
@@ -62,9 +62,9 @@ public class SayMoveCommandInvokedTestCase extends BasicTestCase {
         for (MethodDeclaration caller : callers) {
             String code = caller.toString();
             if (code.contains(".run()"))
-                return pass();
+                return pass(autoGrade);
         }
-        return fail("Couldn't find a parser invoker that called .run()");
+        return fail("Couldn't find a parser invoker that called .run()", autoGrade);
     }
 
     private Option<Method> getMethodOption(Option<ClassDescription> classDescription, String tag) {

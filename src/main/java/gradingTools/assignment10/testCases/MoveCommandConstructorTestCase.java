@@ -33,13 +33,13 @@ public class MoveCommandConstructorTestCase extends BasicTestCase {
 
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("move command", autoGrade);
         if (classDescription.isEmpty())
-            return fail("No move command object");
+            return fail("No move command object", autoGrade);
         Class<?> _class = classDescription.get().getJavaClass();
 
         // Find the avatar class and interface(s)
         Option<ClassDescription> avatarClassDescription = ClassFinder.get(project).findByTag("Avatar", autoGrade);
         if (avatarClassDescription.isEmpty())
-            return fail("No single avatar class. This is needed for the constructor.");
+            return fail("No single avatar class. This is needed for the constructor.", autoGrade);
         Class<?> avatarClass = avatarClassDescription.get().getJavaClass();
         List<Class<?>> avatarClasses = new ArrayList<Class<?>>(Arrays.asList(avatarClass.getInterfaces()));
         avatarClasses.add(avatarClass);
@@ -47,19 +47,19 @@ public class MoveCommandConstructorTestCase extends BasicTestCase {
         // Try all three possible ordering of arguments with different classes.
         for (Class<?> avatar : avatarClasses) {
             if (checkForConstructor(_class, avatar, int.class, int.class))
-                return pass();
+                return pass(autoGrade);
             if (checkForConstructor(_class, avatar, Integer.class, Integer.class))
-                return pass();
+                return pass(autoGrade);
             if (checkForConstructor(_class, int.class, avatar, int.class))
-                return pass();
+                return pass(autoGrade);
             if (checkForConstructor(_class, Integer.class, avatar, Integer.class))
-                return pass();
+                return pass(autoGrade);
             if (checkForConstructor(_class, int.class, int.class, avatar))
-                return pass();
+                return pass(autoGrade);
             if (checkForConstructor(_class, Integer.class, Integer.class, avatar))
-                return pass();
+                return pass(autoGrade);
         }
-        return fail("No constructor taking 1 avatar and 2 ints.");
+        return fail("No constructor taking 1 avatar and 2 ints.", autoGrade);
     }
 
     private boolean checkForConstructor(Class<?> _class, Class<?> ... argTypes) {

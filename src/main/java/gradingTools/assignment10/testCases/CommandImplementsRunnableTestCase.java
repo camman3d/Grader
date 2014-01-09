@@ -39,12 +39,12 @@ public class CommandImplementsRunnableTestCase extends BasicTestCase {
         }
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag(tag, autoGrade);
         if (classDescription.isEmpty())
-            return fail("No class tagged: " + tag);
+            return fail("No class tagged: " + tag, autoGrade);
 
         // Make sure that it implements Runnable
         if (Runnable.class.isAssignableFrom(classDescription.get().getJavaClass()))
-            return partialPass(score, notes);
+            return partialPass(score, notes, autoGrade);
         notes += (notes.isEmpty() ? "" : "\n") + "Class does not implement Runnbale";
-        return partialPass(0, notes);
+        return partialPass(0, notes, autoGrade);
     }
 }

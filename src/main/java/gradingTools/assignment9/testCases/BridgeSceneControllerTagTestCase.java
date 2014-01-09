@@ -24,8 +24,8 @@ public class BridgeSceneControllerTagTestCase extends BasicTestCase {
             throw new NotGradableException();
 
         if (project.getClassesManager().get().findByTag("Bridge Scene Controller").isEmpty())
-            return fail("No class found with tag \"Bridge Scene Controller\"");
+            return fail("No class found with tag \"Bridge Scene Controller\"", autoGrade);
         else
-            return pass();
+            return pass(autoGrade);
     }
 }

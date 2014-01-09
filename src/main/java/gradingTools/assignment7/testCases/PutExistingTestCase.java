@@ -56,8 +56,8 @@ public class PutExistingTestCase extends BasicTestCase {
                 if (field.getType().equals(ArrayList.class)) {
                     int size = ((ArrayList) field.get(table)).size();
                     if (size == 1)
-                        pass();
-                    fail("There should only be one item in the array list");
+                        pass(autoGrade);
+                    fail("There should only be one item in the array list", autoGrade);
                 }
             }
 
@@ -75,8 +75,8 @@ public class PutExistingTestCase extends BasicTestCase {
     private TestCaseResult ask() {
         int result = JOptionPane.showConfirmDialog(null, "Does the put method overwrite values with an existing key?", "Put method", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == 0)
-            return pass();
+            return pass(false);
         else
-            return fail("Put method does not overwrite values with existing keys.");
+            return fail("Put method does not overwrite values with existing keys.", false);
     }
 }

@@ -50,8 +50,8 @@ public class BoundedShapeExtendsLocatableTestCase extends BasicTestCase {
         Class<?> locatableClass = locatableDescription.get().getJavaClass();
 
         if (ClassInheritanceChecker.isSubclass(boundedClass, locatableClass))
-            return pass();
+            return pass(autoGrade);
         else
-            return fail("Bounded shape should extend Locatable");
+            return fail("Bounded shape should extend Locatable", autoGrade);
     }
 }

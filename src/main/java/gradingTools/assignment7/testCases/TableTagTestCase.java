@@ -26,8 +26,8 @@ public class TableTagTestCase extends BasicTestCase {
 
         // There should be one class tagged with "Table"
         if (project.getClassesManager().get().findByTag("Table").size() == 1)
-            return pass();
+            return pass(autoGrade);
         else
-            return fail("There should be one class tagged with \"Table\".");
+            return fail("There should be one class tagged with \"Table\".", autoGrade);
     }
 }

@@ -42,7 +42,7 @@ public class LocatableInheritanceTestCase extends BasicTestCase {
         // There should be at least three classes tagged "locatable" (locatable, angle, bounded shape)
         Set<ClassDescription> locatables = project.getClassesManager().get().findByTag("Locatable");
         if (locatables.size() < 3)
-            return fail("Expected more classes tagged \"Locatable\"");
+            return fail("Expected more classes tagged \"Locatable\"", autoGrade);
 
         // Make sure that everything that is tagged "locatable" extend the locatable class
         int classCount = 0;
@@ -56,6 +56,6 @@ public class LocatableInheritanceTestCase extends BasicTestCase {
                 notes += "Class \"" + description.getJavaClass().getSimpleName() + "\" should extend Locatable. ";
         }
 
-        return partialPass(correctClassCount / classCount, notes);
+        return partialPass(correctClassCount / classCount, notes, autoGrade);
     }
 }

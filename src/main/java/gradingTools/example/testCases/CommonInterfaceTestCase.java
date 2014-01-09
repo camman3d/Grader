@@ -39,7 +39,7 @@ public class CommonInterfaceTestCase extends BasicTestCase {
         // Then we can do checks based on the result. We want to see if there are at least two classes that implement
         // the interface we found.
         if (theInterface == null)
-            return fail("Couldn't find an interface");
+            return fail("Couldn't find an interface", autoGrade);
         double classCount = 0;
         for (ClassDescription description : manager.getClassDescriptions()) {
             Class<?> _class = description.getJavaClass();
@@ -49,7 +49,7 @@ public class CommonInterfaceTestCase extends BasicTestCase {
 
         // You can even give partial credit
         if (classCount >= 2)
-            return pass();
-        return partialPass(0.5, "Only found one class that implemented the interface");
+            return pass(autoGrade);
+        return partialPass(0.5, "Only found one class that implemented the interface", autoGrade);
     }
 }

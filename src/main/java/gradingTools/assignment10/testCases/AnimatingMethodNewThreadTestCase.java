@@ -40,12 +40,12 @@ public class AnimatingMethodNewThreadTestCase extends BasicTestCase {
         // Get the command interpreter
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("Command Interpreter", autoGrade);
         if (classDescription.isEmpty())
-            return fail("Looking for method in command interpreter, but the class was not found.");
+            return fail("Looking for method in command interpreter, but the class was not found.", autoGrade);
 
         // Get the method
         List<Method> methods = classDescription.get().getTaggedMethods(tag);
         if (methods.isEmpty())
-            return fail("No method tagged: " + tag);
+            return fail("No method tagged: " + tag, autoGrade);
 
         try {
             // Look for .start() in the code
@@ -53,8 +53,8 @@ public class AnimatingMethodNewThreadTestCase extends BasicTestCase {
             MethodDeclaration method = CompilationNavigation.getMethod(classDef, methods.get(0).getName());
             String code = method.toString();
             if (code.contains(".start()"))
-                return pass();
-            return fail("Could not find .start() in the async method");
+                return pass(autoGrade);
+            return fail("Could not find .start() in the async method", autoGrade);
         } catch (IOException e) {
             throw new NotGradableException();
         }

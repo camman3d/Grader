@@ -30,11 +30,11 @@ public class IsLetterTestCase extends BasicTestCase {
             try {
                 Method m1 = description.getJavaClass().getMethod("isLetter", char.class);
                 if (m1.getReturnType() == boolean.class)
-                    return pass();
+                    return pass(autoGrade);
             } catch (NoSuchMethodException e) {
                 // Move along
             }
         }
-        return fail("No boolean isLetter(char) method found.");
+        return fail("No boolean isLetter(char) method found.", autoGrade);
     }
 }

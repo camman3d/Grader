@@ -34,8 +34,8 @@ public class ThreePackageTestCase extends BasicTestCase {
         }
 
         if (packages.size() >= 3)
-            return pass();
+            return pass(autoGrade);
         else
-            return fail("You only have " + packages.size() + " packages.");
+            return fail("You only have " + packages.size() + " packages.", autoGrade);
     }
 }

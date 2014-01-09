@@ -30,7 +30,7 @@ public class CmdIntTagTestCase extends BasicTestCase {
 
         Set<ClassDescription> classes = project.getClassesManager().get().findByTag("Command Interpreter");
         if (classes.size() == 1)
-            return pass();
-        return fail("There should be one class tagged \"Command Interpreter\"");
+            return pass(autoGrade);
+        return fail("There should be one class tagged \"Command Interpreter\"", autoGrade);
     }
 }

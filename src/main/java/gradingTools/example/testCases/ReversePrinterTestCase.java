@@ -21,9 +21,9 @@ public class ReversePrinterTestCase extends BasicTestCase {
             RunningProject runningProject = project.launch("Hello world\n");
             String output = runningProject.await();
             if (output.contains("dlrow olleH"))
-                return pass();
+                return pass(autoGrade);
             else
-                return fail("Did not print out backward");
+                return fail("Did not print out backward", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

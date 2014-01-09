@@ -7,6 +7,7 @@ import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
 import org.apache.commons.io.FileUtils;
+import tools.CodeTools;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,14 +37,14 @@ public class RefreshTestCase extends BasicTestCase {
 
                 // Get the source code as a string and remove comments
                 String code = FileUtils.readFileToString(description.getSource());
-                code = code.replaceAll("(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)", "");
+                code = CodeTools.removeComments(code);
 
                 // Fail if we find a refresh method
                 if (code.contains(".refresh();"))
-                    return fail("Object editor refresh() call found in " + description.getJavaClass().getSimpleName());
+                    return fail("Object editor refresh() call found in " + description.getJavaClass().getSimpleName(), autoGrade);
 
             } catch (IOException e) {}
         }
-        return pass();
+        return pass(autoGrade);
     }
 }

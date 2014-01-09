@@ -31,13 +31,13 @@ public class ObservablePainterExtendsComponentTestCase extends BasicTestCase {
             throw new NotGradableException();
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().findByTag("Observable Painter");
         if (classDescriptions.isEmpty())
-            return fail("No class tagged \"Observable Painter\"");
+            return fail("No class tagged \"Observable Painter\"", autoGrade);
         ClassDescription classDescription = new ArrayList<ClassDescription>(classDescriptions).get(0);
 
         boolean extendsComponent = Component.class.isAssignableFrom(classDescription.getJavaClass());
         if (extendsComponent)
-            return pass();
+            return pass(autoGrade);
         else
-            return fail("The observable painter should extend Component.");
+            return fail("The observable painter should extend Component.", autoGrade);
     }
 }

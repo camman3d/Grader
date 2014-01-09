@@ -35,9 +35,9 @@ public class NoStringBuilderReverseTestCase extends BasicTestCase {
             Integer postCount = (Integer) StringBuilder.class.getField("reverseCount").get(null);
 
             if (postCount.equals(preCount))
-                return pass();
+                return pass(autoGrade);
             else
-                return fail("StringBuilder.reverse() was used");
+                return fail("StringBuilder.reverse() was used", autoGrade);
         } catch (Exception e) {
             throw new NotAutomatableException();
         }

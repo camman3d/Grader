@@ -35,6 +35,6 @@ public class PreconditionEventsTestCase extends BasicTestCase {
         for (Exception e : project.getTraceableLog().getLog())
             System.out.println(e);
 
-        return pass();
+        return pass(autoGrade);
     }
 }

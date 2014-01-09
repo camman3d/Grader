@@ -29,11 +29,11 @@ public class SingleTokenTestCase extends BasicTestCase {
 
             String output = runner.runWithSpaces();
             if (output.contains("12479"))
-                return pass();
+                return pass(autoGrade);
             output = runner.runNoSpaces();
             if (output.contains("12479"))
-                return pass();
-            return fail("Program should return a single token.");
+                return pass(autoGrade);
+            return fail("Program should return a single token.", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

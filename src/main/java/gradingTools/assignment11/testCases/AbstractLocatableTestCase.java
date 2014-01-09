@@ -31,11 +31,11 @@ public class AbstractLocatableTestCase extends BasicTestCase {
 
         Option<ClassDescription> locatable = SpecialClassFinder.getLocatable(project, autoGrade);
         if (locatable.isEmpty())
-            return fail("Could not find the locatable class.");
+            return fail("Could not find the locatable class.", autoGrade);
 
         Class<?> _class = locatable.get().getJavaClass();
         if (Modifier.isAbstract(_class.getModifiers()))
-            return pass();
-        return fail("Locatable is not abstract.");
+            return pass(autoGrade);
+        return fail("Locatable is not abstract.", autoGrade);
     }
 }

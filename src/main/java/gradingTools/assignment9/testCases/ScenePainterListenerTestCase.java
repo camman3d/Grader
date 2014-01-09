@@ -38,7 +38,7 @@ public class ScenePainterListenerTestCase extends BasicTestCase {
             throw new NotGradableException();
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().findByTag("Inheriting Bridge Scene Painter");
         if (classDescriptions.isEmpty())
-            return fail("No class tagged \"Inheriting Bridge Scene Painter\"");
+            return fail("No class tagged \"Inheriting Bridge Scene Painter\"", autoGrade);
         ClassDescription classDescription = new ArrayList<ClassDescription>(classDescriptions).get(0);
 
         // It should register itself as a listener at least once in the constructor
@@ -51,9 +51,9 @@ public class ScenePainterListenerTestCase extends BasicTestCase {
             for (ConstructorDeclaration constructor : constructors) {
                 String code = constructor.toString();
                 if (code.contains(".addPropertyChangeListener(this)"))
-                    return pass();
+                    return pass(autoGrade);
             }
-            return fail("The scene painter never registers itself as a listener in the constructor.");
+            return fail("The scene painter never registers itself as a listener in the constructor.", autoGrade);
         } catch (IOException e) {
             throw new NotGradableException();
         }

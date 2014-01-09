@@ -51,11 +51,11 @@ public class BasicPutAndGetTestCase extends BasicTestCase {
             // Get it back
             String s = (String) getMethod.invoke(table, "test1");
             if (s.equals("Test1"))
-                return pass();
-            return fail("Basic put and get didn't work");
+                return pass(autoGrade);
+            return fail("Basic put and get didn't work", autoGrade);
         } catch (InvocationTargetException e) {
             // This means the method threw an error
-            return fail("Basic put/get throws an error");
+            return fail("Basic put/get throws an error", autoGrade);
         } catch (Exception e) {
             throw new NotGradableException();
 //            if (autoGrade)

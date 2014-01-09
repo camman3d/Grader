@@ -84,6 +84,6 @@ public class InterfaceTypeTestCase extends BasicTestCase {
 //        double score = 1 - nonInterfaceAssignment / assignments;
         double score = Math.min(nonInterfaceAssignment, 5) / 5.0;
         score = 1 - score;
-        return partialPass(score, notes);
+        return partialPass(score, notes, autoGrade);
     }
 }

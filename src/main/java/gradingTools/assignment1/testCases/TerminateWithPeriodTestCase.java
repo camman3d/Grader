@@ -29,18 +29,18 @@ public class TerminateWithPeriodTestCase extends BasicTestCase {
             String output = runner1.runWithSpaces();
             String output2 = runner1.runNoSpaces();
             if (!output.contains("*** TIMEOUT ***") && !output2.contains("*** TIMEOUT ***"))
-                return fail("Program terminates prematurely");
+                return fail("Program terminates prematurely", autoGrade);
 
             // Check that a period terminates it
             FlexibleProgramRunner runner2 = new FlexibleProgramRunner(project, "19 28");
 
             output = runner2.runWithSpaces();
             if (!output.contains("*** TIMEOUT ***"))
-                return pass();
+                return pass(autoGrade);
             output = runner2.runNoSpaces();
             if (!output.contains("*** TIMEOUT ***"))
-                return pass();
-            return fail("Program should terminate with period.");
+                return pass(autoGrade);
+            return fail("Program should terminate with period.", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

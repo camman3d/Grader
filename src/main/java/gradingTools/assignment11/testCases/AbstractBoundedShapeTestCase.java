@@ -31,11 +31,11 @@ public class AbstractBoundedShapeTestCase extends BasicTestCase {
         Option<ClassDescription> boundedShape = SpecialClassFinder.getBoundedShape(project, autoGrade);
 
         if (boundedShape.isEmpty())
-            return fail("Could not find the bounded shape class.");
+            return fail("Could not find the bounded shape class.", autoGrade);
 
         Class<?> _class = boundedShape.get().getJavaClass();
         if (Modifier.isAbstract(_class.getModifiers()))
-            return pass();
-        return fail("Bounded Shape is not abstract.");
+            return pass(autoGrade);
+        return fail("Bounded Shape is not abstract.", autoGrade);
     }
 }

@@ -38,8 +38,8 @@ public class ShapesRegisterListenerTestCase extends BasicTestCase {
 
         // There should be at least two cases
         if (count >= 2)
-            return pass();
+            return pass(autoGrade);
         else
-            return fail("All atomic shapes should extend/implement PropertyListenerRegisterer");
+            return fail("All atomic shapes should extend/implement PropertyListenerRegisterer", autoGrade);
     }
 }

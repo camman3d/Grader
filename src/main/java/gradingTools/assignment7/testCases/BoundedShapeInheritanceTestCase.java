@@ -42,7 +42,7 @@ public class BoundedShapeInheritanceTestCase extends BasicTestCase {
         // There should be at least three classes tagged "bounded shape" (bounded shape, line, image)
         Set<ClassDescription> locatables = project.getClassesManager().get().findByTag("Bounded Shape");
         if (locatables.size() < 3)
-            return fail("Expected more classes tagged \"Bounded Shape\"");
+            return fail("Expected more classes tagged \"Bounded Shape\"", autoGrade);
 
         // Make sure that everything that is tagged "bounded shape" extend the locatable class
         int classCount = 0;
@@ -56,6 +56,6 @@ public class BoundedShapeInheritanceTestCase extends BasicTestCase {
                 notes += "Class \"" + description.getJavaClass().getSimpleName() + "\" should extend Bounded Shape. ";
         }
 
-        return partialPass(correctClassCount / classCount, notes);
+        return partialPass(correctClassCount / classCount, notes, autoGrade);
     }
 }

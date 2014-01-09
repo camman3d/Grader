@@ -38,12 +38,12 @@ public class ScannerBeanPatternTestCase extends BasicTestCase {
                 for (PropertyDescriptor descriptor : info.getPropertyDescriptors()) {
                     if (descriptor.getPropertyType() == String.class && descriptor.getReadMethod() != null &&
                             descriptor.getWriteMethod() != null)
-                        return pass();
+                        return pass(autoGrade);
                 }
             } catch (IntrospectionException e) {
                 // Do nothing if it fails
             }
         }
-        return fail("Couldn't find a class that satisfies the bean class requirements (string w/ a getter and setter).");
+        return fail("Couldn't find a class that satisfies the bean class requirements (string w/ a getter and setter).", autoGrade);
     }
 }

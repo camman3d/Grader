@@ -36,16 +36,16 @@ public class AnimatingMethodTestCase extends BasicTestCase {
         // Get the command interpreter
         Option<ClassDescription> classDescription = ClassFinder.get(project).findByTag("Command Interpreter", autoGrade);
         if (classDescription.isEmpty())
-            return fail("Looking for method in command interpreter, but the class was not found.");
+            return fail("Looking for method in command interpreter, but the class was not found.", autoGrade);
 
         // Get the method
         List<Method> methods = classDescription.get().getTaggedMethods(tag);
         if (methods.isEmpty())
-            return fail("No method tagged: " + tag);
+            return fail("No method tagged: " + tag, autoGrade);
 
         // Check that it's parameterless
         if (methods.get(0).getParameterTypes().length == 0)
-            return pass();
-        return partialPass(0.5, tag + " method should be parameterless");
+            return pass(autoGrade);
+        return partialPass(0.5, tag + " method should be parameterless", autoGrade);
     }
 }

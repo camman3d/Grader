@@ -28,11 +28,11 @@ public class SumTestCase extends BasicTestCase {
 
             String output = runner.runWithSpaces();
             if (output.contains("47"))
-                return pass();
+                return pass(autoGrade);
             output = runner.runNoSpaces();
             if (output.contains("47"))
-                return pass();
-            return fail("Program should return the correctly computed sum.");
+                return pass(autoGrade);
+            return fail("Program should return the correctly computed sum.", autoGrade);
 
         } catch (NotRunnableException e) {
             throw new NotGradableException();

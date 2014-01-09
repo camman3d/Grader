@@ -34,13 +34,13 @@ public class ScenePainterExtendsComponentTestCase extends BasicTestCase {
             throw new NotGradableException();
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().findByTag("Inheriting Bridge Scene Painter");
         if (classDescriptions.isEmpty())
-            return fail("No class tagged \"Inheriting Bridge Scene Painter\"");
+            return fail("No class tagged \"Inheriting Bridge Scene Painter\"", autoGrade);
         ClassDescription classDescription = new ArrayList<ClassDescription>(classDescriptions).get(0);
 
         boolean extendsComponent = Component.class.isAssignableFrom(classDescription.getJavaClass());
         if (extendsComponent)
-            return pass();
+            return pass(autoGrade);
         else
-            return fail("The scene painter should extend Component.");
+            return fail("The scene painter should extend Component.", autoGrade);
     }
 }

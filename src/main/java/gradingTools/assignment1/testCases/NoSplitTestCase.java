@@ -7,6 +7,7 @@ import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
 import org.apache.commons.io.FileUtils;
+import tools.CodeTools;
 
 import java.io.IOException;
 
@@ -32,17 +33,17 @@ public class NoSplitTestCase extends BasicTestCase {
             try {
                 // Get the comment free code
                 String code = FileUtils.readFileToString(description.getSource());
-                code = code.replaceAll("(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)", "");
+                code = CodeTools.removeComments(code);
 
                 // Fail if we find a split()
                 if (code.contains(".split("))
-                    return fail("No .split() allowed");
+                    return fail("No .split() allowed", autoGrade);
 
             } catch (IOException e) {
                 throw new NotGradableException();
             }
         }
 
-        return pass();
+        return pass(autoGrade);
     }
 }

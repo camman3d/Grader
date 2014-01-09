@@ -32,11 +32,11 @@ public class AbstractAncestorTokenTestCase extends BasicTestCase {
 
         Option<ClassDescription> description = ClassFinder.get(project).findByTag("ancestor token", autoGrade);
         if (description.isEmpty())
-            return fail("No ancestor token class");
+            return fail("No ancestor token class", autoGrade);
 
         Class<?> _class = description.get().getJavaClass();
         if (Modifier.isAbstract(_class.getModifiers()))
-            return pass();
-        return fail("Ancestor token class is not abstract");
+            return pass(autoGrade);
+        return fail("Ancestor token class is not abstract", autoGrade);
     }
 }

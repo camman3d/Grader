@@ -31,7 +31,7 @@ public class TwoMethodTestCase extends BasicTestCase {
         }
 
         if (methodCount >= 2)
-            return pass();
-        return fail("There should be at least two meaningful methods.");
+            return pass(autoGrade);
+        return fail("There should be at least two meaningful methods.", autoGrade);
     }
 }

@@ -31,14 +31,14 @@ public class PaintListenerPaintMethodTestCase extends BasicTestCase {
             throw new NotGradableException();
         Set<ClassDescription> classDescriptions = project.getClassesManager().get().findByTag("Paint Listener");
         if (classDescriptions.isEmpty())
-            return fail("No class tagged \"Paint Listener\"");
+            return fail("No class tagged \"Paint Listener\"", autoGrade);
         ClassDescription classDescription = new ArrayList<ClassDescription>(classDescriptions).get(0);
 
         try {
             classDescription.getJavaClass().getMethod("paint", Graphics2D.class);
-            return pass();
+            return pass(autoGrade);
         } catch (NoSuchMethodException e) {
-            return fail("No paint(Graphic2D) method found.");
+            return fail("No paint(Graphic2D) method found.", autoGrade);
         }
     }
 }

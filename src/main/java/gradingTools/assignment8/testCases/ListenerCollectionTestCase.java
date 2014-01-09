@@ -35,12 +35,12 @@ public class ListenerCollectionTestCase extends BasicTestCase {
                 String source = FileUtils.readFileToString(description.getSource());
                 if (source.contains("PropertyChangeListener[]") || source.contains("List<PropertyChangeListener>") ||
                         source.contains("Set<PropertyChangeListener>"))
-                    return pass();
+                    return pass(autoGrade);
             } catch (IOException e) {
                 throw new NotGradableException();
             }
         }
 
-        return fail("No PropertyChangeListener collections found.");
+        return fail("No PropertyChangeListener collections found.", autoGrade);
     }
 }

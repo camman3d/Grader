@@ -42,9 +42,9 @@ public class NoStringToolsTestCase extends BasicTestCase {
                 // Now, we'll do the check
                 code = CodeTools.removeComments(code);
                 if (code.contains("StringBuilder") || code.contains("StringBuffer"))
-                    return fail("StringBuilder/StringBuffer found in class: " + description.getJavaClass().getCanonicalName());
+                    return fail("StringBuilder/StringBuffer found in class: " + description.getJavaClass().getCanonicalName(), autoGrade);
             }
-            return pass();
+            return pass(autoGrade);
         } catch (IOException e) {
             throw new NotGradableException();
         }

@@ -31,12 +31,12 @@ public class ListenerAndPainterTagTestCase extends BasicTestCase {
         Set<ClassDescription> class2 = project.getClassesManager().get().findByTag("Observable Painter");
         if (class1.isEmpty()) {
             if (class2.isEmpty())
-                return fail("Neither paint listener nor observable painter are tagged.");
+                return fail("Neither paint listener nor observable painter are tagged.",autoGrade);
             else
-                return partialPass(0.5, "Paint listener is not tagged.");
+                return partialPass(0.5, "Paint listener is not tagged.", autoGrade);
         }
         if (class2.isEmpty())
-            return partialPass(0.5, "Observable painter is not tagged.");
-        return pass();
+            return partialPass(0.5, "Observable painter is not tagged.", autoGrade);
+        return pass(autoGrade);
     }
 }

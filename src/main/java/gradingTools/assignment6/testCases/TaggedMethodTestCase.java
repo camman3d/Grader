@@ -39,10 +39,10 @@ public class TaggedMethodTestCase extends BasicTestCase {
                     String[] tags = method.getAnnotation(Tags.class).value();
                     for (String t : tags)
                         if (tag.equalsIgnoreCase(tag))
-                            return pass();
+                            return pass(autoGrade);
                 } catch (Exception e) {}
             }
         }
-        return fail("No method is tagged: " + tag);
+        return fail("No method is tagged: " + tag, autoGrade);
     }
 }

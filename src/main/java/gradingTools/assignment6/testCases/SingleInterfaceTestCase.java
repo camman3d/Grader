@@ -45,6 +45,6 @@ public class SingleInterfaceTestCase extends BasicTestCase {
         }
 
         double score = 1 - (badCount / classCount);
-        return partialPass(score, notes);
+        return partialPass(score, notes, autoGrade);
     }
 }

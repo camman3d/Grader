@@ -40,9 +40,9 @@ public class MainClassTestCase extends BasicTestCase {
                 // Now make sure that the package and class names are right
                 String packageName = _class.getPackage().getName();
                 if (_class.getSimpleName().equals(className) && packageName.equals("main"))
-                    return pass();
+                    return pass(autoGrade);
                 else
-                    return fail("Main method is in class: " + _class.getSimpleName() + " and package: " + packageName);
+                    return fail("Main method is in class: " + _class.getSimpleName() + " and package: " + packageName, autoGrade);
             } catch (NoSuchMethodException e) {}
         }
         throw new NotAutomatableException();

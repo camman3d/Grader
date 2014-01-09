@@ -78,6 +78,6 @@ public class SettersNotifyTestCase extends BasicTestCase {
             }
         }
 
-        return partialPass(listenerNotifies / listenerSetters, notes);
+        return partialPass(listenerNotifies / listenerSetters, notes, autoGrade);
     }
 }

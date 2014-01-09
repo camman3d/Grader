@@ -31,10 +31,10 @@ public class QuestionTestCase extends BasicTestCase {
 
         int result = JOptionPane.showConfirmDialog(null, question, name, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == 0)
-            return pass();
+            return pass(autoGrade);
         else {
             String notes = JOptionPane.showInputDialog(null, "Why not?", "Explanation needed", JOptionPane.QUESTION_MESSAGE);
-            return fail(notes);
+            return fail(notes, autoGrade);
         }
     }
 }

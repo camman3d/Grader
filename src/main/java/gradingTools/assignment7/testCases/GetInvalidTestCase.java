@@ -49,12 +49,12 @@ public class GetInvalidTestCase extends BasicTestCase {
             Object r = getMethod.invoke(table, "c");
 
             if (r == null)
-                return pass();
+                return pass(autoGrade);
             else
-                return fail("Getting w/ invalid key shouldn't return anything.");
+                return fail("Getting w/ invalid key shouldn't return anything.", autoGrade);
         } catch (InvocationTargetException e) {
             // This means the method threw an error
-            return fail("Getting w/ invalid key throws an error");
+            return fail("Getting w/ invalid key throws an error", autoGrade);
         } catch (Exception e) {
             throw new NotGradableException();
         }
