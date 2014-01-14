@@ -50,7 +50,7 @@ public interface Project {
     /**
      * @return The bin/out/target folder
      */
-    public File getBuildFolder(String preferredClass) throws FileNotFoundException;
+    public File getBuildFolder(String preferredClass) throws NotCompiledException, FileNotFoundException;
 
     /**
      * When the project is run in the same JVM then it should log all tracer bus events. This returns that log

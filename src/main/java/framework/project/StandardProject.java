@@ -1,13 +1,19 @@
 package framework.project;
 
 import framework.execution.*;
+import org.apache.commons.io.FileUtils;
 import scala.Option;
+import tools.CantCompileException;
+import tools.CodeTools;
 import tools.DirectoryUtils;
 import util.trace.TraceableLog;
 import util.trace.TraceableLogFactory;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Set;
 
 /**
  * A "standard" project. That is, an IDE-based java project.
@@ -39,7 +45,16 @@ public class StandardProject implements Project {
             File buildFolder = getBuildFolder("main." + name);
             classesManager = Option.apply((ClassesManager) new ProjectClassesManager(buildFolder, sourceFolder));
         } catch (Exception e) {
-            classesManager = Option.empty();
+
+            // Try to compile the code and create the project classes manager again.
+            try {
+                File buildFolder = CodeTools.compile(sourceFolder);
+                classesManager = Option.apply((ClassesManager) new ProjectClassesManager(buildFolder, sourceFolder));
+            } catch (Exception e2) {
+
+                // Well, we can't compile. So something is really messed up
+                classesManager = Option.empty();
+            }
         }
 
         // Create the traceable log
@@ -54,13 +69,13 @@ public class StandardProject implements Project {
      * @return The build folder
      * @throws FileNotFoundException
      */
-    public File getBuildFolder(String preferredClass) throws FileNotFoundException {
+    public File getBuildFolder(String preferredClass) throws NotCompiledException, FileNotFoundException {
         Option<File> out = DirectoryUtils.locateFolder(directory, "out");
         Option<File> bin = DirectoryUtils.locateFolder(directory, "bin");
 
         // If there is no 'out' or 'bin' folder then give up
         if (out.isEmpty() && bin.isEmpty())
-            throw new FileNotFoundException();
+            throw new NotCompiledException();
         else {
             // There can be more folders under it, so look around some more
             // But first check the class name to see what we are looking for
@@ -74,8 +89,17 @@ public class StandardProject implements Project {
                 Option<File> packageDir = DirectoryUtils.locateFolder(dir, preferredClass.split("\\.")[0]);
                 if (packageDir.isDefined())
                     return packageDir.get().getParentFile();
-                else
-                    return dir;
+                else {
+
+                    // There wasn't a main.{Project Name} class, so look for the main method in the source then pull out
+                    // that class name as the preferred class, and re-run this method.
+                    File srcFolder = new File(this.directory, "src");
+                    String mainClass = CodeTools.findMain(sourceFolder);
+                    if (mainClass.equals(preferredClass))
+                        // If we get here then it means that the byte code was missing, so blow up
+                        throw new FileNotFoundException();
+                    return getBuildFolder(mainClass);
+                }
             } else
                 return dir;
         }
