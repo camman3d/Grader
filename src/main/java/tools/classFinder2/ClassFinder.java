@@ -54,6 +54,27 @@ public class ClassFinder {
         return classDescription;
     }
 
+    /**
+     * Finds the first class with the given tag. If no class is found then it asks the grader which one it is.
+     * @param name
+     * @return The class description wrapped in an {@link Option} in case none was found
+     */
+    public Option<ClassDescription> findByName(String name, boolean autoGrade) throws NotAutomatableException {
+        // First check the cache
+        if (classCache.containsKey(name))
+            return classCache.get(name);
+
+        project.getClassesManager().get().findByClassName(name);
+        Option<ClassDescription> classDescription = project.getClassesManager().get().findByClassName(name);
+        if (classDescription.isEmpty()) {
+            if (autoGrade)
+                throw new NotAutomatableException();
+            classDescription = ask(name);
+        }
+        classCache.put(name, classDescription);
+        return classDescription;
+    }
+
     private Option<ClassDescription> ask(String description) {
         List<ClassDescription> classDescriptions = new ArrayList<ClassDescription>(project.getClassesManager().get().getClassDescriptions());
         Collections.sort(classDescriptions, new Comparator<ClassDescription>() {

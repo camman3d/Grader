@@ -17,5 +17,6 @@ target/
 
 # Project specific
 .gradersettings
+.onyens
 GraderData
 log

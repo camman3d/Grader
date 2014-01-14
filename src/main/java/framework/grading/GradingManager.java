@@ -1,5 +1,7 @@
 package framework.grading;
 
+import framework.grading.manifests.GradingManifest;
+import framework.grading.manifests.GradingManifestLoader;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
@@ -34,9 +36,9 @@ public class GradingManager {
 //    private List<Logger> loggers;
 
     // Settings that affect what to grade
-    private String downloadPath;
-    private String start;
-    private String end;
+//    private String downloadPath;
+//    private String start;
+//    private String end;
 
     // Logger
 //    private Logger logger;
@@ -52,14 +54,13 @@ public class GradingManager {
     }
 
     public void run() {
-        getGradingOptions();
+//        getGradingOptions();
+        GradingManifest manifest = GradingManifestLoader.load();
 
         try {
             // Get the student folders, starting and ending with the specified onyens
-            BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(downloadPath);
-            List<StudentFolder> folders = downloadFolder.getStudentFolders(start, end);
-//            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
-//            loggers.add(new FeedbackTextSummaryLogger(downloadFolder.getFolder()));
+            BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(manifest.getDownloadPath());
+            List<StudentFolder> folders = manifest.getStudentFolders(downloadFolder);
 
             // Grade each one
             for (StudentFolder folder : folders) {
@@ -112,13 +113,13 @@ public class GradingManager {
         }
     }
 
-    private void getGradingOptions() {
-        SettingsWindow window = SettingsWindow.create();
-        window.awaitBegin();
-        downloadPath = window.getDownloadPath();
-        start = window.getStart();
-        end = window.getEnd();
-    }
+//    private void getGradingOptions() {
+//        SettingsWindow window = SettingsWindow.create();
+//        window.awaitBegin();
+//        downloadPath = window.getDownloadPath();
+//        start = window.getStart();
+//        end = window.getEnd();
+//    }
 
 //    private void logResults(StudentFolder folder, List<CheckResult> featureResults,
 //                            List<CheckResult> restrictionResults, String comments, double gradePercentage) {

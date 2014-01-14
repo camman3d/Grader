@@ -75,6 +75,21 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
     }
 
     /**
+     * Turns a list of onyens to a list of student folders
+     * @param onyens A list of onyens. These don't have to be in any order
+     * @return The students' folders wrapped in a {@link StudentFolder}
+     */
+    @Override
+    public List<StudentFolder> getStudentFolders(List<String> onyens) {
+        List<StudentFolder> filteredFolders = new ArrayList<StudentFolder>();
+        for (StudentFolder studentFolder : getStudentFolders()) {
+            if (onyens.contains(studentFolder.getOnyen()))
+                filteredFolders.add(studentFolder);
+        }
+        return filteredFolders;
+    }
+
+    /**
      * Find's a particular student's folder
      * @param onyen The student's Onyen
      * @return The student folder associated with the given Onyen
