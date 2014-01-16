@@ -54,5 +54,13 @@ public class CompilationNavigation {
         return null;
     }
 
+    public static List<FieldDeclaration> getFields(ClassOrInterfaceDeclaration classDef) {
+        List<FieldDeclaration> methods = new ArrayList<FieldDeclaration>();
+        for (BodyDeclaration declaration : classDef.getMembers()) {
+            if (declaration instanceof FieldDeclaration)
+                methods.add((FieldDeclaration) declaration);
+        }
+        return methods;
+    }
 
 }

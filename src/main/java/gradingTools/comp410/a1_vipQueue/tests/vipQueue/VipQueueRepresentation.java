@@ -1,4 +1,4 @@
-package gradingTools.comp410.a1_vipQueue.tests.queue;
+package gradingTools.comp410.a1_vipQueue.tests.vipQueue;
 
 import framework.grading.testing.NotAutomatableException;
 import tools.classFinder2.MethodFinder;
@@ -15,23 +15,25 @@ import java.util.NoSuchElementException;
  * Time: 1:49 PM
  * To change this template use File | Settings | File Templates.
  */
-public class QueueRepresentation {
+public class VipQueueRepresentation {
 
     private Class<?> _class;
     private Object instantiation;
     private Method enqueueMethod;
+    private Method vipEnqueueMethod;
     private Method dequeueMethod;
     private Method peekMethod;
     private Method isEmptyMethod;
     private Method isFullMethod;
 
-    public QueueRepresentation(Class<?> _class, boolean autoGrade) throws NotAutomatableException, NoSuchMethodException {
+    public VipQueueRepresentation(Class<?> _class, boolean autoGrade) throws NotAutomatableException, NoSuchMethodException {
         this._class = _class;
 
         // Find the methods
         MethodFinder methodFinder = MethodFinder.get(_class);
         try {
             enqueueMethod = methodFinder.find("enqueue", autoGrade, true, void.class, int.class).get();
+            vipEnqueueMethod = methodFinder.find("vipEnqueue", autoGrade, true, void.class, int.class).get();
             dequeueMethod = methodFinder.find("dequeue", autoGrade, true, int.class).get();
             peekMethod = methodFinder.find("peek", autoGrade, true, int.class).get();
             isEmptyMethod = methodFinder.find("isEmpty", autoGrade, true, boolean.class).get();
@@ -69,12 +71,12 @@ public class QueueRepresentation {
         return instantiation;
     }
 
-    public void setInstantiation(Object obj) {
-        instantiation = obj;
-    }
-
     public void enqueue(int element) throws InvocationTargetException, IllegalAccessException {
         enqueueMethod.invoke(instantiation, element);
+    }
+
+    public void vipEnqueue(int element) throws InvocationTargetException, IllegalAccessException {
+        vipEnqueueMethod.invoke(instantiation, element);
     }
 
     public Object dequeue() throws InvocationTargetException, IllegalAccessException {
@@ -91,16 +93,6 @@ public class QueueRepresentation {
 
     public boolean isFull() throws InvocationTargetException, IllegalAccessException {
         return (Boolean) isFullMethod.invoke(instantiation);
-    }
-
-    public Field getArrayField() {
-        // Find the array field
-        Field[] fields = _class.getDeclaredFields();
-        Field arrayField = null;
-        for (Field field : fields)
-            if (field.getType().isArray())
-                arrayField = field;
-        return arrayField;
     }
 
 }

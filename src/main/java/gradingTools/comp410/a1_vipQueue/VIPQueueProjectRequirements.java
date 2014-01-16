@@ -1,7 +1,10 @@
 package gradingTools.comp410.a1_vipQueue;
 
 import framework.grading.FrameworkProjectRequirements;
+import gradingTools.comp410.a1_vipQueue.tests.UsesGenericsTestCase;
 import gradingTools.comp410.a1_vipQueue.tests.queue.*;
+import gradingTools.comp410.a1_vipQueue.tests.stack.*;
+import gradingTools.comp410.a1_vipQueue.tests.vipQueue.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,12 +17,9 @@ public class VIPQueueProjectRequirements extends FrameworkProjectRequirements {
 
     public VIPQueueProjectRequirements() {
 
-        // Checks
-//        addFeature("Correct output", 15, new CorrectOutputTestCase());
-//        addFeature("Uses an array", 20, new UsesArrayTestCase());
-//        addFeature("Enqueue adds to array", 20, new UsesArrayTestCase());
-//        addFeature("Well documented code", 10);
+        // Due dates
 
+        // Checks
         addFeature("Queue is correctly implemented", 15,
                 new QueueEnqueueDequeueTestCase(),
                 new QueueIsEmptyTestCase(),
@@ -27,5 +27,34 @@ public class VIPQueueProjectRequirements extends FrameworkProjectRequirements {
                 new QueuePeekTestCase(),
                 new QueueUsesArrayTestCase());
 
+        addFeature("Stack is correctly implemented", 15,
+                new StackPushPopTestCase(),
+                new StackIsEmptyTestCase(),
+                new StackIsFullTestCase(),
+                new StackPeekTestCase(),
+                new StackUsesLinkedListTestCase());
+
+        addFeature("Use of generics", 10,
+                new UsesGenericsTestCase("Queue"),
+                new UsesGenericsTestCase("Stack"),
+                new UsesGenericsTestCase("VipQueue"),
+                new UsesGenericsTestCase("Node"));
+
+        addFeature("VipQueue enqueue method", 15,
+                new VipQueueEnqueueTestCase(),
+                new VipQueueUsesQueueTestCase());
+
+        addFeature("VipQueue vipEnqueue method", 15,
+                new VipQueueVipEnqueueTestCase(),
+                new VipQueueUsesStackTestCase());
+
+        addFeature("Other VipQueue methods", 20,
+                new VipQueueIsEmptyTestCase(),
+                new VipQueueIsFullTestCase(),
+                new VipQueuePeekTestCase());
+
+        addFeature("Clean code", 10);
+
     }
+
 }

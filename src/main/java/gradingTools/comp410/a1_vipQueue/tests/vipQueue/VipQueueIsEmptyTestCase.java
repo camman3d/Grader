@@ -1,4 +1,4 @@
-package gradingTools.comp410.a1_vipQueue.tests.queue;
+package gradingTools.comp410.a1_vipQueue.tests.vipQueue;
 
 import framework.grading.testing.BasicTestCase;
 import framework.grading.testing.NotAutomatableException;
@@ -6,6 +6,7 @@ import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
 import framework.project.Project;
+import gradingTools.comp410.a1_vipQueue.tests.queue.QueueRepresentation;
 import scala.Option;
 import tools.classFinder2.ClassFinder;
 
@@ -18,59 +19,51 @@ import java.lang.reflect.InvocationTargetException;
  * Time: 11:02 AM
  * To change this template use File | Settings | File Templates.
  */
-public class QueueIsFullTestCase extends BasicTestCase {
+public class VipQueueIsEmptyTestCase extends BasicTestCase {
 
-    public QueueIsFullTestCase() {
-        super("Queue isFull test case");
+    public VipQueueIsEmptyTestCase() {
+        super("Queue isEmpty test case");
     }
 
     @Override
     public TestCaseResult test(Project project, boolean autoGrade) throws NotAutomatableException, NotGradableException {
 
-        // Find the "Queue" class
-        Option<ClassDescription> classDescription = ClassFinder.get(project).findByName("Queue", autoGrade);
+        // Find the "VipQueue" class
+        Option<ClassDescription> classDescription = ClassFinder.get(project).findByName("VipQueue", autoGrade);
         if (classDescription.isEmpty())
-            return fail("No queue class");
+            return fail("No vip queue class");
         Class<?> _class = classDescription.get().getJavaClass();
 
         try {
             // Create the queue
-            QueueRepresentation queue = new QueueRepresentation(_class, autoGrade);
+            VipQueueRepresentation queue = new VipQueueRepresentation(_class, autoGrade);
             queue.instantiate();
 
             // Queue should be empty
             double passes = 0;
             String notes = "";
-            if (!queue.isFull())
+            if (queue.isEmpty())
                 passes++;
             else
-                notes += "Queue should not be full before adding.\n";
+                notes += "Queue should be empty before adding.\n";
 
             // Enqueue something then check
-            queue.enqueue(9);
-            if (!queue.isFull())
+            queue.enqueue(3);
+            if (!queue.isEmpty())
                 passes++;
             else
-                notes += "Queue should not be full after adding one item.\n";
+                notes += "Queue should not be empty after adding.\n";
 
-            // Enqueue nine more things then check
-            for (int i = 0; i < 9; i++)
-                queue.enqueue(i);
-            if (queue.isFull())
-                passes++;
-            else
-                notes += "Queue should be full after adding ten items.\n";
-
-            return partialPass(passes / 3, notes);
+            return partialPass(passes / 2, notes);
 
         } catch (NoSuchMethodException e) {
-            return fail("Missing methods in queue class");
+            return fail("Missing methods in vip queue class");
         } catch (InvocationTargetException e) {
-            return fail("Queue method threw an error.");
+            return fail("Vip queue method threw an error.");
         } catch (InstantiationException e) {
-            return fail("Unable to create queue (invalid constructor?)");
+            return fail("Unable to create vip queue (invalid constructor?)");
         } catch (IllegalAccessException e) {
-            return fail("Invalid privacy in queue.");
+            return fail("Invalid privacy in vip queue.");
         }
     }
 

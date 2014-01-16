@@ -64,7 +64,6 @@ public class ClassFinder {
         if (classCache.containsKey(name))
             return classCache.get(name);
 
-        project.getClassesManager().get().findByClassName(name);
         Option<ClassDescription> classDescription = project.getClassesManager().get().findByClassName(name);
         if (classDescription.isEmpty()) {
             if (autoGrade)
