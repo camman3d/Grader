@@ -5,6 +5,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import scala.Option;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,10 +33,11 @@ public class GradingManifest {
 
     public GradingManifest() {
 
+        File manifestFile = getManifestFile();
 
 
 //        this.projectName = projectName;
-        File manifestFile = new File("config/grading.properties");
+//        File manifestFile = new File("config/grading.properties");
         try {
             if (manifestFile.exists()) {
                 configuration = new PropertiesConfiguration(manifestFile);
@@ -177,6 +179,21 @@ public class GradingManifest {
 
     public static GradingManifest getActiveManifest() {
         return activeManifest;
+    }
+
+    private static File getManifestFile() {
+
+        File[] values = new File("config/manifests").listFiles();
+        if (values == null || values.length == 0) {
+            JOptionPane.showMessageDialog(null, "There are no available projects. Please add a .properties manifest file to config/manifests.", "No project", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(1);
+        }
+
+        Object result = JOptionPane.showInputDialog(null, "Please select a project:", "Project Select", JOptionPane.QUESTION_MESSAGE, null,
+                values, null);
+        if (result == null)
+            System.exit(0);
+        return (File) result;
     }
 
 //    public static void setActiveManifest(GradingManifest manifest) {

@@ -2,6 +2,8 @@ package framework.logging.loggers;
 
 import framework.grading.testing.CheckResult;
 import framework.logging.recorder.RecordingSession;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -20,7 +22,6 @@ public class MySQLLogger implements Logger {
     private Connection connection;
     private static final String TableName = "gradingrecords";
     private static final String InsertStatement = "insert into " + TableName + " values(default, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private String projectName;
 
     public MySQLLogger() {
         try {
@@ -34,9 +35,6 @@ public class MySQLLogger implements Logger {
             String user = configuration.getString("grader.logger.mysql.username");
             String password = configuration.getString("grader.logger.mysql.password");
             connection = DriverManager.getConnection("jdbc:mysql://" + host + "/" + schema, user, password);
-
-            // Load the project name
-            projectName = configuration.getString("project.requirements");
 
         } catch (ClassNotFoundException e) {
             System.err.println("MySQLLogger: Cannot load MySQL driver.");
@@ -78,8 +76,8 @@ public class MySQLLogger implements Logger {
 
     private PreparedStatement prepareStatement(CheckResult checkResult, RecordingSession recordingSession, Timestamp timestamp) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(InsertStatement);
-        preparedStatement.setString(1, "NA");
-        preparedStatement.setString(2, projectName);
+        preparedStatement.setString(1, GradingSettings.get().getUsername());
+        preparedStatement.setString(2, GradingManifest.getActiveManifest().getProjectName());
         preparedStatement.setString(3, recordingSession.getUserId());
         preparedStatement.setTimestamp(4, timestamp);
         preparedStatement.setString(5, checkResult.getTarget().getName());
