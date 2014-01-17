@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * A grading manifest contains settings that pertain to a certain project, rather than on a global level.
- * Manifest files should be under the "manifests" folder.
+ * Manifest files should be under the "config/manifests" folder.
  */
 public class GradingManifest {
 
@@ -27,23 +27,14 @@ public class GradingManifest {
 
     private PropertiesConfiguration configuration;
 
-//    public GradingManifest(String projectName) {
-//        this(projectName, new File("config/" + projectName + ".properties"));
-//    }
-
     public GradingManifest() {
 
         File manifestFile = getManifestFile();
-
-
-//        this.projectName = projectName;
-//        File manifestFile = new File("config/grading.properties");
         try {
             if (manifestFile.exists()) {
                 configuration = new PropertiesConfiguration(manifestFile);
 
                 // Load stuff from the configuration file
-
                 // Load the project name
                 projectName = configuration.getString("project.name", "Untitled project");
 
@@ -104,16 +95,8 @@ public class GradingManifest {
         return downloadPath.isDefined();
     }
 
-    public boolean hasOnyens() {
-        return onyens.isDefined();
-    }
-
     public boolean hasProjectRequirements() {
         return projectRequirements.isDefined();
-    }
-
-    public boolean isComplete() {
-        return hasDownloadPath() && hasOnyens() && hasProjectRequirements();
     }
 
     public void setOnyens(List<String> onyens) {
@@ -122,10 +105,6 @@ public class GradingManifest {
 
     public void setDownloadPath(String downloadPath) {
         this.downloadPath = Option.apply(downloadPath);
-    }
-
-    public void setProjectRequirements(ProjectRequirements projectRequirements) {
-        this.projectRequirements = Option.apply(projectRequirements);
     }
 
     public String getDownloadPath() {

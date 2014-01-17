@@ -11,11 +11,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 1/16/14
- * Time: 10:41 AM
- * To change this template use File | Settings | File Templates.
+ * This logs each CheckResult to a MySQL database
  */
 public class MySQLLogger implements Logger {
 

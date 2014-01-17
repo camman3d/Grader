@@ -6,11 +6,7 @@ import java.io.OutputStream;
 import java.util.concurrent.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 11/7/13
- * Time: 11:27 AM
- * To change this template use File | Settings | File Templates.
+ * This is a wrapper around a normal process so that we can have its execution time out.
  */
 public class TimedProcess {
 

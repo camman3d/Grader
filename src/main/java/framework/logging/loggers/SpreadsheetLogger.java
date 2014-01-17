@@ -36,14 +36,6 @@ public class SpreadsheetLogger implements Logger {
         String spreadsheetPath = configuration.getString("grader.logger.spreadsheetFilename")
                 .replace("{projectName}", GradingManifest.getActiveManifest().getProjectName());
         spreadsheetFile = new File(spreadsheetPath);
-
-        // Save loading the workbook until something is logged so we know that the download location is set
-
-        // Load or create the workbook
-//        if (spreadsheetFile.exists())
-//            loadWorkbook();
-//        else
-//            createWorkbook();
     }
 
     @Override

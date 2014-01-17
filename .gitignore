@@ -17,8 +17,6 @@ target/
 
 # Project specific
 /config/settings.properties
-/config/grading.properties
-.onyens
 GraderData
 log
 

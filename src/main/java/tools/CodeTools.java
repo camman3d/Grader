@@ -13,11 +13,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 11/19/13
- * Time: 8:13 PM
- * To change this template use File | Settings | File Templates.
+ * Tools when working with code.
  */
 public class CodeTools {
 

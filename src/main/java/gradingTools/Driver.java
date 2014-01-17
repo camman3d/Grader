@@ -37,14 +37,6 @@ public class Driver {
             GradingManifestWindow.create(gradingManifest).await();
             gradingManifest.setActive().save();
 
-            // Get the project name
-//            String projectName = configuration.getString("project.name");
-//            GradingEnvironment.get().setAssignmentName(projectName);
-
-            // Get the project requirements
-//            Class<?> _class = Class.forName(configuration.getString("project.requirements"));
-//            ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
-
             // Logging
             ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
             recorder.setProjectRequirements(gradingManifest.getProjectRequirements());

@@ -3,11 +3,7 @@ package tools.classModifier;
 import javassist.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 11/5/13
- * Time: 4:20 PM
- * To change this template use File | Settings | File Templates.
+ * This modifies the Thread class to count the number of times "run" is called.
  */
 public class ThreadModifier extends ClassModifier<Thread> {
 

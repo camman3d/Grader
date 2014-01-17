@@ -52,14 +52,9 @@ public class GradingManifestWindow {
             else
                 downloadLabel.setText(path);
             updateOnyensList(onyensList, path);
-
-            // TODO: Select onyens?
-//            onyensList.setSelectedIndices();
         }
 
-//        onyensPanel.setVisible(!gradingManifest.hasOnyens());
         requirementsPanel.setVisible(!gradingManifest.hasProjectRequirements());
-
         changeDownloadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,8 +72,6 @@ public class GradingManifestWindow {
                 }
             }
         });
-
-        // TODO: Set up how project requirements are handled
 
         onyensList.addListSelectionListener(new ListSelectionListener() {
             @Override

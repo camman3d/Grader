@@ -4,7 +4,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import framework.execution.NotRunnableException;
-import framework.grading.FrameworkProjectRequirements;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
@@ -12,8 +11,7 @@ import framework.grading.testing.Restriction;
 import framework.navigation.StudentFolder;
 import framework.project.Project;
 import scala.Option;
-import framework.utils.GradingEnvironment;
-import tools.FileEditing;
+import tools.FileViewer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -361,20 +359,19 @@ public class GradingWindow {
         openSakaiFolderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GradingEnvironment.get().open(folder.getFolder());
+                FileViewer.open(folder.getFolder());
             }
         });
         viewCodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                GradingEnvironment.get().edit(project.get().getSourceFolder());
-                FileEditing.edit(project.get().getSourceFolder());
+                FileViewer.edit(project.get().getSourceFolder());
             }
         });
         openFolderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GradingEnvironment.get().open(project.get().getSourceFolder());
+                FileViewer.open(project.get().getSourceFolder());
             }
         });
         runButton.addActionListener(new ActionListener() {

@@ -1,18 +1,15 @@
 package tools;
 
+import framework.utils.GradingEnvironment;
 import framework.utils.GradingSettings;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 1/16/14
- * Time: 3:30 PM
- * To change this template use File | Settings | File Templates.
+ * This class allows you to edit files or open then in the file browser
  */
-public class FileEditing {
+public class FileViewer {
 
     /**
      * Edits a directory or file in the text editor
@@ -25,6 +22,19 @@ public class FileEditing {
             new ProcessBuilder(editor, file.getAbsolutePath()).start();
         } catch (IOException e) {
             System.out.println("Can't edit file/folder");
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    /**
+     * Opens a directory in the file browser
+     * @param file The directory
+     */
+    public static void open(File file) {
+        try {
+            new ProcessBuilder(GradingEnvironment.get().getBrowser(), file.getAbsolutePath()).start();
+        } catch (IOException e) {
+            System.out.println("Can't open file");
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
