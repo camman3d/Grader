@@ -1,6 +1,7 @@
 package wrappers.grader.sakai;
 
-import framework.utils.GraderSettings;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import framework.utils.GradingEnvironment;
 import wrappers.grader.file.SimplifiedFileProxy;
 import grader.file.FileProxy;
@@ -20,7 +21,8 @@ public class NonNestedBulkAssignmentFolder implements BulkAssignmentFolder {
     private FileProxy spreadsheet;
 
     public NonNestedBulkAssignmentFolder() {
-        rootProxy = new SimplifiedFileProxy(new File(GraderSettings.get().get("path")));
+        String path = GradingManifest.getActiveManifest().getDownloadPath();
+        rootProxy = new SimplifiedFileProxy(new File(path));
         spreadsheet = new SimplifiedFileProxy(new File(rootProxy.getFile(), "grades.csv"));
     }
 
@@ -55,11 +57,11 @@ public class NonNestedBulkAssignmentFolder implements BulkAssignmentFolder {
 
     @Override
     public String getAssignmentName() {
-        return GradingEnvironment.get().getAssignmentName().toLowerCase();
+        return GradingManifest.getActiveManifest().getProjectName().toLowerCase();
     }
 
     @Override
     public String getMixedCaseAssignmentName() {
-        return GradingEnvironment.get().getAssignmentName();
+        return GradingManifest.getActiveManifest().getProjectName();
     }
 }

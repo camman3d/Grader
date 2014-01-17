@@ -13,6 +13,7 @@ import framework.navigation.StudentFolder;
 import framework.project.Project;
 import scala.Option;
 import framework.utils.GradingEnvironment;
+import tools.FileEditing;
 
 import javax.swing.*;
 import java.awt.*;
@@ -366,7 +367,8 @@ public class GradingWindow {
         viewCodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GradingEnvironment.get().edit(project.get().getSourceFolder());
+//                GradingEnvironment.get().edit(project.get().getSourceFolder());
+                FileEditing.edit(project.get().getSourceFolder());
             }
         });
         openFolderButton.addActionListener(new ActionListener() {

@@ -5,6 +5,7 @@ import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.Project;
 import framework.utils.GradingEnvironment;
+import framework.utils.GradingManifest;
 import wrappers.framework.project.ProjectWrapper;
 import grader.checkers.ACheckResult;
 import grader.checkers.CheckResult;
@@ -24,7 +25,7 @@ public class FeatureCheckerWrapper extends ErrorHandlingFeatureChecker {
     @Override
     protected CheckResult doCheck() throws Exception {
 
-        Project project = new ProjectWrapper(this.project, GradingEnvironment.get().getAssignmentName());
+        Project project = new ProjectWrapper(this.project, GradingManifest.getActiveManifest().getProjectName());
         framework.grading.testing.CheckResult checkResult = checkable.check(project, false);
 
         CheckResult result = new ACheckResult();

@@ -1,13 +1,13 @@
 package framework.logging.recorder;
 
-import framework.grading.FrameworkProjectRequirements;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.grading.testing.TestCaseResult;
 import framework.logging.loggers.Logger;
-import framework.utils.GraderSettings;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import grader.assignment.GradingFeature;
 import grader.feedback.AutoFeedback;
 import grader.feedback.ManualFeedback;
@@ -136,7 +136,8 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
     public void newSession(final String onyen) {
 
         // Get the user id from the onyen
-        String userId = DirectoryUtils.find(new File(GraderSettings.get().get("path")), new FileFilter() {
+        String path = GradingManifest.getActiveManifest().getDownloadPath();
+        String userId = DirectoryUtils.find(new File(path), new FileFilter() {
             @Override
             public boolean accept(File file) {
                 return file.getName().contains("(" + onyen + ")");

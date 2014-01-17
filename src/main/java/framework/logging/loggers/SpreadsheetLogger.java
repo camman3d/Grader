@@ -1,13 +1,13 @@
 package framework.logging.loggers;
 
 import au.com.bytecode.opencsv.CSVReader;
-import framework.grading.FrameworkProjectRequirements;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.logging.recorder.RecordingSession;
-import framework.utils.GraderSettings;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import framework.utils.GradingEnvironment;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -26,7 +26,7 @@ public class SpreadsheetLogger implements Logger {
 
     private ProjectRequirements projectRequirements;
     private File spreadsheetFile;
-    private XSSFWorkbook workbook;
+    private XSSFWorkbook workbook = null;
 
     public SpreadsheetLogger(ProjectRequirements projectRequirements) throws ConfigurationException {
         this.projectRequirements = projectRequirements;
@@ -34,18 +34,23 @@ public class SpreadsheetLogger implements Logger {
         // Get the spreadsheet file
         PropertiesConfiguration configuration = new PropertiesConfiguration("./config/config.properties");
         String spreadsheetPath = configuration.getString("grader.logger.spreadsheetFilename")
-                .replace("{projectName}", GradingEnvironment.get().getAssignmentName());
+                .replace("{projectName}", GradingManifest.getActiveManifest().getProjectName());
         spreadsheetFile = new File(spreadsheetPath);
 
+        // Save loading the workbook until something is logged so we know that the download location is set
+
         // Load or create the workbook
-        if (spreadsheetFile.exists())
-            loadWorkbook();
-        else
-            createWorkbook();
+//        if (spreadsheetFile.exists())
+//            loadWorkbook();
+//        else
+//            createWorkbook();
     }
 
     @Override
     public void save(RecordingSession recordingSession) {
+
+        if (workbook == null)
+            loadWorkbook();
 
         // Get the row and save the feature and restriction results
         XSSFRow row = findRow(recordingSession);
@@ -93,13 +98,16 @@ public class SpreadsheetLogger implements Logger {
     }
 
     private void loadWorkbook() {
-        try {
-            workbook = new XSSFWorkbook(new FileInputStream(spreadsheetFile));
-        } catch (Exception e) {
-            System.out.println("Error creating spreadsheet. Creating new");
-            spreadsheetFile.delete();
+        if (spreadsheetFile.exists()) {
+            try {
+                workbook = new XSSFWorkbook(new FileInputStream(spreadsheetFile));
+            } catch (Exception e) {
+                System.out.println("Error creating spreadsheet. Creating new");
+                spreadsheetFile.delete();
+                createWorkbook();
+            }
+        } else
             createWorkbook();
-        }
     }
 
     private void createWorkbook() {
@@ -122,7 +130,8 @@ public class SpreadsheetLogger implements Logger {
 
         // Load the Sakai grades file to get the list of students
         try {
-            String csvFile = GraderSettings.get().get("path") + "/" + SakaiGradesSpreadsheetFilename;
+            String path = GradingManifest.getActiveManifest().getDownloadPath();
+            String csvFile = path + "/" + SakaiGradesSpreadsheetFilename;
             CSVReader reader = new CSVReader(new FileReader(csvFile));
             reader.readNext();
             reader.readNext();

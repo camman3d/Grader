@@ -9,7 +9,9 @@ import java.util.Map;
 
 /**
  * This is part of the manual class locator system.
+ * @deprecated Please use {@link tools.classFinder2.ClassFinder} instead
  */
+@Deprecated
 public class ManualClassFinder {
 
     private static Map<Project, CachedProjectClassFinder> cache = new HashMap<Project, CachedProjectClassFinder>();

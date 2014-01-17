@@ -3,7 +3,8 @@ package wrappers.grader.sakai.project;
 import framework.grading.ProjectRequirements;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
-import framework.utils.GraderSettings;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import framework.utils.GradingEnvironment;
 import util.misc.Common;
 import wrappers.grader.checkers.FeatureCheckerWrapper;
@@ -39,10 +40,10 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
 
     /**
      * If you don't pass in any arguments, then it attempts to find/create the folders.
-     * This requires that you register the download path in the GraderSettings singleton.
+     * This requires that you register the download path in the GradingSettings singleton.
      */
     public ProjectDatabaseWrapper() {
-        super(GraderSettings.get().get("path"), getDataFolder());
+        super(GradingManifest.getActiveManifest().getDownloadPath(), getDataFolder());
 
         // We want to go alphabetically, so set the NavigationListCreator
         setNavigationListCreator(new AlphabeticNavigationList());
@@ -93,7 +94,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
         setBulkFolder(bulkFolder);
 
         // Create the assignmentDataFolder
-        AnAssignmenDataFolder assignmentDataFolder = new AnAssignmenDataFolder(getDataFolder() + "/" + GradingEnvironment.get().getAssignmentName(), bulkFolder.getSpreadsheet());
+        AnAssignmenDataFolder assignmentDataFolder = new AnAssignmenDataFolder(getDataFolder() + "/" + GradingManifest.getActiveManifest().getProjectName(), bulkFolder.getSpreadsheet());
         setAssignmentDataFolder(assignmentDataFolder);
 
         // Create the collection of assignments
@@ -139,7 +140,7 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
     private static String getDataFolder() {
 
         // Make sure the appropriate folder exists
-        File dataFolder = new File(GraderPath + GradingEnvironment.get().getAssignmentName());
+        File dataFolder = new File(GraderPath + GradingManifest.getActiveManifest().getProjectName());
 
         if (!graderDataMade) {
             dataFolder.mkdirs();
@@ -147,18 +148,20 @@ public class ProjectDatabaseWrapper extends ASakaiProjectDatabase {
             // Make sure the onyens.txt file exists
             String onyens = "";
             Boolean include = false;
-            for (File file : new File(GraderSettings.get().get("path")).listFiles()) {
-                if (file.isDirectory()) {
-                    String name = file.getName();
-                    String onyen = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
-                    if (onyen.equals(GraderSettings.get().get("start")))
-                        include = true;
-                    if (include)
-                        onyens += (onyens.isEmpty() ? "" : "\n") + onyen;
-                    if (onyen.equals(GraderSettings.get().get("end")))
-                        include = false;
-                }
-            }
+//            for (File file : new File(GradingSettings.get().get("path")).listFiles()) {
+//                if (file.isDirectory()) {
+//                    String name = file.getName();
+//                    String onyen = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
+//                    if (onyen.equals(GradingSettings.get().get("start")))
+//                        include = true;
+//                    if (include)
+//                        onyens += (onyens.isEmpty() ? "" : "\n") + onyen;
+//                    if (onyen.equals(GradingSettings.get().get("end")))
+//                        include = false;
+//                }
+//            }
+            for (String onyen : GradingManifest.getActiveManifest().getOnyens())
+                onyens += (onyens.isEmpty() ? "" : "\n") + onyen;
             try {
                 FileUtils.writeStringToFile(new File(dataFolder, "onyens.txt"), onyens);
             } catch (IOException e) {

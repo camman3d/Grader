@@ -5,6 +5,7 @@ import framework.logging.loggers.Logger;
 import framework.logging.recorder.RecordingSession;
 import framework.logging.serializers.SerializationUtils;
 import framework.utils.GradingEnvironment;
+import framework.utils.GradingManifest;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -22,7 +23,7 @@ public class LocalJsonLogger implements Logger {
         String text = SerializationUtils.getSerializer("json").serialize(recordingSession);
 
         // Maybe write this to a file
-        File folder = new File("log/" + GradingEnvironment.get().getAssignmentName());
+        File folder = new File("log/" + GradingManifest.getActiveManifest().getProjectName());
         try {
             FileUtils.writeStringToFile(new File(folder, recordingSession.getUserId() + ".json"), text);
         } catch (IOException e) {

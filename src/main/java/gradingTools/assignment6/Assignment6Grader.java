@@ -67,7 +67,7 @@ public class Assignment6Grader {
 
         // Now start the grading process
 
-        GradingManager manager = new GradingManager("Assignment6", requirements);
+        GradingManager manager = new GradingManager(requirements);
         manager.run();
     }
 }

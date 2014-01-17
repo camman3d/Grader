@@ -18,7 +18,7 @@ import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 public class GraderWithFrameworkExample {
     public static void main(String[] args) {
 
-        GradingEnvironment.get().setAssignmentName("Assignment 7");
+//        GradingEnvironment.get().setAssignmentName("Assignment 7");
         String bulkFolder = "/Users/josh/Downloads/a7";
         String dataFolder = "/Users/josh/Documents/School/Fall 2013/COMP401/Grader2/GraderData";
 

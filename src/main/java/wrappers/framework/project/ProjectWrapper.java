@@ -3,7 +3,8 @@ package wrappers.framework.project;
 import framework.navigation.SakaiStudentFolder;
 import framework.navigation.StudentFolder;
 import framework.project.StandardProject;
-import framework.utils.GraderSettings;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import grader.project.Project;
 import grader.sakai.project.SakaiProject;
 import net.lingala.zip4j.core.ZipFile;
@@ -74,7 +75,8 @@ public class ProjectWrapper extends StandardProject {
     }
 
     public static StudentFolder getStudentFolder(final String onyen) {
-        File folder = DirectoryUtils.find(new File(GraderSettings.get().get("path")), new FileFilter() {
+        String path = GradingManifest.getActiveManifest().getDownloadPath();
+        File folder = DirectoryUtils.find(new File(path), new FileFilter() {
             @Override
             public boolean accept(File pathname) {
                 return pathname.getName().contains("(" + onyen + ")");

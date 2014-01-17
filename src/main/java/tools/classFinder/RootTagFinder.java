@@ -7,12 +7,9 @@ import scala.Option;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: josh
- * Date: 10/14/13
- * Time: 11:06 AM
- * To change this template use File | Settings | File Templates.
+ * @deprecated Please use {@link tools.classFinder2.ClassFinder} instead
  */
+@Deprecated
 public class RootTagFinder {
 
     private Project project;

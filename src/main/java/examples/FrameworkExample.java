@@ -22,7 +22,7 @@ public class FrameworkExample {
         }};
 
         // The GraderManager is responsible for running the grading process
-        GradingManager manager = new GradingManager("Example Assignment", requirements);
+        GradingManager manager = new GradingManager(requirements);
         manager.run();
 
     }

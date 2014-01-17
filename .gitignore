@@ -16,7 +16,11 @@ log/
 target/
 
 # Project specific
-.gradersettings
+/config/settings.properties
+/config/grading.properties
 .onyens
 GraderData
 log
+
+# Other
+.passwords

@@ -3,11 +3,14 @@ package gradingTools;
 import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
 import framework.grading.ProjectRequirements;
+import framework.gui.GradingManifestWindow;
 import framework.gui.SettingsWindow;
 import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GradingEnvironment;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import scala.Option;
 import util.misc.Common;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
@@ -28,17 +31,23 @@ public class Driver {
             // Load the config file
             PropertiesConfiguration configuration = new PropertiesConfiguration("./config/config.properties");
 
+            // Initialize the environment and grading manifest
+            GradingSettings.get();
+            GradingManifest gradingManifest = new GradingManifest();
+            GradingManifestWindow.create(gradingManifest).await();
+            gradingManifest.setActive().save();
+
             // Get the project name
-            String projectName = configuration.getString("project.name");
-            GradingEnvironment.get().setAssignmentName(projectName);
+//            String projectName = configuration.getString("project.name");
+//            GradingEnvironment.get().setAssignmentName(projectName);
 
             // Get the project requirements
-            Class<?> _class = Class.forName(configuration.getString("project.requirements"));
-            ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
+//            Class<?> _class = Class.forName(configuration.getString("project.requirements"));
+//            ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
 
             // Logging
             ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
-            recorder.setProjectRequirements(requirements);
+            recorder.setProjectRequirements(gradingManifest.getProjectRequirements());
 
             String[] loggingMethods = configuration.getString("grader.logger", "csv").split("\\s*\\+\\s*");
             for (String method :loggingMethods) {
@@ -53,7 +62,9 @@ public class Driver {
                 if (method.equals("feedback") || method.equals("feedback-json"))
                     recorder.addLogger(new FeedbackJsonLogger());
                 if (method.equals("spreadsheet"))
-                    recorder.addLogger(new SpreadsheetLogger(requirements));
+                    recorder.addLogger(new SpreadsheetLogger(gradingManifest.getProjectRequirements()));
+                if (method.equals("mysql"))
+                    recorder.addLogger(new MySQLLogger());
             }
 
             // Run the grading process
@@ -61,7 +72,7 @@ public class Driver {
             if (controller.equals("GradingManager")) {
 
                 // Run the GraderManager
-                GradingManager manager = new GradingManager(projectName, requirements);
+                GradingManager manager = new GradingManager(gradingManifest.getProjectRequirements());
                 manager.run();
 
             } else if (controller.equals("SakaiProjectDatabase")) {
@@ -75,7 +86,7 @@ public class Driver {
 
                 // Create the database
                 ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
-                database.addProjectRequirements(requirements);
+                database.addProjectRequirements(gradingManifest.getProjectRequirements());
 
                 // Possibly set the stepper displayer
                 boolean useFrameworkGUI = configuration.getBoolean("grader.controller.useFrameworkGUI", false);
@@ -92,12 +103,6 @@ public class Driver {
 
         } catch (ConfigurationException e) {
             System.err.println("Error loading config file.");
-        } catch (ClassNotFoundException e) {
-            System.err.println("Could not find project requirements.");
-        } catch (InstantiationException e) {
-            System.err.println("Could not create project requirements.");
-        } catch (IllegalAccessException e) {
-            System.err.println("Could not create project requirements.");
         }
     }
 }

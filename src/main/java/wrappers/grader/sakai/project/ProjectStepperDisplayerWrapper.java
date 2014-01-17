@@ -8,7 +8,8 @@ import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.StudentFolder;
-import framework.utils.GraderSettings;
+import framework.utils.GradingManifest;
+import framework.utils.GradingSettings;
 import framework.utils.GradingEnvironment;
 import wrappers.framework.project.ProjectWrapper;
 import wrappers.framework.grading.testing.TestCaseWrapper;
@@ -74,7 +75,8 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
             // Get the project and the student information (onyen and name)
             project = (SakaiProject) evt.getNewValue();
             final String onyen = ((AProjectStepper) projectStepper).getOnyen();
-            String studentName = DirectoryUtils.find(new File(GraderSettings.get().get("path")), new FileFilter() {
+            String path = GradingManifest.getActiveManifest().getDownloadPath();
+            String studentName = DirectoryUtils.find(new File(path), new FileFilter() {
                 @Override
                 public boolean accept(File pathname) {
                     return pathname.getName().contains("(" + onyen + ")");
@@ -97,7 +99,7 @@ public class ProjectStepperDisplayerWrapper implements ProjectStepperDisplayer, 
                 project.setCanBeRun(true);
                 project.setHasBeenRun(true);
                 project.maybeMakeClassDescriptions();
-                framework.project.Project wrappedProject = new ProjectWrapper(this.project, GradingEnvironment.get().getAssignmentName());
+                framework.project.Project wrappedProject = new ProjectWrapper(this.project, GradingManifest.getActiveManifest().getProjectName());
                 featureResults = requirements.checkFeatures(wrappedProject);
                 restrictionResults = requirements.checkRestrictions(wrappedProject);
                 window = GradingWindow.create(requirements, studentFolder, Option.apply(wrappedProject), featureResults, restrictionResults);

@@ -1,18 +1,16 @@
 package framework.grading;
 
-import framework.grading.manifests.GradingManifest;
-import framework.grading.manifests.GradingManifestLoader;
 import framework.grading.testing.CheckResult;
 import framework.grading.testing.Feature;
 import framework.grading.testing.Restriction;
 import framework.gui.GradingWindow;
-import framework.gui.SettingsWindow;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
 import framework.navigation.StudentFolder;
 import framework.project.Project;
+import framework.utils.GradingManifest;
 import org.joda.time.DateTime;
 import scala.Option;
 
@@ -21,17 +19,17 @@ import java.util.List;
 
 /**
  * This class is responsible for the entire grading pipeline, which is:
- *  1. Getting Download location w/ onyen information
- *  2. Getting student folders and the associated java project. For each of those
- *      a. Auto grade the project
- *      b. Get manual grading and verification for the project
- *      c. Log the results
- *
+ * 1. Getting Download location w/ onyen information
+ * 2. Getting student folders and the associated java project. For each of those
+ * a. Auto grade the project
+ * b. Get manual grading and verification for the project
+ * c. Log the results
+ * <p/>
  * Like ProjectStepper
  */
 public class GradingManager {
 
-    private String projectName;
+//    private String projectName;
     private ProjectRequirements projectRequirements;
 //    private List<Logger> loggers;
 
@@ -43,8 +41,8 @@ public class GradingManager {
     // Logger
 //    private Logger logger;
 
-    public GradingManager(String projectName, ProjectRequirements projectRequirements) {
-        this.projectName = projectName;
+    public GradingManager(ProjectRequirements projectRequirements) {
+//        this.projectName = projectName;
         this.projectRequirements = projectRequirements;
 //        loggers = new ArrayList<Logger>() {{
 //            add(new LocalJsonLogger());
@@ -55,17 +53,19 @@ public class GradingManager {
 
     public void run() {
 //        getGradingOptions();
-        GradingManifest manifest = GradingManifestLoader.load();
+//        GradingManifest manifest = GradingManifestLoader.load();
 
         try {
-            // Get the student folders, starting and ending with the specified onyens
-            BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(manifest.getDownloadPath());
-            List<StudentFolder> folders = manifest.getStudentFolders(downloadFolder);
+            // Get the student folders
+            String path = GradingManifest.getActiveManifest().getDownloadPath();
+            List<String> onyens = GradingManifest.getActiveManifest().getOnyens();
+            BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(path);
+            List<StudentFolder> folders = downloadFolder.getStudentFolders(onyens);
 
             // Grade each one
             for (StudentFolder folder : folders) {
 
-                Option<Project> project = folder.getProject(projectName);
+                Option<Project> project = folder.getProject(GradingManifest.getActiveManifest().getProjectName());
                 List<CheckResult> featureResults;
                 List<CheckResult> restrictionResults;
 

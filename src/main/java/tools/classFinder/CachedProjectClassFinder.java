@@ -9,8 +9,9 @@ import java.util.*;
 
 /**
  * This keeps track of classes and their corresponding tags. If it has no tag then it asks the user.
- * TODO: This whole class finder system is confusing and needs to be refactored.
+ * @deprecated Please use {@link tools.classFinder2.ClassFinder} instead
  */
+@Deprecated
 public class CachedProjectClassFinder {
 
     private Project project;
