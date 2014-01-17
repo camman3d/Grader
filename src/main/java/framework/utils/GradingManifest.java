@@ -7,6 +7,8 @@ import scala.Option;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
 
 /**
@@ -20,6 +22,7 @@ public class GradingManifest {
     private Option<? extends ProjectRequirements> projectRequirements;
     private Option<String> downloadPath;
     private Option<List<String>> onyens;
+    private Option<? extends ClassLoader> classLoader = Option.empty();
 
     private PropertiesConfiguration configuration;
 
@@ -48,19 +51,28 @@ public class GradingManifest {
                 else
                     downloadPath = Option.empty();
 
-                // Load the list of onyens
-//                if (configuration.containsKey("onyens")) {
-//                    List<String> onyenList = new ArrayList<String>();
-//                    for (Object obj : configuration.getList("onyens", new ArrayList<Object>()))
-//                        onyenList.add((String) obj);
-//                    onyens = Option.apply(onyenList);
-//                } else
-//                    onyens = Option.empty();
+                // If there is a JAR specified then be sure to load that before the requirements
+                if (configuration.containsKey("project.grading.jar")) {
+                    // Try both a file and a URL
+                    String jarPath = configuration.getString("project.grading.jar");
+                    URL url = new URL(jarPath);
+                    File file = new File(jarPath);
+                    if (file.exists())
+                        url = file.toURI().toURL();
+                    URLClassLoader classLoader = new URLClassLoader(new URL[]{url});
+                    this.classLoader = Option.apply(classLoader);
+                }
 
                 // Load the project requirements
-                if (configuration.containsKey("project.requirements")) {
-                    Class<?> _class = Class.forName(configuration.getString("project.requirements"));
-                    projectRequirements = Option.apply((ProjectRequirements) _class.newInstance());
+                if (configuration.containsKey("project.grading.requirements")) {
+                    String className = configuration.getString("project.grading.requirements");
+                    if (classLoader.isDefined()) {
+                        Class<?> _class = classLoader.get().loadClass(className);
+                        projectRequirements = Option.apply((ProjectRequirements) _class.newInstance());
+                    } else {
+                        Class<?> _class = Class.forName(className);
+                        projectRequirements = Option.apply((ProjectRequirements) _class.newInstance());
+                    }
                 } else
                     projectRequirements = Option.empty();
 
@@ -142,9 +154,9 @@ public class GradingManifest {
             configuration.addProperty("project.name", projectName);
 
             if (projectRequirements.isDefined()) {
-                if (configuration.containsKey("project.requirements"))
-                    configuration.clearProperty("project.requirements");
-                configuration.addProperty("project.requirements", projectRequirements.get().getClass().getCanonicalName());
+                if (configuration.containsKey("project.grading.requirements"))
+                    configuration.clearProperty("project.grading.requirements");
+                configuration.addProperty("project.grading.requirements", projectRequirements.get().getClass().getCanonicalName());
             }
 
             configuration.save();
