@@ -70,6 +70,8 @@ public class QueueUsesArrayTestCase extends BasicTestCase {
             return fail("Unable to create queue (invalid constructor?)");
         } catch (IllegalAccessException e) {
             return fail("Invalid privacy in queue.");
+        } catch (NoSuchFieldException e) {
+            return fail("Missing array field in class");
         }
     }
 }

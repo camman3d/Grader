@@ -81,7 +81,6 @@ public class GradingManifestWindow {
                 for (String name : onyensList.getSelectedValuesList())
                     onyens.add(name.substring(name.indexOf("(") + 1, name.indexOf(")")));
                 gradingManifest.setOnyens(onyens);
-                System.out.println(onyens);
             }
         });
 

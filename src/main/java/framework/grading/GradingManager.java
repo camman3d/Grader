@@ -29,31 +29,13 @@ import java.util.List;
  */
 public class GradingManager {
 
-//    private String projectName;
     private ProjectRequirements projectRequirements;
-//    private List<Logger> loggers;
-
-    // Settings that affect what to grade
-//    private String downloadPath;
-//    private String start;
-//    private String end;
-
-    // Logger
-//    private Logger logger;
 
     public GradingManager(ProjectRequirements projectRequirements) {
-//        this.projectName = projectName;
         this.projectRequirements = projectRequirements;
-//        loggers = new ArrayList<Logger>() {{
-//            add(new LocalJsonLogger());
-//            add(new LocalTextSummaryLogger());
-//        }};
-//        this.logger = logger;
     }
 
     public void run() {
-//        getGradingOptions();
-//        GradingManifest manifest = GradingManifestLoader.load();
 
         try {
             // Get the student folders

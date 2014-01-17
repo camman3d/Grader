@@ -1,0 +1,24 @@
+Grading result for: Student, Other(other)
+
+Grading features...
+----------------------------------
+Queue is correctly implemented                         0.0 / 15.0
+Stack is correctly implemented                         0.0 / 15.0
+Use of generics                                        0.0 / 10.0
+VipQueue enqueue method                                0.0 / 15.0
+VipQueue vipEnqueue method                             0.0 / 15.0
+Other VipQueue methods                                 0.0 / 20.0
+Clean code                                             10.0 / 10.0
+----------------------------------
+  Points Awarded: 10.0
+
+  Total Score: 10.0
+
+Notes from grading features:
+----------------------------------
+
+Notes from grading restrictions:
+----------------------------------
+
+TA Comments:
+----------------------------------

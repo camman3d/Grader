@@ -32,12 +32,28 @@ public class StackRepresentation {
         MethodFinder methodFinder = MethodFinder.get(_class);
         try {
             pushMethod = methodFinder.find("push", autoGrade, true, void.class, int.class).get();
+        } catch (NoSuchElementException e) {
+            pushMethod = null;
+        }
+        try {
             popMethod = methodFinder.find("pop", autoGrade, true, int.class).get();
+        } catch (NoSuchElementException e) {
+            popMethod = null;
+        }
+        try {
             peekMethod = methodFinder.find("peek", autoGrade, true, int.class).get();
+        } catch (NoSuchElementException e) {
+            peekMethod = null;
+        }
+        try {
             isEmptyMethod = methodFinder.find("isEmpty", autoGrade, true, boolean.class).get();
+        } catch (NoSuchElementException e) {
+            isEmptyMethod = null;
+        }
+        try {
             isFullMethod = methodFinder.find("isFull", autoGrade, true, boolean.class).get();
         } catch (NoSuchElementException e) {
-            throw new NoSuchMethodException();
+            isFullMethod = null;
         }
 
     }
@@ -73,23 +89,33 @@ public class StackRepresentation {
         this.instantiation = instantiation;
     }
 
-    public void push(int element) throws InvocationTargetException, IllegalAccessException {
+    public void push(int element) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (pushMethod == null)
+            throw new NoSuchMethodException();
         pushMethod.invoke(instantiation, element);
     }
 
-    public Object pop() throws InvocationTargetException, IllegalAccessException {
+    public Object pop() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (popMethod == null)
+            throw new NoSuchMethodException();
         return popMethod.invoke(instantiation);
     }
 
-    public Object peek() throws InvocationTargetException, IllegalAccessException {
+    public Object peek() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (peekMethod == null)
+            throw new NoSuchMethodException();
         return peekMethod.invoke(instantiation);
     }
 
-    public boolean isEmpty() throws InvocationTargetException, IllegalAccessException {
+    public boolean isEmpty() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (isEmptyMethod == null)
+            throw new NoSuchMethodException();
         return (Boolean) isEmptyMethod.invoke(instantiation);
     }
 
-    public boolean isFull() throws InvocationTargetException, IllegalAccessException {
+    public boolean isFull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (isFullMethod == null)
+            throw new NoSuchMethodException();
         return (Boolean) isFullMethod.invoke(instantiation);
     }
 

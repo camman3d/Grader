@@ -25,14 +25,16 @@ public class VIPQueueProjectRequirements extends FrameworkProjectRequirements {
                 new QueueIsEmptyTestCase(),
                 new QueueIsFullTestCase(),
                 new QueuePeekTestCase(),
-                new QueueUsesArrayTestCase());
+                new QueueUsesArrayTestCase(),
+                new QueueConstructorTestCase());
 
         addFeature("Stack is correctly implemented", 15,
                 new StackPushPopTestCase(),
                 new StackIsEmptyTestCase(),
                 new StackIsFullTestCase(),
                 new StackPeekTestCase(),
-                new StackUsesLinkedListTestCase());
+                new StackUsesLinkedListTestCase(),
+                new StackConstructorTestCase());
 
         addFeature("Use of generics", 10,
                 new UsesGenericsTestCase("Queue"),
@@ -51,7 +53,9 @@ public class VIPQueueProjectRequirements extends FrameworkProjectRequirements {
         addFeature("Other VipQueue methods", 20,
                 new VipQueueIsEmptyTestCase(),
                 new VipQueueIsFullTestCase(),
-                new VipQueuePeekTestCase());
+                new VipQueuePeekTestCase(),
+                new VipQueueVipPeekTestCase(),
+                new VipQueueConstructorTestCase());
 
         addFeature("Clean code", 10);
 

@@ -33,13 +33,33 @@ public class VipQueueRepresentation {
         MethodFinder methodFinder = MethodFinder.get(_class);
         try {
             enqueueMethod = methodFinder.find("enqueue", autoGrade, true, void.class, int.class).get();
+        } catch (NoSuchElementException e) {
+            enqueueMethod = null;
+        }
+        try {
             vipEnqueueMethod = methodFinder.find("vipEnqueue", autoGrade, true, void.class, int.class).get();
+        } catch (NoSuchElementException e) {
+            vipEnqueueMethod = null;
+        }
+        try {
             dequeueMethod = methodFinder.find("dequeue", autoGrade, true, int.class).get();
+        } catch (NoSuchElementException e) {
+            dequeueMethod = null;
+        }
+        try {
             peekMethod = methodFinder.find("peek", autoGrade, true, int.class).get();
+        } catch (NoSuchElementException e) {
+            peekMethod = null;
+        }
+        try {
             isEmptyMethod = methodFinder.find("isEmpty", autoGrade, true, boolean.class).get();
+        } catch (NoSuchElementException e) {
+            isEmptyMethod = null;
+        }
+        try {
             isFullMethod = methodFinder.find("isFull", autoGrade, true, boolean.class).get();
         } catch (NoSuchElementException e) {
-            throw new NoSuchMethodException();
+            isFullMethod = null;
         }
 
     }
@@ -71,27 +91,39 @@ public class VipQueueRepresentation {
         return instantiation;
     }
 
-    public void enqueue(int element) throws InvocationTargetException, IllegalAccessException {
+    public void enqueue(int element) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (enqueueMethod == null)
+            throw new NoSuchMethodException();
         enqueueMethod.invoke(instantiation, element);
     }
 
-    public void vipEnqueue(int element) throws InvocationTargetException, IllegalAccessException {
+    public void vipEnqueue(int element) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (vipEnqueueMethod == null)
+            throw new NoSuchMethodException();
         vipEnqueueMethod.invoke(instantiation, element);
     }
 
-    public Object dequeue() throws InvocationTargetException, IllegalAccessException {
+    public Object dequeue() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (dequeueMethod == null)
+            throw new NoSuchMethodException();
         return dequeueMethod.invoke(instantiation);
     }
 
-    public Object peek() throws InvocationTargetException, IllegalAccessException {
+    public Object peek() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (peekMethod == null)
+            throw new NoSuchMethodException();
         return peekMethod.invoke(instantiation);
     }
 
-    public boolean isEmpty() throws InvocationTargetException, IllegalAccessException {
+    public boolean isEmpty() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (isEmptyMethod == null)
+            throw new NoSuchMethodException();
         return (Boolean) isEmptyMethod.invoke(instantiation);
     }
 
-    public boolean isFull() throws InvocationTargetException, IllegalAccessException {
+    public boolean isFull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        if (isFullMethod == null)
+            throw new NoSuchMethodException();
         return (Boolean) isFullMethod.invoke(instantiation);
     }
 

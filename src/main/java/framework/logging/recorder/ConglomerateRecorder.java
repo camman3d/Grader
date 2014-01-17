@@ -157,8 +157,14 @@ public class ConglomerateRecorder implements FeatureGradeRecorder, AutoFeedback,
     }
 
     public void finish() {
-        for (Logger logger : loggers)
-            logger.save(recordingSession);
+        for (Logger logger : loggers) {
+            try {
+                logger.save(recordingSession);
+            } catch (Exception e) {
+                System.err.println("Error when recording with: " + logger.getClass().getCanonicalName());
+                e.printStackTrace();
+            }
+        }
         recordingSession = null;
         featureComments = "";
     }

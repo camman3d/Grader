@@ -1,0 +1,53 @@
+Grading result for: Student, Lazy(lazy)
+
+Grading features...
+----------------------------------
+Queue is correctly implemented                         0.0 / 15.0
+Stack is correctly implemented                         0.0 / 15.0
+Use of generics                                        0.0 / 10.0
+VipQueue enqueue method                                7.5 / 15.0
+VipQueue vipEnqueue method                             7.5 / 15.0
+Other VipQueue methods                                 0.0 / 20.0
+Clean code                                             0.0 / 10.0
+----------------------------------
+  Points Awarded: 15.0
+
+  Total Score: 15.0
+
+Notes from grading features:
+----------------------------------
+Notes about Queue is correctly implemented:
+ * From test case "Enqueue and dequeue test case": No queue class
+ * From test case "Queue isEmpty test case": No queue class
+ * From test case "Queue isFull test case": No queue class
+ * From test case "Queue peek test case": No queue class
+ * From test case "Queue uses an array test case": No queue class
+ * From test case "Queue constructor test case": No queue class
+Notes about Stack is correctly implemented:
+ * From test case "Push and pop test case": No stack class
+ * From test case "Stack isEmpty test case": No stack class
+ * From test case "Stack isFull test case": No stack class
+ * From test case "Stack peek test case": No stack class
+ * From test case "Stack uses linked list test case": No stack class
+ * From test case "Stack constructor test case": No stack class
+Notes about Use of generics:
+ * From test case "Queue uses generics test case": No queue class
+ * From test case "Stack uses generics test case": No stack class
+ * From test case "VipQueue uses generics test case": The VipQueue didn't use generics.
+ * From test case "Node uses generics test case": No node class
+Notes about VipQueue enqueue method:
+ * From test case "VipQueue uses Queue test case": No queue class
+Notes about VipQueue vipEnqueue method:
+ * From test case "VipQueue uses Stack test case": No queue class
+Notes about Other VipQueue methods:
+ * From test case "Queue isEmpty test case": Missing methods in vip queue class
+ * From test case "Queue isFull test case": Missing methods in vip queue class
+ * From test case "VipQueue peek test case": Missing methods in vip queue class
+ * From test case "VipQueue peek w/ enqueueVip test case": Missing methods in vip queue class
+ * From test case "Stack constructor test case": No VipQueue(int) constructor
+
+Notes from grading restrictions:
+----------------------------------
+
+TA Comments:
+----------------------------------

@@ -78,7 +78,7 @@ public class QueueEnqueueDequeueTestCase extends BasicTestCase {
             return partialPass(passes / 6, notes);
 
         } catch (NoSuchMethodException e) {
-            return fail("Missing methods in queue class");
+            return fail("Missing method in queue class");
         } catch (InvocationTargetException e) {
             return fail("Queue method threw an error.");
         } catch (InstantiationException e) {
