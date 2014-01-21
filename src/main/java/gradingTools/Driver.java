@@ -1,23 +1,19 @@
 package gradingTools;
 
-import framework.grading.FrameworkProjectRequirements;
 import framework.grading.GradingManager;
-import framework.grading.ProjectRequirements;
 import framework.gui.GradingManifestWindow;
 import framework.gui.SettingsWindow;
 import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
-import framework.utils.GradingEnvironment;
+import framework.updates.ProgramUpdater;
 import framework.utils.GradingManifest;
 import framework.utils.GradingSettings;
-import scala.Option;
-import util.misc.Common;
-import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
-import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
+import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 
 /**
  * This is the entry class for the grading tools that Maven will reference.
@@ -31,6 +27,13 @@ public class Driver {
             // Load the config file
             PropertiesConfiguration configuration = new PropertiesConfiguration("./config/config.properties");
 
+            // First check for updates
+            boolean update = configuration.getBoolean("updates.apply", false);
+            if (update) {
+                String updateLocation = configuration.getString("updates.location");
+                new ProgramUpdater(updateLocation).update();
+            }
+
             // Initialize the environment and grading manifest
             GradingSettings.get();
             GradingManifest gradingManifest = new GradingManifest();
@@ -42,7 +45,7 @@ public class Driver {
             recorder.setProjectRequirements(gradingManifest.getProjectRequirements());
 
             String[] loggingMethods = configuration.getString("grader.logger", "csv").split("\\s*\\+\\s*");
-            for (String method :loggingMethods) {
+            for (String method : loggingMethods) {
 
                 // Add loggers
                 if (method.equals("local") || method.equals("local-txt"))
