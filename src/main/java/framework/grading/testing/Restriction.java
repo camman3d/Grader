@@ -12,6 +12,7 @@ import java.util.List;
 public class Restriction extends Checkable {
 
     private String name;
+    private String description;
     private double points;
     private List<TestCase> testCases;
 
@@ -27,9 +28,27 @@ public class Restriction extends Checkable {
         this.testCases = Arrays.asList(testCases);
     }
 
+    public Restriction(String name, String description, double points, List<TestCase> testCases) {
+        this.name = name;
+        this.description = description;
+        this.points = Math.min(points, -points); // Make sure we are negative
+        this.testCases = testCases;
+    }
+
+    public Restriction(String name, String description, double points, TestCase ... testCases) {
+        this.name = name;
+        this.description = description;
+        this.points = Math.min(points, -points); // Make sure we are negative
+        this.testCases = Arrays.asList(testCases);
+    }
+
     @Override
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override

@@ -8,10 +8,9 @@ import framework.project.Project;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import tools.classFinder2.MethodDescription;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This is the fundamental container which holds all the features and restrictions on which programs are graded.
@@ -22,6 +21,9 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
     private List<Restriction> restrictions;
 
     private List<DueDate> dueDates = new ArrayList<DueDate>();
+
+    private Set<String> neededClasses = new HashSet<String>();
+    private Map<String, Set<MethodDescription>> neededMethods = new HashMap<String, Set<MethodDescription>>();
 
     /**
      * It's important that there is a nullary constructor because this needs to be able to be simply instantiated via
@@ -54,6 +56,14 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         addFeature(new Feature(name, points, extraCredit, testCases));
     }
 
+    public void addFeature(String name, String description, double points, TestCase ... testCases) {
+        addFeature(new Feature(name, description, points, testCases));
+    }
+
+    public void addFeature(String name, String description, double points, boolean extraCredit, TestCase ... testCases) {
+        addFeature(new Feature(name, description, points, extraCredit, testCases));
+    }
+
     // Restriction adding methods
 
     public void addRestriction(Restriction restriction) {
@@ -62,6 +72,10 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
 
     public void addRestriction(String name, double points, TestCase ... testCases) {
         addRestriction(new Restriction(name, points, testCases));
+    }
+
+    public void addRestriction(String name, String description, double points, TestCase ... testCases) {
+        addRestriction(new Restriction(name, description, points, testCases));
     }
 
     public void addRestriction(String name, double points, List<TestCase> testCases) {
@@ -132,4 +146,35 @@ public class FrameworkProjectRequirements implements ProjectRequirements {
         return percentage;
     }
 
+    @Override
+    public void registerNeededClass(String className) {
+        neededClasses.add(className);
+    }
+
+    @Override
+    public void registerNeededMethod(String className, MethodDescription methodDescription) {
+        if (neededMethods.containsKey(className))
+            neededMethods.get(className).add(methodDescription);
+        else {
+            Set<MethodDescription> methods = new HashSet<MethodDescription>();
+            methods.add(methodDescription);
+            neededMethods.put(className, methods);
+        }
+    }
+
+    @Override
+    public void registerNeededMethods(String className, MethodDescription... methodDescriptions) {
+        for (MethodDescription methodDescription : methodDescriptions)
+            registerNeededMethod(className, methodDescription);
+    }
+
+    @Override
+    public Set<String> getNeededClasses() {
+        return neededClasses;
+    }
+
+    @Override
+    public Map<String, Set<MethodDescription>> getNeededMethods() {
+        return neededMethods;
+    }
 }

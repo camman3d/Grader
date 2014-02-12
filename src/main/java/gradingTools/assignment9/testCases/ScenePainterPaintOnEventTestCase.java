@@ -42,7 +42,7 @@ public class ScenePainterPaintOnEventTestCase extends BasicTestCase {
         // It should register itself as a listener at least once in the constructor
         // Get the constructor code
         try {
-            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(classDescription.parse());
+            ClassOrInterfaceDeclaration classDef = classDescription.parse();
             MethodDeclaration method = CompilationNavigation.getMethod(classDef, "propertyChange");
             String code = method.toString();
             if (code.contains("paint();"))

@@ -29,6 +29,14 @@ public class ProjectClassesManager implements ClassesManager {
         loadClasses(sourceFolder);
     }
 
+    private void loadInnerClasses(Class<?> _class, ClassDescription parent) {
+        Class<?>[] innerClasses = _class.getDeclaredClasses();
+        if (innerClasses != null) {
+            for (Class<?> innerClass : innerClasses)
+                classDescriptions.add(new InnerClassDescription(innerClass, parent));
+        }
+    }
+
     /**
      * This loads all the classes based on the source code files.
      * @param sourceFolder The folder containing the source code
@@ -46,7 +54,9 @@ public class ProjectClassesManager implements ClassesManager {
             String className = getClassName(file);
             try {
                 Class c = classLoader.loadClass(className);
-                classDescriptions.add(new BasicClassDescription(c, file));
+                ClassDescription description = new BasicClassDescription(c, file);
+                classDescriptions.add(description);
+                loadInnerClasses(c, description);
             } catch (Error e) {
                 throw new IOException(e.getMessage());
             } catch (Exception e) {
@@ -90,13 +100,15 @@ public class ProjectClassesManager implements ClassesManager {
     public Option<ClassDescription> findByClassName(String className) {
         // First search the simple names
         for (ClassDescription description : classDescriptions) {
-            if (description.getJavaClass().getSimpleName().equalsIgnoreCase(className))
+//            if (description.getJavaClass().getSimpleName().equalsIgnoreCase(className))
+            if (description.getJavaClass().getSimpleName().equals(className))
                 return Option.apply(description);
         }
 
         // Next search the canonical names
         for (ClassDescription description : classDescriptions) {
-            if (description.getJavaClass().getCanonicalName().equalsIgnoreCase(className))
+//            if (description.getJavaClass().getCanonicalName().equalsIgnoreCase(className))
+            if (description.getJavaClass().getCanonicalName().equals(className))
                 return Option.apply(description);
         }
         return Option.empty();

@@ -69,11 +69,16 @@ public class SakaiStudentFolder implements StudentFolder {
         // First, open up the submission folder.
         File submissionFolder = new File(folder, "Submission attachment(s)");
 
-        // Look for a folder, taking the first one found.
+        // What we are going to do is check if there is any folder in the submission folder. If there is, then we will
+        // let the project do the folder finding
         Option<File> projectFolder = DirectoryUtils.find(submissionFolder, new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return pathname.isDirectory() && !pathname.getName().equals("__MACOSX");
+                return pathname.isDirectory()
+                        && !pathname.getName().equals("out") // Don't accept compiled folders
+                        && !pathname.getName().equals("bin")
+                        && !pathname.getName().equals("target")
+                        && !pathname.getName().equals("__MACOSX");
             }
         });
         if (projectFolder.isDefined())
@@ -97,22 +102,30 @@ public class SakaiStudentFolder implements StudentFolder {
         // Extract the zip to look for the folder
         try {
             ZipFile zip = new ZipFile(zipFile.get());
-            zip.extractAll(submissionFolder.getAbsolutePath());
+
+            // Make a folder to extract the stuff to
+            File extractDir = new File(submissionFolder, "zip_extract");
+            extractDir.mkdir();
+            zip.extractAll(extractDir.getAbsolutePath());
 
             // Look for a folder, taking the first one found.
-            Option<File> projectFolder2 = DirectoryUtils.find(submissionFolder, new FileFilter() {
-                @Override
-                public boolean accept(File pathname) {
-                    return pathname.isDirectory();
-                }
-            });
-            if (projectFolder2.isDefined())
+//            Option<File> projectFolder2 = DirectoryUtils.find(submissionFolder, new FileFilter() {
+//                @Override
+//                public boolean accept(File pathname) {
+//                    return pathname.isDirectory()
+//                            && !pathname.getName().equals("out") // Don't accept compiled folders
+//                            && !pathname.getName().equals("bin")
+//                            && !pathname.getName().equals("target")
+//                            && !pathname.getName().equals("__MACOSX");
+//                }
+//            });
+//            if (projectFolder2.isDefined())
                 try {
-                    return Option.apply(new StandardProject(projectFolder2.get(), name));
+                    return Option.apply(new StandardProject(extractDir, name));
                 } catch (Exception e) {
                     return Option.empty();
                 }
-            return Option.empty();
+//            return Option.empty();
         } catch (ZipException e) {
             return Option.empty();
         }

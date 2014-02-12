@@ -10,6 +10,7 @@ import framework.grading.testing.NotAutomatableException;
 import framework.grading.testing.NotGradableException;
 import framework.grading.testing.TestCaseResult;
 import framework.project.ClassDescription;
+import framework.project.InnerClassDescription;
 import framework.project.Project;
 import scala.Option;
 import tools.CompilationNavigation;
@@ -44,12 +45,13 @@ public class UsesGenericsTestCase extends BasicTestCase {
 
         try {
             // Get the parsed code and pull out the type parameters
-            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(classDescription.get().parse());
-            List<TypeParameter> typeParameters = classDef.getTypeParameters();
+            ClassOrInterfaceDeclaration classDef = classDescription.get().parse();
+            List<TypeParameter> typeParameters = CompilationNavigation.getTypeParameters(classDescription.get());
 
             // There should be one type parameter
-            if (typeParameters == null)
+            if (typeParameters == null) {
                 return fail("The " + className + " didn't use generics.");
+            }
             if (typeParameters.size() > 1)
                 return fail("There should only be one generic type in the " + className + " class.");
 

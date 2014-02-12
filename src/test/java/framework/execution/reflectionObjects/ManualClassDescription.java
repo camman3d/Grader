@@ -1,6 +1,7 @@
 package framework.execution.reflectionObjects;
 
 import com.github.antlrjavaparser.api.CompilationUnit;
+import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
 import framework.project.ClassDescription;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class ManualClassDescription implements ClassDescription {
     }
 
     @Override
-    public CompilationUnit parse() throws IOException {
+    public ClassOrInterfaceDeclaration parse() throws IOException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

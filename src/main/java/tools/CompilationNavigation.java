@@ -1,8 +1,12 @@
 package tools;
 
 import com.github.antlrjavaparser.api.CompilationUnit;
+import com.github.antlrjavaparser.api.TypeParameter;
 import com.github.antlrjavaparser.api.body.*;
+import framework.project.ClassDescription;
+import framework.project.InnerClassDescription;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +65,36 @@ public class CompilationNavigation {
                 methods.add((FieldDeclaration) declaration);
         }
         return methods;
+    }
+
+    public static List<ClassOrInterfaceDeclaration> getInnerClasses(ClassOrInterfaceDeclaration classDef) {
+        List<ClassOrInterfaceDeclaration> classes = new ArrayList<ClassOrInterfaceDeclaration>();
+        for (BodyDeclaration declaration : classDef.getMembers()) {
+            if (declaration instanceof ClassOrInterfaceDeclaration)
+                classes.add((ClassOrInterfaceDeclaration) declaration);
+        }
+        return classes;
+    }
+
+    /**
+     * This looks for additional type parameters that are visible in the scope
+     */
+    public static List<TypeParameter> getTypeParameters(ClassDescription classDescription) {
+        try {
+            ClassOrInterfaceDeclaration classDef = classDescription.parse();
+            List<TypeParameter> typeParameters = classDef.getTypeParameters();
+            if (typeParameters == null)
+                typeParameters = new ArrayList<TypeParameter>();
+
+            if (classDescription instanceof InnerClassDescription) {
+                ClassDescription parent = ((InnerClassDescription) classDescription).getParent();
+                typeParameters.addAll(getTypeParameters(parent));
+            }
+            return typeParameters;
+        } catch (IOException e) {
+            System.err.println("Error getting type parameters from: " + classDescription.getJavaClass().getName());
+        }
+        return null;
     }
 
 }

@@ -8,11 +8,11 @@ Use of generics                                        0.0 / 10.0
 VipQueue enqueue method                                0.0 / 15.0
 VipQueue vipEnqueue method                             0.0 / 15.0
 Other VipQueue methods                                 0.0 / 20.0
-Clean code                                             10.0 / 10.0
+Clean code                                             0.0 / 10.0
 ----------------------------------
-  Points Awarded: 10.0
+  Points Awarded: 0.0
 
-  Total Score: 10.0
+  Total Score: 0.0
 
 Notes from grading features:
 ----------------------------------

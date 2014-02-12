@@ -1,6 +1,7 @@
 package framework.project;
 
 import com.github.antlrjavaparser.api.CompilationUnit;
+import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public interface ClassDescription {
     /**
      * @return The parsed code
      */
-    public CompilationUnit parse() throws IOException;
+    public ClassOrInterfaceDeclaration parse() throws IOException;
 
     /**
      * Looks for and returns all method within the class which have been tagged with the given tag

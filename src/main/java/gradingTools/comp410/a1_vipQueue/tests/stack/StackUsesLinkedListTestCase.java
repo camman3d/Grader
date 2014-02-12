@@ -8,9 +8,12 @@ import framework.project.ClassDescription;
 import framework.project.Project;
 import scala.Option;
 import tools.classFinder2.ClassFinder;
+import tools.classFinder2.FieldFinder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,26 +48,31 @@ public class StackUsesLinkedListTestCase extends BasicTestCase {
             StackRepresentation stack = new StackRepresentation(_class, autoGrade);
             stack.instantiate();
 
-            // Get the node property
-            Field nodeField = null;
-            for (Field field : _class.getDeclaredFields())
-                if (field.getType() == nodeClass)
-                    nodeField = field;
-            if (nodeField == null)
-                return fail("There is no node property");
-            nodeField.setAccessible(true);
-            Object nodeValue = nodeField.get(stack.getInstantiation());
+            // Get the node properties (there may be more than one, depending on implementation)
+            Set<Field> nodeFields = FieldFinder.findAll(_class, nodeClass);
+            if (nodeFields.isEmpty())
+                return fail("There are no node properties");
 
-            // Make sure that it's null
-            if (nodeValue != null)
-                return fail("Node should be null before adding");
+            for (Field nodeField : nodeFields) {
+                nodeField.setAccessible(true);
+                Object nodeValue = nodeField.get(stack.getInstantiation());
 
-            // Push something and then check again
+                // Make sure that it's null
+                if (nodeValue != null)
+                    return fail("Node should be null before adding");
+            }
+
+            // Push something and then check that at least one of the fields has changed
             stack.push(23);
-            nodeValue = nodeField.get(stack.getInstantiation());
-            if (nodeValue != null)
-                return pass();
-            return fail("Adding to the stack should change the node property");
+            for (Field nodeField : nodeFields) {
+                nodeField.setAccessible(true);
+                Object nodeValue = nodeField.get(stack.getInstantiation());
+
+                // Make sure that it's null
+                if (nodeValue != null)
+                    return pass();
+            }
+            return fail("Adding to the stack should change a node property");
 
         } catch (NoSuchMethodException e) {
             return fail("Missing methods in stack class");

@@ -12,6 +12,7 @@ import java.util.List;
 public class Feature extends Checkable {
 
     private String name;
+    private String description = "";
     private double points;
     private boolean extraCredit;
     private List<TestCase> testCases;
@@ -44,9 +45,45 @@ public class Feature extends Checkable {
         this.testCases = Arrays.asList(testCases);
     }
 
+    public Feature(String name, String description, double points, List<TestCase> testCases) {
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.extraCredit = false;
+        this.testCases = testCases;
+    }
+
+    public Feature(String name, String description, double points, boolean extraCredit, List<TestCase> testCases) {
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.extraCredit = extraCredit;
+        this.testCases = testCases;
+    }
+
+    public Feature(String name, String description, double points, TestCase ... testCases) {
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.extraCredit = false;
+        this.testCases = Arrays.asList(testCases);
+    }
+
+    public Feature(String name, String description, double points, boolean extraCredit, TestCase ... testCases) {
+        this.name = name;
+        this.description = description;
+        this.points = points;
+        this.extraCredit = extraCredit;
+        this.testCases = Arrays.asList(testCases);
+    }
+
     @Override
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override

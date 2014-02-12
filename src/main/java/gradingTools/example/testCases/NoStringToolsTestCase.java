@@ -34,7 +34,7 @@ public class NoStringToolsTestCase extends BasicTestCase {
             for (ClassDescription description : project.getClassesManager().get().getClassDescriptions()) {
 
                 // The CompilationNavigation class offers methods to help navigate and work with the compilation unit
-                ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(description.parse());
+                ClassOrInterfaceDeclaration classDef = description.parse();
 
                 // With antlr parse object, you can call toString at any level to convert it to Java code.
                 String code = classDef.toString();

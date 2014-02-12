@@ -53,7 +53,7 @@ public class PaintListenerListenersTestCase extends BasicTestCase {
         for (ClassDescription view : views) {
             // Get the constructors
             try {
-                ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(view.parse());
+                ClassOrInterfaceDeclaration classDef = view.parse();
                 List<ConstructorDeclaration> constructors = CompilationNavigation.getConstructors(classDef);
 
                 // Look for one assignment in any constructor

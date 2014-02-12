@@ -6,8 +6,11 @@ import framework.grading.testing.Restriction;
 import framework.grading.testing.TestCase;
 import framework.project.Project;
 import org.joda.time.DateTime;
+import tools.classFinder2.MethodDescription;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,5 +55,16 @@ public interface ProjectRequirements {
     public List<CheckResult> checkRestrictions(Project project);
 
     public double checkDueDate(DateTime dateTime);
+
+    // Pre-grading class lookups
+    public void registerNeededClass(String className);
+
+    public void registerNeededMethod(String className, MethodDescription methodDescription);
+
+    public void registerNeededMethods(String className, MethodDescription... methodDescriptions);
+
+    public Set<String> getNeededClasses();
+
+    public Map<String, Set<MethodDescription>> getNeededMethods();
 
 }

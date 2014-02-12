@@ -2,6 +2,8 @@ package framework.project;
 
 import com.github.antlrjavaparser.JavaParser;
 import com.github.antlrjavaparser.api.CompilationUnit;
+import com.github.antlrjavaparser.api.body.ClassOrInterfaceDeclaration;
+import tools.CompilationNavigation;
 import util.annotations.EditablePropertyNames;
 import util.annotations.PropertyNames;
 import util.annotations.StructurePattern;
@@ -74,10 +76,11 @@ public class BasicClassDescription implements ClassDescription {
     }
 
     @Override
-    public CompilationUnit parse() throws IOException {
+    public ClassOrInterfaceDeclaration parse() throws IOException {
         if (compilationUnit == null)
             compilationUnit = JavaParser.parse(source);
-        return compilationUnit;
+
+        return CompilationNavigation.getClassDef(compilationUnit);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class ScenePainterListenerTestCase extends BasicTestCase {
         // It should register itself as a listener at least once in the constructor
         // Get the constructor code
         try {
-            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(classDescription.parse());
+            ClassOrInterfaceDeclaration classDef = classDescription.parse();
             List<ConstructorDeclaration> constructors = CompilationNavigation.getConstructors(classDef);
 
             // Look for one assignment in any constructor

@@ -56,6 +56,8 @@ public class VipQueueIsEmptyTestCase extends BasicTestCase {
 
             return partialPass(passes / 2, notes);
 
+        } catch (NullPointerException e) {
+            return fail("Got a null pointer exception.");
         } catch (NoSuchMethodException e) {
             return fail("Missing methods in vip queue class");
         } catch (InvocationTargetException e) {

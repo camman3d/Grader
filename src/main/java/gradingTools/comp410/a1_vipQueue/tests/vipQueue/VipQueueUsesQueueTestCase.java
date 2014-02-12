@@ -9,6 +9,7 @@ import framework.project.Project;
 import gradingTools.comp410.a1_vipQueue.tests.queue.QueueRepresentation;
 import scala.Option;
 import tools.classFinder2.ClassFinder;
+import tools.classFinder2.FieldFinder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -47,10 +48,8 @@ public class VipQueueUsesQueueTestCase extends BasicTestCase {
             vipQueue.instantiate();
 
             // Get the queue property of the vip queue
-            Field queueField = null;
-            for (Field field : _class.getDeclaredFields())
-                if (field.getType() == queueClass)
-                    queueField = field;
+            Field queueField = FieldFinder.find(_class, queueClass);
+
             if (queueField == null)
                 return fail("There is no queue field");
             queueField.setAccessible(true);
@@ -86,6 +85,8 @@ public class VipQueueUsesQueueTestCase extends BasicTestCase {
             // Return the test results
             return partialPass(passes / 3, notes);
 
+        } catch (NullPointerException e) {
+            return fail("Got a null pointer exception.");
         } catch (NoSuchMethodException e) {
             return fail("Missing methods in vip queue class");
         } catch (InvocationTargetException e) {

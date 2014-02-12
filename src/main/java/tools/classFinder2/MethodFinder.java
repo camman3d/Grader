@@ -31,6 +31,16 @@ public class MethodFinder {
         this._class = _class;
     }
 
+    public MethodFinder(Class<?> _class, Map<String, Option<Method>> methodCache) {
+        this._class = _class;
+        this.methodCache = methodCache;
+    }
+
+    // This is if you want to prompt for needed methods beforehand. You can
+    public static void setClassCache(Map<Class<?>, MethodFinder> cache) {
+        classCache = cache;
+    }
+
     /**
      * Returns the method that has been designated with "tag", or asks if there is none.
      *
@@ -70,6 +80,10 @@ public class MethodFinder {
         Option<Method> method = ask(name);
         methodCache.put(name, method);
         return method;
+    }
+
+    public Option<Method> find(MethodDescription description, boolean autoGrade, boolean lenient) throws NotAutomatableException {
+        return find(description.getName(), autoGrade, lenient, description.getReturnType(), description.getParameters());
     }
 
     private boolean typesEquals(Class<?> type1, Class<?> type2, Boolean lenient) {

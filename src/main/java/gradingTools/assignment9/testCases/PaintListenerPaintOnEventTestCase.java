@@ -54,7 +54,7 @@ public class PaintListenerPaintOnEventTestCase extends BasicTestCase {
         for (ClassDescription view : views) {
             // Get the constructors
             try {
-                ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(view.parse());
+                ClassOrInterfaceDeclaration classDef = view.parse();
                 MethodDeclaration method = CompilationNavigation.getMethod(classDef, "propertyChange");
                 if (method == null) {
                     notes += "Paint listener view " + view.getJavaClass().getSimpleName() + " doesn't have a propertyChange method.";

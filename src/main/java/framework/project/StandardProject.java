@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -33,15 +36,42 @@ public class StandardProject implements Project {
      * @throws FileNotFoundException
      */
     public StandardProject(File directory, String name) throws FileNotFoundException {
-        // Find the folder. We could be there or it could be in a different folder
-        Option<File> src = DirectoryUtils.locateFolder(directory, "src");
-        if (src.isEmpty())
-            throw new FileNotFoundException("No src folder");
-        sourceFolder = src.get();
-        this.directory = src.get().getParentFile();
-
+        // Find the src folder. Do this by searching recursively for a .java file, then look at it's package
+        Set<File> sourceFiles = DirectoryUtils.getFiles(directory, new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.getName().endsWith(".java");
+            }
+        });
+        if (sourceFiles.isEmpty())
+            throw new FileNotFoundException("No src code");
+        File file = new ArrayList<File>(sourceFiles).get(0);
         try {
-            File sourceFolder = new File(this.directory, "src");
+
+            // Navigate up N times, where N is the number of nested packages
+            String canonicalName = CodeTools.generateCanonicalName(file);
+            sourceFolder = file;
+            int packages = canonicalName.split("\\.").length;
+            for (int i = 0; i < packages; i++) {
+                File parent = sourceFolder.getParentFile();
+                if (sourceFolder.equals(directory)) {
+
+                    // Invalid package. Make a non-compilable project
+                    this.directory = directory;
+                    classesManager = Option.empty();
+                    return;
+                }
+                sourceFolder = parent;
+            }
+
+        } catch (IOException e) {
+            throw new FileNotFoundException("Error while attempting to locate package");
+        }
+        this.directory = sourceFolder.getParentFile();
+
+        // Now let's try to find the build folder
+        try {
+//            File sourceFolder = new File(this.directory, "src");
             File buildFolder = getBuildFolder("main." + name);
             classesManager = Option.apply((ClassesManager) new ProjectClassesManager(buildFolder, sourceFolder));
         } catch (Exception e) {

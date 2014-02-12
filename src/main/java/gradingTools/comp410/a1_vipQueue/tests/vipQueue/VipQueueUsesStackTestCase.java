@@ -10,6 +10,7 @@ import gradingTools.comp410.a1_vipQueue.tests.queue.QueueRepresentation;
 import gradingTools.comp410.a1_vipQueue.tests.stack.StackRepresentation;
 import scala.Option;
 import tools.classFinder2.ClassFinder;
+import tools.classFinder2.FieldFinder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -48,10 +49,8 @@ public class VipQueueUsesStackTestCase extends BasicTestCase {
             vipQueue.instantiate();
 
             // Get the stack property of the vip queue
-            Field stackField = null;
-            for (Field field : _class.getDeclaredFields())
-                if (field.getType() == stackClass)
-                    stackField = field;
+            Field stackField = FieldFinder.find(_class, stackClass);
+
             if (stackField == null)
                 return fail("There is no queue field");
             stackField.setAccessible(true);
@@ -87,6 +86,8 @@ public class VipQueueUsesStackTestCase extends BasicTestCase {
             // Return the test results
             return partialPass(passes / 3, notes);
 
+        } catch (NullPointerException e) {
+            return fail("Got a null pointer exception.");
         } catch (NoSuchMethodException e) {
             return fail("Missing methods in vip queue class");
         } catch (InvocationTargetException e) {

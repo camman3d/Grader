@@ -10,6 +10,8 @@ public interface Gradable extends Describable {
      */
     public String getName();
 
+    public String getDescription();
+
     /**
      * @return The max possible point that can be awarded
      */

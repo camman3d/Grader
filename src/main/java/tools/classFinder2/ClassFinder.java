@@ -19,16 +19,28 @@ public class ClassFinder {
     private static Map<Project, ClassFinder> projectCache = new HashMap<Project, ClassFinder>();
 
     public static ClassFinder get(Project project) {
+        // Possibly override with the temp class finder
+        if (tempFinder != null)
+            return tempFinder;
+
         if (!projectCache.containsKey(project))
             projectCache.put(project, new ClassFinder(project));
         return projectCache.get(project);
     }
+
+    // This is if you want to prompt for needed classes beforehand. Save the custom ClassFinder here
+    public static ClassFinder tempFinder = null;
 
     private Project project;
     private Map<String, Option<ClassDescription>> classCache = new HashMap<String, Option<ClassDescription>>();
 
     private ClassFinder(Project project) {
         this.project = project;
+    }
+
+    public ClassFinder(Project project, Map<String, Option<ClassDescription>> classCache) {
+        this.project = project;
+        this.classCache = classCache;
     }
 
     /**
@@ -65,7 +77,7 @@ public class ClassFinder {
             return classCache.get(name);
 
         Option<ClassDescription> classDescription = project.getClassesManager().get().findByClassName(name);
-        if (classDescription.isEmpty()) {
+        if (classDescription.isEmpty() || classDescription.get().getJavaClass().isInterface()) {
             if (autoGrade)
                 throw new NotAutomatableException();
             classDescription = ask(name);

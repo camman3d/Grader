@@ -3,6 +3,7 @@ package gradingTools.comp410.a1_vipQueue.tests.vipQueue;
 import framework.grading.testing.NotAutomatableException;
 import tools.classFinder2.MethodFinder;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -68,17 +69,26 @@ public class VipQueueRepresentation {
      * This attempts to create the queue by trying to find a valid constructor then instantiating it.
      */
     public void instantiate() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor constructor;
         try {
-            instantiation = _class.getConstructor(Object.class).newInstance(10);
+            constructor = _class.getConstructor(Object.class);
+            constructor.setAccessible(true);
+            instantiation = constructor.newInstance(10);
         } catch (NoSuchMethodException e) {
             try {
-                instantiation = _class.getConstructor(int.class).newInstance(10);
+                constructor = _class.getConstructor(int.class);
+                constructor.setAccessible(true);
+                instantiation = constructor.newInstance(10);
             } catch (NoSuchMethodException e1) {
                 try {
-                    instantiation = _class.getConstructor(Integer.class).newInstance(10);
+                    constructor = _class.getConstructor(Integer.class);
+                    constructor.setAccessible(true);
+                    instantiation = constructor.newInstance(10);
                 } catch (NoSuchMethodException e2) {
                     try {
-                        instantiation = _class.newInstance();
+                        constructor = _class.getConstructor(new Class[]{});
+                        constructor.setAccessible(true);
+                        instantiation = constructor.newInstance(10);
                     } catch (Exception e3) {
                         throw new InstantiationException();
                     }

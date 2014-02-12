@@ -49,7 +49,7 @@ public class AnimatingMethodNewThreadTestCase extends BasicTestCase {
 
         try {
             // Look for .start() in the code
-            ClassOrInterfaceDeclaration classDef = CompilationNavigation.getClassDef(classDescription.get().parse());
+            ClassOrInterfaceDeclaration classDef = classDescription.get().parse();
             MethodDeclaration method = CompilationNavigation.getMethod(classDef, methods.get(0).getName());
             String code = method.toString();
             if (code.contains(".start()"))
