@@ -67,8 +67,9 @@ public class SettersNotifyTestCase extends BasicTestCase {
                             }
                         }
                     }
-                    if (hasNotify == 0)
-                        notes += "Class " + description.getJavaClass().getName() + " has addPropertyChangeListener but never notifies listeners";
+                    if (hasNotify == 0) {
+                        notes += "Class " + description.getJavaClass().getName() + " has addPropertyChangeListener but never notifies listeners;";
+                    }
                     listenerNotifies += hasNotify;
                 }
             } catch (IOException e) {
@@ -77,7 +78,6 @@ public class SettersNotifyTestCase extends BasicTestCase {
                 // Move along
             }
         }
-
         return partialPass(listenerNotifies / listenerSetters, notes, autoGrade);
     }
 }

@@ -40,7 +40,7 @@ public class NamingConventionsTestCase extends BasicTestCase {
             if (Character.isUpperCase(_class.getSimpleName().charAt(0)))
                 checkPass++;
             else
-                notes += "Class \"" + _class.getSimpleName() + "\" should be capitalized";
+                notes += "Class \"" + _class.getSimpleName() + "\" should be capitalized;";
 
             // Check each method is lowercase
             for (Method method : description.getJavaClass().getDeclaredMethods()) {
@@ -48,7 +48,7 @@ public class NamingConventionsTestCase extends BasicTestCase {
                 if (Character.isLowerCase(method.getName().charAt(0)))
                     checkPass++;
                 else
-                    notes += "Method \"" + method.getName() + "\" should be lowercase";
+                    notes += "Method \"" + method.getName() + "\" should be lowercase;";
             }
 
             // Check is property is lowercase if not final
@@ -58,7 +58,7 @@ public class NamingConventionsTestCase extends BasicTestCase {
                     if (Character.isLowerCase(field.getName().charAt(0)))
                         checkPass++;
                     else
-                        notes += "Field \"" + field.getName() + "\" should be lowercase";
+                        notes += "Field \"" + field.getName() + "\" should be lowercase;";
                 }
             }
         }

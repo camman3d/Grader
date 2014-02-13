@@ -51,7 +51,7 @@ public class CodeTools {
                 }
                 prev = cur;
             }
-            if (out && !inLineComment) {
+            if (prev != -1 && out && !inLineComment) {
                 newCode.append((char)prev);
             }
         } catch (IOException e) {

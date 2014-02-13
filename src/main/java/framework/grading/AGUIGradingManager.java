@@ -11,9 +11,15 @@ import framework.navigation.NotValidDownloadFolderException;
 import framework.navigation.SakaiBulkDownloadFolder;
 import framework.navigation.StudentFolder;
 import framework.project.Project;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.joda.time.DateTime;
 import scala.Option;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +64,14 @@ public class AGUIGradingManager implements GradingManager {
         try {
             // Get the student folders, starting and ending with the specified onyens
             BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(downloadPath);
+            System.out.println(downloadPath);
             List<StudentFolder> folders = downloadFolder.getStudentFolders(start, end);
 //            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));
 //            loggers.add(new FeedbackTextSummaryLogger(downloadFolder.getFolder()));
 
             // Grade each one
             for (StudentFolder folder : folders) {
+                System.out.println(folder.getOnyen());
 
                 Option<Project> project = folder.getProject(projectName);
                 List<CheckResult> featureResults;
@@ -119,6 +127,23 @@ public class AGUIGradingManager implements GradingManager {
         downloadPath = window.getDownloadPath();
         start = window.getStart();
         end = window.getEnd();
+        String name = "properties-" + Thread.currentThread().getId();
+        try {
+            File config = Files.createTempFile(name, ".config").toFile();
+            if (!config.exists()) {
+                config = Paths.get("config", name + ".config").toFile();
+            }
+            if (config.exists()) {
+                PropertiesConfiguration configuration = new PropertiesConfiguration(config);
+               // downloadPath = configuration.getString("grader.headless.path", downloadPath);
+                start = configuration.getString("grader.headless.start", start);
+                end = configuration.getString("grader.headless.end", end);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 
 //    private void logResults(StudentFolder folder, List<CheckResult> featureResults,

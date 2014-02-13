@@ -14,7 +14,7 @@ import gradingTools.assignment6.testCases.*;
  * Time: 3:45 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Assignment6Grader {
+public class Assignment6ProjectRequirements {
     public static void main(String[] args) {
 
         FrameworkProjectRequirements requirements = new FrameworkProjectRequirements();

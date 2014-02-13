@@ -9,11 +9,17 @@ import framework.logging.loggers.*;
 import framework.logging.recorder.ConglomerateRecorder;
 import framework.logging.recorder.ConglomerateRecorderFactory;
 import framework.utils.GradingEnvironment;
+import framework.utils.UserPropertyWriter;
 import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
 import wrappers.grader.sakai.project.ProjectStepperDisplayerWrapper;
 import grader.spreadsheet.FeatureGradeRecorderSelector;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This is the entry class for the grading tools that Maven will reference.
@@ -22,10 +28,29 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 public class Driver {
 
     public static void main(String[] args) {
-
+        File userPropsFile = null;
         try {
-            // Load the config file
-            PropertiesConfiguration configuration = new PropertiesConfiguration("./config/config.properties");
+            UserPropertyWriter userProperties = new UserPropertyWriter(Paths.get("config", "config.properties").toString());
+            userProperties.setUserProperties(args);
+            String name = "properties-" + Thread.currentThread().getId();
+            try {
+                userPropsFile = Files.createTempFile(name, ".config").toFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                userPropsFile = Paths.get("config", name + ".config").toFile();
+            }
+            if (userPropsFile.exists()) {
+                userPropsFile.delete();
+            }
+            try {
+                userPropsFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            userProperties.writeUserProperties(userPropsFile);
+            // Load the default config file
+            PropertiesConfiguration configuration = new PropertiesConfiguration(userPropsFile);
 
             // Get the project name
             String projectName = configuration.getString("project.name");
@@ -66,7 +91,7 @@ public class Driver {
             } else if (controller.equals("AHeadlessGradingManager")) {
 
                 // Run the GraderManager
-                GradingManager manager = new AHeadlessGradingManager(projectName, requirements);
+                GradingManager manager = new AHeadlessGradingManager(projectName, requirements, userPropsFile.getAbsolutePath());
                 manager.run();
 
             } else if (controller.equals("SakaiProjectDatabase")) {
@@ -97,12 +122,21 @@ public class Driver {
 
         } catch (ConfigurationException e) {
             System.err.println("Error loading config file.");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             System.err.println("Could not find project requirements.");
+            e.printStackTrace();
         } catch (InstantiationException e) {
             System.err.println("Could not create project requirements.");
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
             System.err.println("Could not create project requirements.");
+            e.printStackTrace();
+        } finally {
+            System.out.println("run done");
+            if (userPropsFile != null) {
+                userPropsFile.delete();
+            }
         }
     }
 }

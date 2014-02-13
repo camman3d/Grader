@@ -16,6 +16,10 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.joda.time.DateTime;
 import scala.Option;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,8 @@ import java.util.List;
  * Created by Andrew on 1/1/14.
  */
 public class AHeadlessGradingManager implements GradingManager {
+
+    private String configFile;
 
     private String projectName;
     private ProjectRequirements projectRequirements;
@@ -33,17 +39,14 @@ public class AHeadlessGradingManager implements GradingManager {
     private String start;
     private String end;
 
-    // Logger
-//    private Logger logger;
-
     public AHeadlessGradingManager(String projectName, ProjectRequirements projectRequirements) {
+        this(projectName, projectRequirements, "config.properties");
+    }
+
+    public AHeadlessGradingManager(String projectName, ProjectRequirements projectRequirements, String configFile) {
         this.projectName = projectName;
         this.projectRequirements = projectRequirements;
-//        loggers = new ArrayList<Logger>() {{
-//            add(new LocalJsonLogger());
-//            add(new LocalTextSummaryLogger());
-//        }};
-//        this.logger = logger;
+        this.configFile = configFile;
     }
 
     @Override
@@ -63,7 +66,6 @@ public class AHeadlessGradingManager implements GradingManager {
 
             // Grade each one
             for (StudentFolder folder : folders) {
-
                 Option<Project> project = folder.getProject(projectName);
                 List<CheckResult> featureResults;
                 List<CheckResult> restrictionResults;
@@ -116,7 +118,7 @@ public class AHeadlessGradingManager implements GradingManager {
 
     private void getGradingOptions() throws ConfigurationException {
         // Load the config file
-        PropertiesConfiguration configuration = new PropertiesConfiguration("./config/config.properties");
+        PropertiesConfiguration configuration = new PropertiesConfiguration(configFile);
 
         String configPath = configuration.getString("grader.headless.path", null);
         if (configPath != null) {
@@ -128,9 +130,9 @@ public class AHeadlessGradingManager implements GradingManager {
             GraderSettings.get().set("start", configStart);
         }
 
-        String configEnd = configuration.getString("grader.headless.start", null);
+        String configEnd = configuration.getString("grader.headless.end", null);
         if (configEnd != null) {
-            GraderSettings.get().set("start", configEnd);
+            GraderSettings.get().set("end", configEnd);
         }
 
         if (GraderSettings.get().has("editor")) {
