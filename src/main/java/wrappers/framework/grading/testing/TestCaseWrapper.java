@@ -41,6 +41,6 @@ public class TestCaseWrapper extends BasicTestCase {
         String notes = "";
         for (String line : result.getLog())
             notes += (notes.isEmpty() ? "\n" : "") + line;
-        return partialPass(result.getScore() / feature.getMax(), notes);
+        return partialPass(result.getScore() / feature.getMax(), notes, true);
     }
 }

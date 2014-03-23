@@ -11,17 +11,12 @@ import framework.navigation.StudentFolder;
 import framework.project.Project;
 import framework.utils.GraderSettings;
 import framework.utils.GradingEnvironment;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.joda.time.DateTime;
 import scala.Option;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Andrew on 1/1/14.
@@ -59,6 +54,7 @@ public class AHeadlessGradingManager implements GradingManager {
 
         try {
             // Get the student folders, starting and ending with the specified onyens
+            System.out.println(downloadPath);
             BulkDownloadFolder downloadFolder = new SakaiBulkDownloadFolder(downloadPath);
             List<StudentFolder> folders = downloadFolder.getStudentFolders(start, end);
 //            loggers.add(new FeedbackJsonLogger(downloadFolder.getFolder()));

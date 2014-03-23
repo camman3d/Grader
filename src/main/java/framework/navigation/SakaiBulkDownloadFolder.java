@@ -23,8 +23,9 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
                 return pathname.getName().equals("grades.csv");
             }
         });
-        if (foundFiles.length == 0)
+        if (foundFiles.length == 0) {
             throw new NotValidDownloadFolderException();
+        }
         grades = foundFiles[0];
     }
 
@@ -48,13 +49,15 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
             }
         });
         List<StudentFolder> studentFolders = new ArrayList<StudentFolder>();
-        for (File studentFolder : folders)
+        for (File studentFolder : folders) {
             studentFolders.add(new SakaiStudentFolder(studentFolder));
+        }
         return studentFolders;
     }
 
     /**
      * Gets a segment of the student folder list
+     *
      * @param start The onyen to start with
      * @param end The onyen to end with
      * @return The student folder that fall within the given onyen range
@@ -64,18 +67,22 @@ public class SakaiBulkDownloadFolder implements BulkDownloadFolder {
         List<StudentFolder> filteredFolders = new ArrayList<StudentFolder>();
         boolean collect = false;
         for (StudentFolder studentFolder : getStudentFolders()) {
-            if (studentFolder.getOnyen().equals(start))
+            if (studentFolder.getOnyen().equals(start)) {
                 collect = true;
-            if (collect)
+            }
+            if (collect) {
                 filteredFolders.add(studentFolder);
-            if (studentFolder.getOnyen().equals(end))
+            }
+            if (studentFolder.getOnyen().equals(end)) {
                 collect = false;
+            }
         }
         return filteredFolders;
     }
 
     /**
      * Find's a particular student's folder
+     *
      * @param onyen The student's Onyen
      * @return The student folder associated with the given Onyen
      */

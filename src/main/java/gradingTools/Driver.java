@@ -133,7 +133,7 @@ public class Driver {
             System.err.println("Could not create project requirements.");
             e.printStackTrace();
         } finally {
-            System.out.println("run done");
+            //System.out.println("run done");
             if (userPropsFile != null) {
                 userPropsFile.delete();
             }

@@ -50,12 +50,23 @@ public abstract class BasicTestCase implements TestCase {
         return new TestCaseResult(percentage, notes, name, autograded);
     }
 
+    protected TestCaseResult pass() {
+        return new TestCaseResult(true, name, true);
+    }
+
     protected TestCaseResult pass(boolean autograded) {
         return new TestCaseResult(true, name, autograded);
     }
 
+    protected TestCaseResult pass(String notes) {
+        return new TestCaseResult(true, notes, name, true);
+    }
     protected TestCaseResult pass(String notes, boolean autograded) {
         return new TestCaseResult(true, notes, name, autograded);
+    }
+
+    protected TestCaseResult fail(String notes) {
+        return new TestCaseResult(false, notes, name, true);
     }
 
     protected TestCaseResult fail(String notes, boolean autograded) {
